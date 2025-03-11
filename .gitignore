@@ -24,6 +24,7 @@ coverage
 out/
 build
 storybook-static
+tsconfig.tsbuildinfo
 
 # Debug
 npm-debug.log*
