@@ -12,7 +12,7 @@ export default defineConfig({
     tailwindcss(),
     dts({
       insertTypesEntry: true,
-      exclude: ["**/*.stories.tsx", "**/*.test.tsx"],
+      exclude: ["**/*.stories.tsx", "**/*.test.tsx", "**/*.mdx"],
     }),
   ],
   build: {
