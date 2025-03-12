@@ -1,4 +1,4 @@
-import { AiqiaSpinner } from "../spinner";
+import { AiqiaSpinner } from "../spinner/spinner.component";
 
 export function Loader() {
   return (
