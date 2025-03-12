@@ -1,8 +1,8 @@
 {
   "name": "@aiqiabr/aiqia-ui",
   "version": "1.0.0",
-  "type": "module",
   "author": "Aiqia",
+  "type": "module",
   "main": "dist/main.js",
   "types": "dist/index.d.ts",
   "repository": {
