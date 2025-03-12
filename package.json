@@ -1,9 +1,15 @@
 {
   "name": "aiqia-ui",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": "Aiqia",
+  "main": "dist/main.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aiqia-dev/aiqia-ui.com.br"
+  },
+  "license": "ISC",
   "exports": {
     ".": {
       "import": "./dist/index.js"
