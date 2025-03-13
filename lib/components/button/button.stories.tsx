@@ -1,70 +1,60 @@
-// Button.stories.tsx
-import { Meta, StoryFn } from "@storybook/react";
+import { StoryObj } from "@storybook/react";
 import { Button, ButtonProps } from "./button.component";
-import { X } from "lucide-react";
+import { Bell } from "lucide-react";
+
+type Story = StoryObj<ButtonProps>;
 
 export default {
   title: "Components/Button",
   component: Button,
-} as Meta;
-
-const Template: StoryFn<ButtonProps> = ({ children, ...args }) => (
-  <Button {...args}>{children ? children : "Button"}</Button>
-);
-
-export const Default = Template.bind({});
-Default.args = {
-  variant: "default",
-  size: "default",
-  disabled: false,
+  tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: "select"
+    },
+    size: {
+      control: "select"
+    }
+  }
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  variant: "secondary",
-  size: "default",
-  disabled: false,
+export const Standard: Story = {
+  args: {
+    variant: 'default'
+  },
+  render: (args: ButtonProps) => (
+    <Button {...args}>
+      Button
+    </Button>
+  )
 };
 
-export const Destructive = Template.bind({});
-Destructive.args = {
-  variant: "destructive",
-  size: "default",
-  disabled: false,
+export const Variants: Story = {
+  render: (args: ButtonProps) => (
+    <div className="flex gap-5 flex-wrap">
+      <Button {...args} variant="default">default</Button>
+      <Button {...args} variant="destructive">destructive</Button>
+      <Button {...args} variant="ghost">ghost</Button>
+      <Button {...args} variant="ghostDestructive">ghostDestructive</Button>
+      <Button {...args} variant="outline">outline</Button>
+      <Button {...args} variant="secondary">secondary</Button>
+      <Button {...args} variant="link">link</Button>
+    </div>
+  )
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  variant: "default",
-  size: "sm",
-  disabled: false,
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  variant: "default",
-  size: "lg",
-  disabled: false,
-};
-
-export const Icon = Template.bind({});
-Icon.args = {
-  variant: "default",
-  size: "icon",
-  disabled: false,
-  children: <X />,
-};
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-  variant: "default",
-  size: "default",
-  disabled: true,
-};
-
-export const Link = Template.bind({});
-Link.args = {
-  variant: "link",
-  size: "default",
-  href: "https://example.com",
+export const Sizes: Story = {
+  args: {
+    variant: 'default'
+  },
+  render: (args: ButtonProps) => (
+    <div className="flex gap-5 flex-wrap items-center">
+      <Button {...args} size="sm">size: sm</Button>
+      <Button {...args} size="default">size: default</Button>
+      <Button {...args} size="lg">size: lg</Button>
+      <Button {...args} size="icon">
+        <Bell />
+      </Button>
+    </div>
+  )
 };
