@@ -7,17 +7,22 @@ export default {
   tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: {
-        type: "select",
-      },
+      control: "select",
       options: ["default", "destructive", "secondary", "outline"]
+    },
+    className: {
+      control: "text",
+      description: "Additional classes to apply to the component container.",
+      table: {
+        type: { summary: "string" },
+      },
     }
   },
 };
 
 type Story = StoryObj<BadgeProps>;
 
-export const Standard: Story = {
+export const Default: Story = {
   render: (args: BadgeProps) => (
     <Badge {...args}>Default</Badge>
   )

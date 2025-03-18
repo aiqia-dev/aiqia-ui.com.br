@@ -3,40 +3,27 @@ import { Meta, StoryFn } from "@storybook/react";
 import { MaskedInput, MaskedInputProps } from "./masked-input.component";
 
 export default {
-  title: 'Components/MaskedInput', 
+  title: "Components/MaskedInput",
   component: MaskedInput,
+  tags: ["autodocs"],
   argTypes: {
-    value: { control: 'text' },
-    mask: { control: 'text' },
+    value: { control: "text" },
+    mask: { control: "text" },
   },
 } as Meta;
 
-const Template: StoryFn<MaskedInputProps> = (args) => {
+export const Default: StoryFn<MaskedInputProps> = ({
+  mask = "(##) #####-####",
+  ...args
+}) => {
   const [value, setValue] = useState(args.value || "");
 
   return (
     <MaskedInput
       {...args}
+      mask={mask}
       value={value}
       onChange={(newValue) => setValue(newValue)}
     />
   );
-};
-
-export const Default = Template.bind({});
-Default.args = {
-  value: '',
-  mask: '###-###-####',
-};
-
-export const CustomMask = Template.bind({});
-CustomMask.args = {
-  value: '1234',
-  mask: 'AAA-###',
-};
-
-export const FullExample = Template.bind({});
-FullExample.args = {
-  value: 'abcdef123',
-  mask: 'AAAA-####',
 };

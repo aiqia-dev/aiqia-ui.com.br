@@ -1,9 +1,12 @@
-import { Meta, StoryFn } from "@storybook/react";
+import { StoryObj } from "@storybook/react";
 import { Calendar, CalendarProps } from "./calendar.component";
+
+type Story = StoryObj<CalendarProps>;
 
 export default {
   title: "Components/Calendar",
   component: Calendar,
+  tags: ['autodocs'],
   argTypes: {
     className: {
       control: "text",
@@ -46,35 +49,39 @@ export default {
       },
     },
   },
-} as Meta;
-
-const Template: StoryFn<CalendarProps> = (args) => <Calendar {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  showOutsideDays: true,
 };
 
-export const SingleDateSelection = Template.bind({});
-SingleDateSelection.args = {
-  mode: "single",
-  selected: new Date(),
-  showOutsideDays: true,
+export const Default: Story = {
+  render: (args: CalendarProps) => (
+    <Calendar {...args} />
+  )
 };
 
-export const MultipleDateSelection = Template.bind({});
-MultipleDateSelection.args = {
-  mode: "multiple",
-  selected: [new Date(), new Date(Date.now() + 86400000)],
-  showOutsideDays: true,
-};
+// export const Default = Template.bind({});
+// Default.args = {
+//   showOutsideDays: true,
+// };
 
-export const DateRangeSelection = Template.bind({});
-DateRangeSelection.args = {
-  mode: "range",
-  selected: {
-    from: new Date(),
-    to: new Date(Date.now() + 7 * 86400000),
-  },
-  showOutsideDays: true,
-};
+// export const SingleDateSelection = Template.bind({});
+// SingleDateSelection.args = {
+//   mode: "single",
+//   selected: new Date(),
+//   showOutsideDays: true,
+// };
+
+// export const MultipleDateSelection = Template.bind({});
+// MultipleDateSelection.args = {
+//   mode: "multiple",
+//   selected: [new Date(), new Date(Date.now() + 86400000)],
+//   showOutsideDays: true,
+// };
+
+// export const DateRangeSelection = Template.bind({});
+// DateRangeSelection.args = {
+//   mode: "range",
+//   selected: {
+//     from: new Date(),
+//     to: new Date(Date.now() + 7 * 86400000),
+//   },
+//   showOutsideDays: true,
+// };

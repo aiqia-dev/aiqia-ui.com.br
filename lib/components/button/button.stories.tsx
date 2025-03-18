@@ -14,11 +14,18 @@ export default {
     },
     size: {
       control: "select"
+    },
+    className: {
+      control: "text",
+      description: "Additional classes to apply to the component container.",
+      table: {
+        type: { summary: "string" },
+      },
     }
   }
 };
 
-export const Standard: Story = {
+export const Default: Story = {
   args: {
     variant: 'default'
   },

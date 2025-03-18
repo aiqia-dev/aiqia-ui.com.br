@@ -9,9 +9,12 @@ import {
   FormField,
 } from "./form.component";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Input } from "../input/input.component";
+import { Button } from "../button/button.component";
 
 export default {
   title: "Components/Form",
+  tags: ["autodocs"],
   component: Form,
 } as Meta;
 
@@ -42,23 +45,13 @@ const Template: StoryFn = () => {
           name="name"
           control={form.control}
           rules={{ required: "O campo nome é obrigatório." }}
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <input
-                  {...field}
-                  placeholder="Enter your name"
-                  className={`w-full p-2 border rounded-md ${
-                    fieldState.error
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-blue-500"
-                  }`}
-                />
+                <Input {...field} placeholder="Enter your name" />
               </FormControl>
-              <FormDescription>
-                Please enter your full name.
-              </FormDescription>
+              <FormDescription>Please enter your full name.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -74,19 +67,11 @@ const Template: StoryFn = () => {
               message: "Digite um endereço de email válido.",
             },
           }}
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <input
-                  {...field}
-                  placeholder="Enter your email"
-                  className={`w-full p-2 border rounded-md ${
-                    fieldState.error
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-blue-500"
-                  }`}
-                />
+                <Input {...field} placeholder="Enter your email" />
               </FormControl>
               <FormDescription>
                 Please enter a valid email address.
@@ -96,12 +81,7 @@ const Template: StoryFn = () => {
           )}
         />
 
-        <button
-          type="submit"
-          className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-        >
-          Submit
-        </button>
+        <Button>Submit</Button>
       </form>
     </Form>
   );

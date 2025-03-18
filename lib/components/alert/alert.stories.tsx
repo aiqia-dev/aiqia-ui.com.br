@@ -17,11 +17,18 @@ export default {
     },
     description: {
       control: "text"
+    },
+    className: {
+      control: "text",
+      description: "Additional classes to apply to the component container.",
+      table: {
+        type: { summary: "string" },
+      },
     }
   },
 };
 
-export const Standard: StoryFn = (args) => (
+export const Default: StoryFn = (args) => (
   <Alert {...args}>
     <AlertTitle>{args.title || "Default Title"}</AlertTitle>
     <AlertDescription>{args.description || "Default description for the alert."}</AlertDescription>

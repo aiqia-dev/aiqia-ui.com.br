@@ -6,6 +6,7 @@ import { ptBR } from "date-fns/locale";
 
 export default {
   title: "Components/DatePicker",
+  tags: ["autodocs"],
   component: DatePicker,
 } as Meta;
 
@@ -18,22 +19,24 @@ Default.args = {
 
 export const CustomDate = Template.bind({});
 CustomDate.args = {
-  value: new Date(2024, 11, 25), 
+  value: new Date(2024, 11, 25),
 };
 
 export const WithoutDate = Template.bind({});
 WithoutDate.args = {
-  value: undefined, 
+  value: undefined,
 };
 
 export const OnChangeExample = Template.bind({});
 OnChangeExample.args = {
   value: new Date(),
-  onChange: (date) => alert(`Data selecionada: ${format(date, "PPP", { locale: ptBR })}`),
+  onChange: (date) =>
+    alert(`Data selecionada: ${format(date, "PPP", { locale: ptBR })}`),
 };
 
 export const WithOnChangeAlert = Template.bind({});
 WithOnChangeAlert.args = {
   value: new Date(), // Data inicial
-  onChange: (date) => alert(`Data selecionada: ${format(date, "PPP", { locale: ptBR })}`), // Exemplo com alerta
+  onChange: (date) =>
+    alert(`Data selecionada: ${format(date, "PPP", { locale: ptBR })}`), // Exemplo com alerta
 };

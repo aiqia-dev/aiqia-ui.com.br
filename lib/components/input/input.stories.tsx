@@ -2,8 +2,9 @@ import { Meta, StoryObj } from "@storybook/react";
 import { Input } from "./input.component";
 
 const meta: Meta<typeof Input> = {
-  title: "Components/Input", 
-  component: Input, 
+  title: "Components/Input",
+  tags: ["autodocs"],
+  component: Input,
 };
 
 export default meta;
@@ -15,12 +16,22 @@ export const Default: Story = {
 };
 
 export const Disabled: Story = {
-  render: (args) => <Input {...args} placeholder="Disabled input" disabled />,
+  render: (args) => <Input {...args} placeholder="Enter text here" />,
+};
+
+export const Textarea: Story = {
+  render: (args) => (
+    <Input {...args} placeholder="Disabled input" type="textarea" />
+  ),
 };
 
 export const WithCustomClass: Story = {
   render: (args) => (
-    <Input {...args} placeholder="Input with custom styles" className="bg-blue-200" />
+    <Input
+      {...args}
+      placeholder="Input with custom styles"
+      className="bg-blue-200"
+    />
   ),
 };
 

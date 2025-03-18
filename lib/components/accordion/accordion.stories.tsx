@@ -9,10 +9,19 @@ import {
 export default {
   title: "Components/Accordion",
   component: Accordion,
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  argTypes: {
+    className: {
+      control: "text",
+      description: "Additional classes to apply to the component container.",
+      table: {
+        type: { summary: "string" },
+      },
+    }
+  }
 };
 
-export const Standard: StoryObj = {
+export const Default: StoryObj = {
   render: (args) => (
     <Accordion type="multiple" {...args}>
       <AccordionItem value="item-1">
