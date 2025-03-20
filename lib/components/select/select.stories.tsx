@@ -7,17 +7,22 @@ import {
   SelectTrigger,
   SelectContent,
   SelectItem,
+  SelectLabel,
 } from "./select.component";
 import { FormControl } from "../form/form.component";
 import { brazillianStates } from "../../utils/brazillian-states";
 
-export default {
+const meta: Meta<typeof Select> = {
   title: "Components/Select",
+  tags: ["autodocs"],
   component: Select,
-  subcomponents: { SelectGroup, SelectValue, SelectTrigger },
-} as Meta;
+};
 
-const Template: StoryFn = (args) => {
+export default meta;
+
+type Story = StoryFn<typeof Select>;
+
+export const Default: Story = (args) => {
   const methods = useForm();
   return (
     <FormProvider {...methods}>
@@ -39,5 +44,27 @@ const Template: StoryFn = (args) => {
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {};
+export const WithGroup: Story = (args) => {
+  const methods = useForm();
+  return (
+    <FormProvider {...methods}>
+      <Select {...args}>
+        <FormControl>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione..." />
+          </SelectTrigger>
+        </FormControl>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Fruits</SelectLabel>
+            <SelectItem value="apple">Apple</SelectItem>
+            <SelectItem value="banana">Banana</SelectItem>
+            <SelectItem value="blueberry">Blueberry</SelectItem>
+            <SelectItem value="grapes">Grapes</SelectItem>
+            <SelectItem value="pineapple">Pineapple</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </FormProvider>
+  );
+};

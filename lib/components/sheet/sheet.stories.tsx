@@ -1,15 +1,25 @@
-import { useState } from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { Sheet, SheetTrigger, SheetContent, SheetClose, SheetHeader, SheetTitle, SheetDescription } from './sheet.component';
-import { X } from 'lucide-react';
+import { useState } from "react";
+import { Meta, StoryFn } from "@storybook/react";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetClose,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "./sheet.component";
+import { X } from "lucide-react";
+import { Button } from "../button/button.component";
 
 export default {
-  title: 'Components/Sheet',
+  title: "Components/Sheet",
   component: Sheet,
+  tags: ["autodocs"],
   argTypes: {
     side: {
-      control: 'select',
-      options: ['top', 'bottom', 'left', 'right'],
+      control: "select",
+      options: ["top", "bottom", "left", "right"],
     },
   },
 } as Meta;
@@ -19,7 +29,9 @@ const Template: StoryFn = (args) => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger>Open Sheet</SheetTrigger>
+      <SheetTrigger asChild>
+        <Button>Open sheet</Button>
+      </SheetTrigger>
       <SheetContent side={args.side}>
         <SheetHeader>
           <SheetTitle>Sheet Title</SheetTitle>
@@ -27,7 +39,9 @@ const Template: StoryFn = (args) => {
         </SheetHeader>
         <p>This is a sample content inside the sheet.</p>
         <SheetClose onClick={() => setOpen(false)}>
-          <X className="h-4 w-4" /> Close
+          <Button variant="outline">
+            <X className="h-4 w-4" /> Close
+          </Button>
         </SheetClose>
       </SheetContent>
     </Sheet>
@@ -36,25 +50,25 @@ const Template: StoryFn = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  side: 'right',
+  side: "right",
 };
 
 export const TopSheet = Template.bind({});
 TopSheet.args = {
-  side: 'top',
+  side: "top",
 };
 
 export const BottomSheet = Template.bind({});
 BottomSheet.args = {
-  side: 'bottom',
+  side: "bottom",
 };
 
 export const LeftSheet = Template.bind({});
 LeftSheet.args = {
-  side: 'left',
+  side: "left",
 };
 
 export const RightSheet = Template.bind({});
 RightSheet.args = {
-  side: 'right',
+  side: "right",
 };

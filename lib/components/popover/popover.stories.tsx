@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
-import { Popover, PopoverTrigger, PopoverContent } from './popover.component';
+import { useState } from "react";
+import { Meta, StoryObj } from "@storybook/react";
+import { Popover, PopoverTrigger, PopoverContent } from "./popover.component";
+import { Button } from "../button/button.component";
 
 const meta: Meta = {
-  title: 'Components/Popover',
+  title: "Components/Popover",
   component: Popover,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -16,9 +17,7 @@ export const Default: Story = {
   render: () => (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="px-4 py-2 text-white bg-blue-500 rounded-sm">
-          Open Popover
-        </button>
+        <Button>Open Popover</Button>
       </PopoverTrigger>
       <PopoverContent>
         <div className="text-sm">This is a popover content</div>
@@ -31,9 +30,7 @@ export const CustomPosition: Story = {
   render: () => (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="px-4 py-2 text-white bg-green-500 rounded-sm">
-          Open Popover (Top)
-        </button>
+        <Button>Open Popover (Top)</Button>
       </PopoverTrigger>
       <PopoverContent side="top" align="center">
         <div className="text-sm">Popover positioned at the top</div>
@@ -49,13 +46,12 @@ export const WithCustomContent: Story = {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <button className="px-4 py-2 text-white bg-red-500 rounded-sm">
-            Toggle Popover
-          </button>
+          <Button>Toggle Popover</Button>
         </PopoverTrigger>
         <PopoverContent>
           <div className="text-sm">
-            <strong>Custom Content:</strong> This popover can show more detailed content, such as forms, images, or custom components.
+            <strong>Custom Content:</strong> This popover can show more detailed
+            content, such as forms, images, or custom components.
           </div>
         </PopoverContent>
       </Popover>
