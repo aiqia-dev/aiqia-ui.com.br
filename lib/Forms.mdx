@@ -1,0 +1,119 @@
+# Forms
+
+Building forms with React Hook Form and Yup.
+
+## Usage
+
+This is a concept to build forms with React Hook Form and Yup.
+
+### Validation
+
+Define a schema to validate and define the type of the form.
+
+```tsx
+// schemas.ts
+
+import * as Yup from "yup";
+
+// export validation form
+export const someFormSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required!"),
+  description: Yup.string(),
+});
+
+// Export schema form values
+export type SomeFormValues = Yup.InferType<typeof someFormSchema>;
+```
+
+### Field component
+
+Create a reusable input field component to simplify the form development.
+
+```tsx
+// InputField.tsx
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  InputProps,
+  MaskedInput,
+} from '@aiqiabr/aiqia-ui';
+import { useFormContext } from 'react-hook-form';
+
+type Props = {
+  name: string;
+  label?: string;
+  placeholder?: string;
+  mask?: string;
+} & InputProps;
+
+export const InputField = ({
+  name,
+  label,
+  placeholder,
+  mask,
+  ...props
+}: Props) => {
+  const form = useFormContext();
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="flex-1">
+          {Boolean(label) && <FormLabel>{label}</FormLabel>}
+          <FormControl>
+            {mask ? (
+              <MaskedInput
+                mask={mask}
+                placeholder={placeholder}
+                {...props}
+                {...field}
+              />
+            ) : (
+              <Input placeholder={placeholder} {...props} {...field} />
+            )}
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
+```
+
+### The form
+
+```tsx
+// MyFormComponent.tsx
+
+import { SomeFormValues, someFormSchema } from "schemas"
+import { useForm } from 'react-hook-form';
+import { Button, Form } from '@aiqiabr/aiqia-ui';
+
+const form = useForm<SomeFormValues>({
+    resolver: yupResolver(someFormSchema),
+    defaultValues: {
+      title: '',
+      description: ''
+    },
+});
+
+const onSubmit = (data: SomeFormValues) => {
+    console.log(data)
+}
+
+return (
+    <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+            <InputField name="title" label="Title" />
+            <InputField name="description" label="Description" />
+            <Button>Submit</Button>
+        </form>
+    </Form>
+)
+```

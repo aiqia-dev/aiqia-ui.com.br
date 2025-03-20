@@ -1,5 +1,5 @@
 // Card.stories.tsx
-import { Meta, StoryFn } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import {
   Card,
   CardTitle,
@@ -7,14 +7,24 @@ import {
   CardContent,
   CardFooter,
 } from "./card.component";
+import { Button } from "../button/button.component";
 
 export default {
   title: "Components/Card",
+  tags: ['autodocs'],
   component: Card,
-  subcomponents: { CardTitle, CardDescription, CardContent, CardFooter },
-} as Meta;
+  argTypes: {
+    className: {
+      control: "text",
+      description: "Additional classes to apply to the component container.",
+      table: {
+        type: { summary: "string" },
+      },
+    },
+  }
+};
 
-const Template: StoryFn = (args) => (
+export const Default: StoryFn = (args) => (
   <Card {...args}>
     <CardTitle>Card Title</CardTitle>
     <CardDescription>Card Description</CardDescription>
@@ -22,26 +32,13 @@ const Template: StoryFn = (args) => (
       <p>This is the card content.</p>
     </CardContent>
     <CardFooter>
-      <button>Footer Button</button>
+      <Button>Footer Button</Button>
     </CardFooter>
   </Card>
 );
 
-export const Default = Template.bind({});
-Default.args = {};
-
-export const WithCustomContent = Template.bind({});
-WithCustomContent.args = {
-  children: (
-    <>
-      <CardTitle>Custom Title</CardTitle>
-      <CardDescription>Custom Description</CardDescription>
-      <CardContent>
-        <p>Custom content goes here.</p>
-      </CardContent>
-      <CardFooter>
-        <button>Custom Footer Button</button>
-      </CardFooter>
-    </>
-  ),
-};
+export const OnlyCard: StoryFn = (args) => (
+  <Card className="p-5" {...args}>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam voluptate ea, accusamus illum placeat ducimus aut, aspernatur numquam voluptatum libero ex possimus fugiat labore pariatur fugit cum voluptates. Impedit, quod!</p>
+  </Card>
+);

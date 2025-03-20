@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -9,22 +9,22 @@ import { ChevronRight } from "lucide-react";
 export default {
   title: "Components/Breadcrumb",
   component: Breadcrumb,
-  subcomponents: { BreadcrumbList, BreadcrumbItem },
-} as Meta;
+  tags: ['autodocs'],
+}
 
-const Template: StoryFn = (args) => (
+export const Default: StoryFn = (args) => (
   <Breadcrumb {...args}>
     <BreadcrumbList>
       <BreadcrumbItem>
-        <a href="/">Home</a>
+        <a href="#">Home</a>
       </BreadcrumbItem>
       <ChevronRight className="text-muted-foreground" />
       <BreadcrumbItem>
-        <a href="/section">Section</a>
+        <a href="#">Section</a>
       </BreadcrumbItem>
       <ChevronRight className="text-muted-foreground" />
       <BreadcrumbItem>
-        <a href="/section/subsection">Subsection</a>
+        <a href="#">Subsection</a>
       </BreadcrumbItem>
       <ChevronRight className="text-muted-foreground" />
       <BreadcrumbItem>
@@ -34,5 +34,3 @@ const Template: StoryFn = (args) => (
   </Breadcrumb>
 );
 
-export const Default = Template.bind({});
-Default.args = {};

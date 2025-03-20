@@ -4,6 +4,7 @@ import { Skeleton } from "./skeleton.component";
 
 export default {
   title: "Components/Skeleton",
+  tags: ["autodocs"],
   component: Skeleton,
 } as Meta;
 

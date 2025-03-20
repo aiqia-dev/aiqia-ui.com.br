@@ -11,6 +11,7 @@ import {
 
 export default {
   title: "Components/Pagination",
+  tags: ["autodocs"],
   component: Pagination,
 };
 
@@ -30,23 +31,35 @@ const Template: any = (args: any) => {
       <PaginationContent>
         <PaginationPrevious onClick={handlePrevious} />
         <PaginationItem>
-          <PaginationLink isActive={currentPage === 1} onClick={() => setCurrentPage(1)}>
+          <PaginationLink
+            isActive={currentPage === 1}
+            onClick={() => setCurrentPage(1)}
+          >
             1
           </PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink isActive={currentPage === 2} onClick={() => setCurrentPage(2)}>
+          <PaginationLink
+            isActive={currentPage === 2}
+            onClick={() => setCurrentPage(2)}
+          >
             2
           </PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink isActive={currentPage === 3} onClick={() => setCurrentPage(3)}>
+          <PaginationLink
+            isActive={currentPage === 3}
+            onClick={() => setCurrentPage(3)}
+          >
             3
           </PaginationLink>
         </PaginationItem>
         <PaginationEllipsis />
         <PaginationItem>
-          <PaginationLink isActive={currentPage === 5} onClick={() => setCurrentPage(5)}>
+          <PaginationLink
+            isActive={currentPage === 5}
+            onClick={() => setCurrentPage(5)}
+          >
             5
           </PaginationLink>
         </PaginationItem>

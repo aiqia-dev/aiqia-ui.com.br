@@ -1,9 +1,17 @@
-
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from './table.component';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from "./table.component";
 
 export default {
-  title: 'Components/Table',
+  title: "Components/Table",
   component: Table,
+  tags: ["autodocs"],
 };
 
 interface TableProps {
@@ -37,33 +45,33 @@ const Template: any = ({ caption, rows, columns, className }: TableProps) => (
 
 export const DefaultTable = Template.bind({});
 DefaultTable.args = {
-  caption: 'My Table',
-  columns: ['Header 1', 'Header 2', 'Header 3'],
+  caption: "My Table",
+  columns: ["Header 1", "Header 2", "Header 3"],
   rows: [
-    ['Row 1, Cell 1', 'Row 1, Cell 2', 'Row 1, Cell 3'],
-    ['Row 2, Cell 1', 'Row 2, Cell 2', 'Row 2, Cell 3'],
+    ["Row 1, Cell 1", "Row 1, Cell 2", "Row 1, Cell 3"],
+    ["Row 2, Cell 1", "Row 2, Cell 2", "Row 2, Cell 3"],
   ],
-  className: '',
+  className: "",
 };
 
 export const TableWithCaption = Template.bind({});
 TableWithCaption.args = {
-  caption: 'My table with caption',
-  columns: ['Header 1', 'Header 2', 'Header 3'],
+  caption: "My table with caption",
+  columns: ["Header 1", "Header 2", "Header 3"],
   rows: [
-    ['Row 1, Cell 1', 'Row 1, Cell 2', 'Row 1, Cell 3'],
-    ['Row 2, Cell 1', 'Row 2, Cell 2', 'Row 2, Cell 3'],
+    ["Row 1, Cell 1", "Row 1, Cell 2", "Row 1, Cell 3"],
+    ["Row 2, Cell 1", "Row 2, Cell 2", "Row 2, Cell 3"],
   ],
-  className: '',
+  className: "",
 };
 
 export const TableWithDifferentStyles = Template.bind({});
 TableWithDifferentStyles.args = {
-  caption: 'Styled Table',
-  columns: ['Styled Header 1', 'Styled Header 2', 'Styled Header 3'],
+  caption: "Styled Table",
+  columns: ["Styled Header 1", "Styled Header 2", "Styled Header 3"],
   rows: [
-    ['Styled Row 1, Cell 1', 'Styled Row 1, Cell 2', 'Styled Row 1, Cell 3'],
-    ['Styled Row 2, Cell 1', 'Styled Row 2, Cell 2', 'Styled Row 2, Cell 3'],
+    ["Styled Row 1, Cell 1", "Styled Row 1, Cell 2", "Styled Row 1, Cell 3"],
+    ["Styled Row 2, Cell 1", "Styled Row 2, Cell 2", "Styled Row 2, Cell 3"],
   ],
-  className: 'shadow-lg rounded-lg',
+  className: "shadow-lg rounded-lg",
 };

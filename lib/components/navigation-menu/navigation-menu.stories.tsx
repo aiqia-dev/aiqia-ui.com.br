@@ -12,6 +12,7 @@ import { ListItem } from "..";
 export default {
   title: "Components/NavigationMenu",
   component: NavigationMenu,
+  tags: ["autodocs"],
   args: {
     items: [
       {

@@ -5,7 +5,6 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 
 import { cn } from "../../utils/utils";
-import { useFormField } from "../form/form.component";
 
 export interface SelectProps extends SelectPrimitive.SelectProps {
   onChange: (value: string) => void;
@@ -21,8 +20,6 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  const { error } = useFormField();
-
   return (
     <SelectPrimitive.Trigger
       ref={ref}
@@ -33,11 +30,6 @@ const SelectTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      {!error?.message && (
-        <SelectPrimitive.Icon asChild>
-          <ChevronDown className="h-4 w-4 opacity-50" />
-        </SelectPrimitive.Icon>
-      )}
     </SelectPrimitive.Trigger>
   );
 });

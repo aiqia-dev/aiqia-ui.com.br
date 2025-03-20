@@ -1,60 +1,40 @@
-import { Meta, StoryFn } from "@storybook/react";
+import { StoryObj } from "@storybook/react";
 import { Badge, BadgeProps } from "./badge.component";
 
 export default {
   title: "Components/Badge",
   component: Badge,
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: {
-        type: "select",
-      },
-      options: ["default", "secondary", "destructive", "outline"], // Variantes suportadas
-      description: "Define o estilo visual do badge.",
-      table: {
-        type: { summary: "default | secondary | destructive | outline" },
-        defaultValue: { summary: "default" },
-      },
+      control: "select",
+      options: ["default", "destructive", "secondary", "outline"]
     },
     className: {
       control: "text",
-      description: "Classes CSS adicionais para customização do badge.",
+      description: "Additional classes to apply to the component container.",
       table: {
         type: { summary: "string" },
       },
-    },
-    children: {
-      control: "text",
-      description: "Conteúdo exibido dentro do badge.",
-      table: {
-        type: { summary: "ReactNode" },
-      },
-    },
+    }
   },
-} as Meta;
-
-const Template: StoryFn<BadgeProps> = (args) => <Badge {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  variant: "default",
-  children: "Default Badge",
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  variant: "secondary",
-  children: "Secondary Badge",
+type Story = StoryObj<BadgeProps>;
+
+export const Default: Story = {
+  render: (args: BadgeProps) => (
+    <Badge {...args}>Default</Badge>
+  )
 };
 
-export const Destructive = Template.bind({});
-Destructive.args = {
-  variant: "destructive",
-  children: "Destructive Badge",
-};
-
-export const Outline = Template.bind({});
-Outline.args = {
-  variant: "outline",
-  children: "Outline Badge",
+export const Variants: Story = {
+  render: (args: BadgeProps) => (
+    <div className="flex gap-5 flex-wrap">
+      <Badge {...args} variant="default">Default</Badge>
+      <Badge {...args} variant="destructive">Destructive</Badge>
+      <Badge {...args} variant="outline">Outline</Badge>
+      <Badge {...args} variant="secondary">Secondary</Badge>
+    </div>
+  )
 };
