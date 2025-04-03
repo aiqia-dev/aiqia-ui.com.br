@@ -10,17 +10,23 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-  },
-};
-
-export const decorators = [
-  withThemeByClassName({
-    themes: {
-      light: "light",
-      dark: "dark",
+    backgrounds: {
+      values: [
+        { name: "Dark", value: "#000" },
+        { name: "Light", value: "#fff" },
+      ],
+      default: "Light",
     },
-    defaultTheme: "light",
-  }),
-];
+  },
+  decorators: [
+    withThemeByClassName({
+      themes: {
+        light: "light",
+        dark: "dark",
+      },
+      defaultTheme: "light",
+    }),
+  ],
+};
 
 export default preview;
