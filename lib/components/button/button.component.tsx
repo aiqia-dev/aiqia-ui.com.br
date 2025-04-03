@@ -38,30 +38,12 @@ const buttonVariants = cva(
   }
 );
 
-interface ButtonAttributes
+export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof buttonVariants> { }
-interface AnchorAttributes
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  VariantProps<typeof buttonVariants> { }
-
-export type ButtonProps = (
-  | Omit<ButtonAttributes, "variant">
-  | AnchorAttributes
-) & {
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  disabled?: boolean;
   href?: string;
-  variant?:
-  | "default"
-  | "destructive"
-  | "outline"
-  | "secondary"
-  | "ghost"
-  | "ghostDestructive"
-  | "link";
-  size?: "default" | "sm" | "lg" | "icon";
-};
+}
 
 const Button = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
