@@ -5321,10 +5321,10 @@ const KT = {
     link: "text-primary underline-offset-4 hover:underline"
   },
   size: {
-    default: "h-10 px-4 py-2",
+    default: "h-9 px-4 py-2",
     sm: "h-9 rounded-md px-3",
     lg: "h-11 rounded-md px-8",
-    icon: "h-10 w-10",
+    icon: "h-9 w-9",
     iconSm: "h-8 w-8 [&_svg]:size-4"
   }
 }, zt = $t(
@@ -18662,7 +18662,7 @@ const Qx = A.forwardRef(({ className: e, type: t, ...r }, n) => t === "textarea"
     ref: n,
     type: t,
     className: M(
-      "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+      "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
       e
     ),
     ...r
@@ -19967,7 +19967,7 @@ const H2 = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx(
   {
     ref: r,
     className: M(
-      "aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow-smfocus:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      "aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
       e
     ),
     ...t,
@@ -21317,7 +21317,7 @@ const fu = Sq, YW = Tq, pu = Cq, na = d.forwardRef(({ className: e, children: t,
   {
     ref: n,
     className: M(
-      "flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      "flex h-9 w-full items-center justify-between rounded-md border border-input bg-background shadow-xs px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
       e
     ),
     ...r,
@@ -21676,7 +21676,7 @@ const Yq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx(
   }
 ));
 Yq.displayName = zC.displayName;
-const Uq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx("div", { className: "relative w-full overflow-auto", children: /* @__PURE__ */ p.jsx(
+const Uq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx("div", { className: "relative w-full overflow-auto border rounded-lg shadow-xs", children: /* @__PURE__ */ p.jsx(
   "table",
   {
     ref: r,
@@ -21685,7 +21685,14 @@ const Uq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx("di
   }
 ) }));
 Uq.displayName = "Table";
-const Kq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx("thead", { ref: r, className: M("[&_tr]:border-b", e), ...t }));
+const Kq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx(
+  "thead",
+  {
+    ref: r,
+    className: M("[&_tr]:border-b bg-muted/50", e),
+    ...t
+  }
+));
 Kq.displayName = "TableHeader";
 const Xq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx(
   "tbody",
@@ -21701,7 +21708,7 @@ const Zq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx(
   {
     ref: r,
     className: M(
-      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0 [&>tr>td]:py-2",
       e
     ),
     ...t
@@ -21725,7 +21732,7 @@ const Jq = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx(
   {
     ref: r,
     className: M(
-      "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      "h-10 px-3 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       e
     ),
     ...t
@@ -21737,7 +21744,7 @@ const eB = d.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ p.jsx(
   {
     ref: r,
     className: M(
-      "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      "py-1 px-3 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       e
     ),
     ...t
