@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -50,21 +51,27 @@ const invoices = [
     totalAmount: "$350.00",
     paymentMethod: "Bank Transfer",
   },
+  {
+    invoice: "INV004",
+    paymentStatus: "Pending",
+    totalAmount: "$150.00",
+    paymentMethod: "PayPal",
+  },
 ];
 
 export const PageExample = {
   render: (args: any) => (
     <main {...args} className="p-10">
-      <header className="mb-8">
+      <header className="mb-3">
         <h1 className="text-2xl font-semibold">Page title</h1>
       </header>
 
-      <section className="flex flex-col md:flex-row gap-4 md:justify-between mb-8">
-        <div className="flex gap-4 items-center">
+      <section className="flex flex-col md:flex-row gap-3 md:justify-between mb-3">
+        <div className="flex gap-3 items-center">
           <Input placeholder="Search" />
         </div>
 
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-3 items-center">
           <Button variant="outline">Secondary right action</Button>
           <Button>Right action primary</Button>
         </div>
@@ -74,7 +81,10 @@ export const PageExample = {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[50px]"></TableHead>
+              <TableHead className="w-[30px]"></TableHead>
+              <TableHead className="w-[30px]">
+                <Checkbox />
+              </TableHead>
               <TableHead className="w-[100px]">Invoice</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Method</TableHead>
@@ -83,8 +93,11 @@ export const PageExample = {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
+            {invoices.map((invoice, index) => (
+              <TableRow
+                key={invoice.invoice}
+                data-state={index === 1 ? "selected" : ""}
+              >
                 <TableCell>
                   <TooltipProvider>
                     <Tooltip delayDuration={100} disableHoverableContent>
@@ -99,6 +112,9 @@ export const PageExample = {
                     </Tooltip>
                   </TooltipProvider>
                 </TableCell>
+                <TableCell>
+                  <Checkbox checked={index === 1} />
+                </TableCell>
                 <TableCell className="font-medium">{invoice.invoice}</TableCell>
                 <TableCell>{invoice.paymentStatus}</TableCell>
                 <TableCell>{invoice.paymentMethod}</TableCell>
@@ -106,7 +122,7 @@ export const PageExample = {
                   {invoice.totalAmount}
                 </TableCell>
                 <TableCell className="text-right">
-                  <div className="flex gap-2 justify-end">
+                  <div className="flex gap-3 justify-end">
                     <TooltipProvider>
                       <Tooltip delayDuration={100} disableHoverableContent>
                         <TooltipTrigger>
@@ -151,13 +167,13 @@ export const PageExample = {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={5}>Total</TableCell>
+              <TableCell colSpan={6}>Total</TableCell>
               <TableCell className="text-right">$2,500.00</TableCell>
             </TableRow>
           </TableFooter>
         </Table>
 
-        <Pagination className="mt-5">
+        <Pagination className="mt-3">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious />
