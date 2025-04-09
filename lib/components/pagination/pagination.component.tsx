@@ -34,60 +34,58 @@ const PaginationItem = React.forwardRef<
 ));
 PaginationItem.displayName = "PaginationItem";
 
-type PaginationButtonProps = {
+type PaginationLinkProps = {
   isActive?: boolean;
-  onClick?: () => void;
 } & Pick<ButtonProps, "size"> &
-  React.ComponentProps<"button">;
+  React.ComponentProps<"a">;
 
-const PaginationButton = ({
+const PaginationLink = ({
   className,
   isActive,
   size = "icon",
-  onClick,
   ...props
-}: PaginationButtonProps) => (
-  <button
+}: PaginationLinkProps) => (
+  <a
     aria-current={isActive ? "page" : undefined}
     className={cn(
-      buttonVariants({ variant: isActive ? "outline" : "ghost", size }),
+      buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      }),
       className
     )}
-    onClick={onClick}
     {...props}
   />
 );
-PaginationButton.displayName = "PaginationButton";
+PaginationLink.displayName = "PaginationLink";
 
 const PaginationPrevious = ({
   className,
-  onClick,
   ...props
-}: React.ComponentProps<typeof PaginationButton>) => (
-  <PaginationButton
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
     aria-label="Go to previous page"
+    size="default"
     className={cn("gap-1", className)}
-    onClick={onClick}
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
-  </PaginationButton>
+  </PaginationLink>
 );
 PaginationPrevious.displayName = "PaginationPrevious";
 
 const PaginationNext = ({
   className,
-  onClick,
   ...props
-}: React.ComponentProps<typeof PaginationButton>) => (
-  <PaginationButton
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
     aria-label="Go to next page"
+    size="default"
     className={cn("gap-1", className)}
-    onClick={onClick}
     {...props}
   >
     <ChevronRight className="h-4 w-4" />
-  </PaginationButton>
+  </PaginationLink>
 );
 PaginationNext.displayName = "PaginationNext";
 
@@ -106,67 +104,12 @@ const PaginationEllipsis = ({
 );
 PaginationEllipsis.displayName = "PaginationEllipsis";
 
-const PaginationComponent = () => {
-  const [currentPage, setCurrentPage] = React.useState(1);
-
-  const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNext = () => {
-    setCurrentPage(currentPage + 1);
-  };
-
-  return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationPrevious onClick={handlePrevious} />
-        <PaginationItem>
-          <PaginationButton
-            isActive={currentPage === 1}
-            onClick={() => setCurrentPage(1)}
-          >
-            1
-          </PaginationButton>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationButton
-            isActive={currentPage === 2}
-            onClick={() => setCurrentPage(2)}
-          >
-            2
-          </PaginationButton>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationButton
-            isActive={currentPage === 3}
-            onClick={() => setCurrentPage(3)}
-          >
-            3
-          </PaginationButton>
-        </PaginationItem>
-        <PaginationEllipsis />
-        <PaginationItem>
-          <PaginationButton
-            isActive={currentPage === 5}
-            onClick={() => setCurrentPage(5)}
-          >
-            5
-          </PaginationButton>
-        </PaginationItem>
-        <PaginationNext onClick={handleNext} />
-      </PaginationContent>
-    </Pagination>
-  );
-};
-
 export {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
+  PaginationLink,
   PaginationItem,
-  PaginationButton as PaginationLink,
-  PaginationNext,
   PaginationPrevious,
-  PaginationComponent,
+  PaginationNext,
+  PaginationEllipsis,
 };

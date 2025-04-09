@@ -6,25 +6,23 @@ declare const Pagination: {
 };
 declare const PaginationContent: React.ForwardRefExoticComponent<Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLUListElement>, HTMLUListElement>, "ref"> & React.RefAttributes<HTMLUListElement>>;
 declare const PaginationItem: React.ForwardRefExoticComponent<Omit<React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement>, "ref"> & React.RefAttributes<HTMLLIElement>>;
-type PaginationButtonProps = {
+type PaginationLinkProps = {
     isActive?: boolean;
-    onClick?: () => void;
-} & Pick<ButtonProps, "size"> & React.ComponentProps<"button">;
-declare const PaginationButton: {
-    ({ className, isActive, size, onClick, ...props }: PaginationButtonProps): import("react/jsx-runtime").JSX.Element;
+} & Pick<ButtonProps, "size"> & React.ComponentProps<"a">;
+declare const PaginationLink: {
+    ({ className, isActive, size, ...props }: PaginationLinkProps): import("react/jsx-runtime").JSX.Element;
     displayName: string;
 };
 declare const PaginationPrevious: {
-    ({ className, onClick, ...props }: React.ComponentProps<typeof PaginationButton>): import("react/jsx-runtime").JSX.Element;
+    ({ className, ...props }: React.ComponentProps<typeof PaginationLink>): import("react/jsx-runtime").JSX.Element;
     displayName: string;
 };
 declare const PaginationNext: {
-    ({ className, onClick, ...props }: React.ComponentProps<typeof PaginationButton>): import("react/jsx-runtime").JSX.Element;
+    ({ className, ...props }: React.ComponentProps<typeof PaginationLink>): import("react/jsx-runtime").JSX.Element;
     displayName: string;
 };
 declare const PaginationEllipsis: {
     ({ className, ...props }: React.ComponentProps<"span">): import("react/jsx-runtime").JSX.Element;
     displayName: string;
 };
-declare const PaginationComponent: () => import("react/jsx-runtime").JSX.Element;
-export { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationButton as PaginationLink, PaginationNext, PaginationPrevious, PaginationComponent, };
+export { Pagination, PaginationContent, PaginationLink, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis, };
