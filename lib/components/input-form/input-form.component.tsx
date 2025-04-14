@@ -50,5 +50,3 @@ export const InputForm = ({
     />
   );
 };
-
-InputForm.displayName = "InputForm";

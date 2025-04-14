@@ -5,7 +5,4 @@ export type InputFormProps = {
     placeholder?: string;
     mask?: string;
 } & InputProps;
-export declare const InputForm: {
-    ({ name, label, placeholder, mask, ...props }: InputFormProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-};
+export declare const InputForm: ({ name, label, placeholder, mask, ...props }: InputFormProps) => import("react/jsx-runtime").JSX.Element;
