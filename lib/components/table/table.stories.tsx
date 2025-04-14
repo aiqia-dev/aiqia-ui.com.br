@@ -5,7 +5,6 @@ import {
   TableRow,
   TableHead,
   TableCell,
-  TableCaption,
 } from "./table.component";
 
 export default {
@@ -21,9 +20,8 @@ interface TableProps {
   className: string;
 }
 
-const Template: any = ({ caption, rows, columns, className }: TableProps) => (
+const Template: any = ({ rows, columns, className }: TableProps) => (
   <Table className={className}>
-    {caption && <TableCaption>{caption}</TableCaption>}
     <TableHeader>
       <TableRow>
         {columns.map((col, idx) => (

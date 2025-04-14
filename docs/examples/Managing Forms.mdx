@@ -25,68 +25,9 @@ export const someFormSchema = Yup.object().shape({
 export type SomeFormValues = Yup.InferType<typeof someFormSchema>;
 ```
 
-### Field component
-
-Create a reusable input field component to simplify the form development.
-
-```tsx
-// InputField.tsx
-
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-  InputProps,
-  MaskedInput,
-} from '@aiqiabr/aiqia-ui';
-import { useFormContext } from 'react-hook-form';
-
-type Props = {
-  name: string;
-  label?: string;
-  placeholder?: string;
-  mask?: string;
-} & InputProps;
-
-export const InputField = ({
-  name,
-  label,
-  placeholder,
-  mask,
-  ...props
-}: Props) => {
-  const form = useFormContext();
-  return (
-    <FormField
-      control={form.control}
-      name={name}
-      render={({ field }) => (
-        <FormItem className="flex-1">
-          {Boolean(label) && <FormLabel>{label}</FormLabel>}
-          <FormControl>
-            {mask ? (
-              <MaskedInput
-                mask={mask}
-                placeholder={placeholder}
-                {...props}
-                {...field}
-              />
-            ) : (
-              <Input placeholder={placeholder} {...props} {...field} />
-            )}
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  );
-};
-```
-
 ### The form
+
+Use the `InputForm` component that is integrated with `react-hook-form`
 
 ```tsx
 // MyFormComponent.tsx
@@ -110,8 +51,8 @@ const onSubmit = (data: SomeFormValues) => {
 return (
     <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-            <InputField name="title" label="Title" />
-            <InputField name="description" label="Description" />
+            <InputForm name="title" label="Title" />
+            <InputForm name="description" label="Description" />
             <Button>Submit</Button>
         </form>
     </Form>
