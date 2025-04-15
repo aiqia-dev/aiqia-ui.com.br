@@ -4,6 +4,7 @@ import { peerDependencies } from "./package.json";
 import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,6 +14,14 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       exclude: ["**/*.stories.tsx", "**/*.test.tsx", "**/*.mdx", "./docs/**/*"],
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: "lib/variables.css",
+          dest: ".",
+        },
+      ],
     }),
   ],
   build: {

@@ -16,13 +16,13 @@ import { ptBR } from "date-fns/locale";
 
 export interface DatePickerProps {
   value?: Date;
-  onChange?: (date: Date) => void;
+  onChange?: (date: Date | undefined) => void;
 }
 
 export function DatePicker({ value, onChange }: DatePickerProps) {
   const [date, setDate] = React.useState<Date | undefined>(value);
 
-  function handleSelect(date: Date) {
+  function handleSelect(date: Date | undefined) {
     setDate(date);
     onChange?.(date);
   }

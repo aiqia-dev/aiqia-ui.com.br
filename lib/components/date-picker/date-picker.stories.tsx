@@ -31,12 +31,12 @@ export const OnChangeExample = Template.bind({});
 OnChangeExample.args = {
   value: new Date(),
   onChange: (date) =>
-    alert(`Data selecionada: ${format(date, "PPP", { locale: ptBR })}`),
+    alert(`Data selecionada: ${date && format(date, "PPP", { locale: ptBR })}`),
 };
 
 export const WithOnChangeAlert = Template.bind({});
 WithOnChangeAlert.args = {
   value: new Date(), // Data inicial
   onChange: (date) =>
-    alert(`Data selecionada: ${format(date, "PPP", { locale: ptBR })}`), // Exemplo com alerta
+    alert(`Data selecionada: ${date && format(date, "PPP", { locale: ptBR })}`), // Exemplo com alerta
 };
