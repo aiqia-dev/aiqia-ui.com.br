@@ -12,6 +12,25 @@ Getting up and running is quick and easy.
 pnpm install @aiqiabr/aiqia-ui
 ```
 
+### Tailwind config
+
+Define the custom tailwind config:
+
+```js
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@aiqiabr/aiqia-ui/dist/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
 ### Import the CSS file
 
 Import styles in your css file with tailwind import:
