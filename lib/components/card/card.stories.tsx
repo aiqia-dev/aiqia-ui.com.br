@@ -6,12 +6,13 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
+  CardHeader,
 } from "./card.component";
 import { Button } from "../button/button.component";
 
 export default {
   title: "Components/Card",
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   component: Card,
   argTypes: {
     className: {
@@ -21,13 +22,15 @@ export default {
         type: { summary: "string" },
       },
     },
-  }
+  },
 };
 
 export const Default: StoryFn = (args) => (
   <Card {...args}>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+    <CardHeader>
+      <CardTitle>Card Title</CardTitle>
+      <CardDescription>Card Description</CardDescription>
+    </CardHeader>
     <CardContent>
       <p>This is the card content.</p>
     </CardContent>
@@ -39,6 +42,11 @@ export const Default: StoryFn = (args) => (
 
 export const OnlyCard: StoryFn = (args) => (
   <Card className="p-5" {...args}>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam voluptate ea, accusamus illum placeat ducimus aut, aspernatur numquam voluptatum libero ex possimus fugiat labore pariatur fugit cum voluptates. Impedit, quod!</p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam voluptate
+      ea, accusamus illum placeat ducimus aut, aspernatur numquam voluptatum
+      libero ex possimus fugiat labore pariatur fugit cum voluptates. Impedit,
+      quod!
+    </p>
   </Card>
 );
