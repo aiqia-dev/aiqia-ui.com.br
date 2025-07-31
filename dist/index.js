@@ -8500,7 +8500,7 @@ const oA = f.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ u.jsx(
   "div",
   {
     ref: r,
-    className: M("flex flex-col space-y-1.5 p-2", e),
+    className: M("flex flex-col space-y-1.5 p-4 pb-0", e),
     ...t
   }
 ));
@@ -8510,7 +8510,7 @@ const aA = f.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ u.jsx(
   {
     ref: r,
     className: M(
-      "text-xl font-semibold leading-none tracking-tight p-4 pb-0",
+      "text-xl font-semibold leading-none tracking-tight",
       e
     ),
     ...t
@@ -8521,7 +8521,7 @@ const iA = f.forwardRef(({ className: e, ...t }, r) => /* @__PURE__ */ u.jsx(
   "p",
   {
     ref: r,
-    className: M("text-sm text-muted-foreground px-4", e),
+    className: M("text-sm text-muted-foreground", e),
     ...t
   }
 ));
