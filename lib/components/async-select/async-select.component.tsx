@@ -46,6 +46,8 @@ export interface AsyncSelectProps<T> {
   noResultsMessage?: string;
   /** Allow clearing the selection */
   clearable?: boolean;
+  /** Error message */
+  error?: string;
 }
 
 export function AsyncSelect<T>({
@@ -63,6 +65,7 @@ export function AsyncSelect<T>({
   triggerClassName,
   noResultsMessage,
   clearable = true,
+  error,
 }: AsyncSelectProps<T>) {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
@@ -98,7 +101,9 @@ export function AsyncSelect<T>({
 
   return (
     <div className="space-y-1">
-      {!!label && <Label>{label}</Label>}
+      {!!label && (
+        <Label className={cn(error && "text-destructive")}>{label}</Label>
+      )}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -167,6 +172,11 @@ export function AsyncSelect<T>({
           </Command>
         </PopoverContent>
       </Popover>
+      {!!error && (
+        <p className="text-destructive dark:text-red-400 text-[0.8rem]">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
