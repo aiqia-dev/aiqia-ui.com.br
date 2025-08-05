@@ -113,6 +113,7 @@ export function AsyncSelect<T>({
             className={cn(
               "justify-between w-full",
               disabled && "opacity-50 cursor-not-allowed",
+              !value && "text-muted-foreground",
               triggerClassName
             )}
             disabled={disabled}
@@ -156,15 +157,15 @@ export function AsyncSelect<T>({
                     value={getOptionValue(option)}
                     onSelect={handleSelect}
                   >
-                    {renderOption(option)}
                     <Check
                       className={cn(
-                        "ml-auto h-3 w-3",
+                        "mr-2 size-4",
                         selectedValue === getOptionValue(option)
                           ? "opacity-100"
                           : "opacity-0"
                       )}
                     />
+                    {renderOption(option)}
                   </CommandItem>
                 ))}
               </CommandGroup>
