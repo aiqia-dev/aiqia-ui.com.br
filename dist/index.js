@@ -5279,7 +5279,7 @@ function i4({
     [v, c, g, e, n, s]
   );
   return /* @__PURE__ */ u.jsxs("div", { className: "space-y-1", children: [
-    !!a && /* @__PURE__ */ u.jsx(Vd, { className: "block", children: a }),
+    !!a && /* @__PURE__ */ u.jsx(Vd, { children: a }),
     /* @__PURE__ */ u.jsxs(Ta, { open: y, onOpenChange: h, children: [
       /* @__PURE__ */ u.jsx(Na, { asChild: !0, children: /* @__PURE__ */ u.jsxs(
         rr,

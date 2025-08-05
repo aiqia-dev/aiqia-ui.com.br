@@ -98,7 +98,7 @@ export function AsyncSelect<T>({
 
   return (
     <div className="space-y-1">
-      {!!label && <Label className="block">{label}</Label>}
+      {!!label && <Label>{label}</Label>}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
