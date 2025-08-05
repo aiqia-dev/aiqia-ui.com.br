@@ -1,6 +1,7 @@
 export * from "./accordion/accordion.component";
 export * from "./alert/alert.component";
 export * from "./alert-dialog/alert-dialog.component";
+export * from "./async-select/async-select.component";
 export * from "./avatar/avatar.component";
 export * from "./badge/badge.component";
 export * from "./breadcrumb/breadcrumb.component";
