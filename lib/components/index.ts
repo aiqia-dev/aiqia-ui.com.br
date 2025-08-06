@@ -33,6 +33,7 @@ export * from "./popover/popover.component";
 export * from "./radio-group/radio-group.component";
 export * from "./scroll-area/scroll-area.component";
 export * from "./select/select.component";
+export * from "./select-form/select-form.component";
 export * from "./separator/separator.component";
 export * from "./sheet/sheet.component";
 export * from "./skeleton/skeleton.component";
