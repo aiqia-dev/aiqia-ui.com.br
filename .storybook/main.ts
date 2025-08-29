@@ -7,20 +7,14 @@ const config: StorybookConfig = {
     "../lib/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../docs/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
+
   addons: [
-    "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@chromatic-com/storybook",
-    "@storybook/addon-interactions",
     "@storybook/addon-styling-webpack",
     "@storybook/addon-themes",
+    "@storybook/addon-docs"
   ],
-  framework: {
-    name: "@storybook/react-vite",
-    options: {},
-  },
-  docs: {
-    autodocs: "tag",
-  },
+  framework: '@storybook/react-vite'
 };
 export default config;

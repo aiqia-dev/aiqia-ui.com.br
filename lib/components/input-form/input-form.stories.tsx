@@ -1,4 +1,4 @@
-import { StoryObj } from "@storybook/react";
+import { StoryObj } from "@storybook/react-vite";
 import { InputForm, InputFormProps } from "./input-form.component";
 import { useForm } from "react-hook-form";
 import { Form } from "../form/form.component";

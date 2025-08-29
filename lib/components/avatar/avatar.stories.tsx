@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/react";
+import { StoryFn } from "@storybook/react-vite";
 import { Avatar, AvatarImage, AvatarFallback } from "./avatar.component";
 
 export default {

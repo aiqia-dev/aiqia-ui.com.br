@@ -1,5 +1,5 @@
 // DatePicker.stories.tsx
-import { Meta, StoryFn } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react-vite";
 import { DatePicker, DatePickerProps } from "./date-picker.component";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";

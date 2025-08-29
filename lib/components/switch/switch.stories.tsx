@@ -1,4 +1,4 @@
-import { StoryObj } from "@storybook/react";
+import { StoryObj } from "@storybook/react-vite";
 import { Switch } from "./switch.component";
 import { Label } from "../label/label.component";
 

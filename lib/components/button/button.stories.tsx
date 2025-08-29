@@ -1,4 +1,4 @@
-import { StoryObj } from "@storybook/react";
+import { StoryObj } from "@storybook/react-vite";
 import { Button, ButtonProps } from "./button.component";
 import { Bell } from "lucide-react";
 

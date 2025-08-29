@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AsyncSelect, AsyncSelectProps } from "./async-select.component";
 import { useEffect, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";

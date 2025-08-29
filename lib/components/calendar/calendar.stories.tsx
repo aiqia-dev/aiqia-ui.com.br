@@ -1,4 +1,4 @@
-import { StoryObj } from "@storybook/react";
+import { StoryObj } from "@storybook/react-vite";
 import { Calendar, CalendarProps } from "./calendar.component";
 
 type Story = StoryObj<CalendarProps>;

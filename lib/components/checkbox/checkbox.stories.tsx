@@ -1,5 +1,5 @@
 // Checkbox.stories.tsx
-import { Meta, StoryFn } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react-vite";
 import { Checkbox } from "./checkbox.component";
 
 export default {

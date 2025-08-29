@@ -1,4 +1,4 @@
-import { StoryObj } from "@storybook/react";
+import { StoryObj } from "@storybook/react-vite";
 import { Badge, BadgeProps } from "./badge.component";
 
 export default {

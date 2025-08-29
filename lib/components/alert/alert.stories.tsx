@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/react";
+import { StoryFn } from "@storybook/react-vite";
 import { Alert, AlertTitle, AlertDescription } from "./alert.component";
 
 export default {
