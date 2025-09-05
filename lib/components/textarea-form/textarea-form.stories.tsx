@@ -37,7 +37,7 @@ export const Default: Story = {
 
       return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(() => {})}>
+          <form onSubmit={form.handleSubmit(() => { })}>
             <TextareaForm
               {...args}
               name="name"

@@ -9,16 +9,7 @@ import {
 export default {
   title: "Components/Accordion",
   component: Accordion,
-  tags: ['autodocs'],
-  argTypes: {
-    className: {
-      control: "text",
-      description: "Additional classes to apply to the component container.",
-      table: {
-        type: { summary: "string" },
-      },
-    }
-  }
+  tags: ['autodocs']
 };
 
 export const Default: StoryObj = {

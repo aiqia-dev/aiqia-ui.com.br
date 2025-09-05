@@ -40,7 +40,7 @@ export const Default: Story = {
 
       return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(() => {})}>
+          <form onSubmit={form.handleSubmit(() => { })}>
             <InputForm
               {...args}
               name="name"

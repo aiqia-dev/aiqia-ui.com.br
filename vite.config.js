@@ -13,7 +13,7 @@ export default defineConfig({
     tailwindcss(),
     dts({
       insertTypesEntry: true,
-      exclude: ["**/*.stories.tsx", "**/*.test.tsx", "**/*.mdx", "./docs/**/*"],
+      exclude: ["**/*.stories.tsx", "**/*.test.tsx", "**/*.mdx", "./docs/**/*", "**/*.fixture.tsx"],
     }),
     viteStaticCopy({
       targets: [
@@ -41,6 +41,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./lib"),
+      "cosmos": path.resolve(__dirname, "./cosmos")
     },
   },
 });

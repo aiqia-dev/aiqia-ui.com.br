@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "react-cosmos-plugin-vite"
+  ],
+  "globalImports": [
+    "./lib/variables.css"
+  ],
+  "staticPath": "public"
+}
