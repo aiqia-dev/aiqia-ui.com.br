@@ -16,7 +16,8 @@ export function MaskedInput({
 }: MaskedInputProps) {
   const hashCount = mask.split("#").length - 1;
   const aCount = mask.split("A").length - 1;
-  const cleanedLength = hashCount + aCount;
+  const asteristcsCount = mask.split("*").length - 1;
+  const cleanedLength = hashCount + aCount + asteristcsCount;
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value;

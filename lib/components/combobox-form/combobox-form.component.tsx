@@ -1,24 +1,10 @@
 import { useFormContext } from "react-hook-form";
 import {
-  Button,
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  FormControl,
+  Combobox,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
 } from "..";
-import { cn } from "@/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { useState } from "react";
 
 export type ComboboxFormOption = {
   value: string;
@@ -32,6 +18,8 @@ export type ComboboxFormProps = {
   placeholder?: string;
   searchPlaceholder?: string;
   emptyMessage?: string;
+  isDisabled?: boolean;
+  isLoading?: boolean;
 };
 
 export function ComboboxForm({
@@ -41,9 +29,10 @@ export function ComboboxForm({
   placeholder = "Selecione uma opção",
   searchPlaceholder = "Buscar...",
   emptyMessage = "Nenhum resultado encontrado.",
+  isDisabled = false,
+  isLoading = false
 }: ComboboxFormProps) {
   const { control, setValue } = useFormContext();
-  const [open, setOpen] = useState(false);
 
   return (
     <FormField
@@ -51,60 +40,17 @@ export function ComboboxForm({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <FormControl>
-                <Button
-                  variant="outline"
-                  aria-expanded={open}
-                  disabled={options.length === 0}
-                  className={cn(
-                    "w-full justify-between",
-                    !field.value && "text-muted-foreground"
-                  )}
-                >
-                  {field.value
-                    ? options.find((option) => option.value === field.value)
-                        ?.label
-                    : placeholder}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </FormControl>
-            </PopoverTrigger>
-            <PopoverContent className="min-w-[var(--radix-popover-trigger-width)] p-0">
-              <Command>
-                <CommandInput placeholder={searchPlaceholder} />
-                <CommandList>
-                  <CommandEmpty>{emptyMessage}</CommandEmpty>
-                  <CommandGroup>
-                    {options.map((option) => (
-                      <CommandItem
-                        value={option.label}
-                        key={option.value}
-                        onSelect={() => {
-                          setValue(name, option.value, {
-                            shouldValidate: true,
-                          });
-                          setOpen(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 size-4",
-                            field.value === option.value
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        {option.label}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
+          <Combobox
+            label={label}
+            placeholder={placeholder}
+            searchPlaceholder={searchPlaceholder}
+            emptyMessage={emptyMessage}
+            options={options}
+            selected={field.value}
+            onSelect={(v) => setValue(name, v, { shouldValidate: true })}
+            isDisabled={isDisabled}
+            isLoading={isLoading}
+          />
           <FormMessage />
         </FormItem>
       )}

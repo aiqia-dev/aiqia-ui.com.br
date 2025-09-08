@@ -1,13 +1,60 @@
-# Aiqia UI
+# Getting Started
 
-## Build
+Aiqia UI is a component library that is designed to use in Aiqia apps.
+
+### Installation
+
+Getting up and running is quick and easy.
+
+### Install Aiqia UI
+
+[![GitHub release](https://img.shields.io/github/v/release/aiqia-dev/aiqia-ui.com.br)](https://github.com/aiqia-dev/aiqia-ui.com.br/releases)
 
 ```
-pnpm run build
+pnpm install @aiqiabr/aiqia-ui
 ```
 
-## Storybook
+### Tailwind config
 
+Define the custom tailwind config:
+
+```js
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@aiqiabr/aiqia-ui/dist/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
 ```
-pnpm run storybook
+
+### Import the CSS file
+
+Import styles in your css file with tailwind import:
+
+```css
+// globals.css
+@import "tailwindcss";
+@import "tw-animate-css";
+// 👇
+@import "@aiqiabr/aiqia-ui/variables.css";
+@config "../tailwind.config.js";
+...
+```
+
+### Start building
+
+You are now ready to use Aiqia UI components.
+
+```js
+import { Button } from "@aiqiabr/aiqia-ui";
+
+export default function MyApp() {
+  return <Button>Click me!</Button>;
+}
 ```

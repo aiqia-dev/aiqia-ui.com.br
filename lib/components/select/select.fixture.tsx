@@ -5,24 +5,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from './select.component';
-import { useFixtureState } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos/client';
+import { Code } from 'cosmos/Code';
 
 const Fixture = () => {
-  const [value, setValue] = useFixtureState('value', 'apple');
+  const [value, setValue] = useFixtureInput('value', 'apple');
+  const [disabled] = useFixtureInput('disabled', false);
+  const [isLoading] = useFixtureInput('isLoading', false);
 
   return (
-    <Select value={value} onValueChange={setValue}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="apple">Apple</SelectItem>
-        <SelectItem value="banana">Banana</SelectItem>
-        <SelectItem value="blueberry">Blueberry</SelectItem>
-        <SelectItem value="grapes">Grapes</SelectItem>
-        <SelectItem value="pineapple">Pineapple</SelectItem>
-      </SelectContent>
-    </Select>
+    <>
+      <Select value={value} onValueChange={setValue} disabled={disabled}>
+        <SelectTrigger className="w-[180px]" isLoading={isLoading}>
+          <SelectValue placeholder="Select a fruit" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="apple">Apple</SelectItem>
+          <SelectItem value="banana">Banana</SelectItem>
+          <SelectItem value="blueberry">Blueberry</SelectItem>
+          <SelectItem value="grapes">Grapes</SelectItem>
+          <SelectItem value="pineapple">Pineapple</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Code language='html'>{`
+<Select value={value} onValueChange={setValue}>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="Select a fruit" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="apple">Apple</SelectItem>
+    <SelectItem value="banana">Banana</SelectItem>
+    <SelectItem value="blueberry">Blueberry</SelectItem>
+    <SelectItem value="grapes">Grapes</SelectItem>
+    <SelectItem value="pineapple">Pineapple</SelectItem>
+  </SelectContent>
+</Select>
+      `}</Code>
+    </>
   );
 };
 

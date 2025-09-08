@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, buttonVariants } from "..";
-import type { CalendarProps } from "..";
+import type { DayPickerProps } from "react-day-picker";
 import { Input } from "..";
 import { Popover, PopoverContent, PopoverTrigger } from "..";
 import { cn } from "../../utils/utils";
@@ -9,6 +9,7 @@ import { add, format } from "date-fns";
 import { type Locale, ptBR } from "date-fns/locale";
 import {
   Calendar as CalendarIcon,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -252,7 +253,7 @@ function Calendar({
   showOutsideDays = true,
   yearRange = 50,
   ...props
-}: CalendarProps & { yearRange?: number }) {
+}: DayPickerProps & { yearRange?: number }) {
   const MONTHS = React.useMemo(() => {
     let locale: Pick<Locale, "options" | "localize" | "formatLong"> = ptBR;
     const { options, localize, formatLong } = props.locale || {};
@@ -729,7 +730,7 @@ type DateTimePickerProps = {
    **/
   defaultPopupValue?: Date;
 } & Pick<
-  CalendarProps,
+  DayPickerProps,
   "locale" | "weekStartsOn" | "showWeekNumber" | "showOutsideDays"
 >;
 
@@ -845,28 +846,32 @@ const DateTimePicker = React.forwardRef<
           <Button
             variant="outline"
             className={cn(
-              "w-full justify-start text-left font-normal",
+              "w-full justify-between text-left font-normal",
               !displayDate && "text-muted-foreground",
               className
             )}
             ref={buttonRef}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            <span className="truncate block" title={placeholder}>
-              {displayDate ? (
-                format(
-                  displayDate,
-                  hourCycle === 24
-                    ? initHourFormat.hour24
-                    : initHourFormat.hour12,
-                  {
-                    locale: loc,
-                  }
-                )
-              ) : (
-                <span>{placeholder}</span>
-              )}
-            </span>
+            <div className="flex">
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              <span className="truncate block" title={placeholder}>
+                {displayDate ? (
+                  format(
+                    displayDate,
+                    hourCycle === 24
+                      ? initHourFormat.hour24
+                      : initHourFormat.hour12,
+                    {
+                      locale: loc,
+                    }
+                  )
+                ) : (
+                  <span>{placeholder}</span>
+                )}
+              </span>
+            </div>
+
+            <ChevronDown className="shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">

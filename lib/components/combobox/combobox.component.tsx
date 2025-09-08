@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from "..";
 import { cn } from "@/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 export type ComboboxOption = {
@@ -29,6 +29,8 @@ export type ComboBoxProps = {
   searchPlaceholder?: string;
   emptyMessage?: string;
   error?: string;
+  isDisabled?: boolean;
+  isLoading?: boolean;
 };
 
 export function Combobox({
@@ -40,6 +42,8 @@ export function Combobox({
   searchPlaceholder = "Buscar...",
   emptyMessage = "Nenhum resultado encontrado.",
   error,
+  isDisabled = false,
+  isLoading = false
 }: ComboBoxProps) {
   const [open, setOpen] = useState(false);
 
@@ -50,16 +54,22 @@ export function Combobox({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            disabled={options.length === 0}
+            disabled={options.length === 0 || isDisabled}
             className={cn(
-              "w-full justify-between",
+              "relative w-full justify-between",
               !selected && "text-muted-foreground"
             )}
           >
             {selected
               ? options.find((option) => option.value === selected)?.label
               : placeholder}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+
+            <div className="flex items-center gap-1">
+              {isLoading && (
+                <Loader2 className="animate-spin shrink-0 opacity-50" />
+              )}
+              <ChevronsUpDown className="shrink-0 opacity-50" />
+            </div>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="min-w-[var(--radix-popover-trigger-width)] p-0">

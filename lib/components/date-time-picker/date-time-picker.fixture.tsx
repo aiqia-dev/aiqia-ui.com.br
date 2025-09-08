@@ -1,10 +1,18 @@
 import { DateTimePicker } from './date-time-picker.component';
-import { useFixtureState } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos/client';
+import { Code } from 'cosmos/Code';
 
 const Fixture = () => {
-  const [date, setDate] = useFixtureState<Date | undefined>('date', new Date());
+  const [date, setDate] = useFixtureInput<Date | undefined>('date', new Date());
 
-  return <DateTimePicker value={date} onChange={setDate} />;
+  return (
+    <>
+      <DateTimePicker value={date} onChange={setDate} />
+      <Code>{`
+<DateTimePicker value={date} onChange={setDate} />
+      `}</Code>
+    </>
+  );
 };
 
 export default Fixture;

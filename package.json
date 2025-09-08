@@ -24,9 +24,8 @@
   "scripts": {
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "storybook": "storybook dev -p 6007",
-    "build-storybook": "storybook build",
-    "cosmos": "cosmos"
+    "cosmos": "cosmos",
+    "cosmos-export": "cosmos-export"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",

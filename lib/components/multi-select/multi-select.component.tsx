@@ -60,7 +60,7 @@ const multiSelectVariants = cva(
  */
 interface MultiSelectProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof multiSelectVariants> {
+  VariantProps<typeof multiSelectVariants> {
   /**
    * An array of option objects to be displayed in the multi-select component.
    * Each option object has a label, value, and an optional icon.
@@ -220,7 +220,7 @@ export const MultiSelect = React.forwardRef<
             onClick={handleTogglePopover}
             variant="outline"
             className={cn(
-              "flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between [&_svg]:pointer-events-auto",
+              "flex w-full p-1 py-0 rounded-md border min-h-10 h-auto items-center justify-between [&_svg]:pointer-events-auto",
               className
             )}
           >
@@ -274,6 +274,9 @@ export const MultiSelect = React.forwardRef<
                   )}
                 </div>
                 <div className="flex items-center justify-between">
+                  {isLoading && (
+                    <Loader2 className="animate-spin text-muted-foreground" />
+                  )}
                   <XIcon
                     className="h-4 mx-2 cursor-pointer text-muted-foreground"
                     onClick={(event) => {

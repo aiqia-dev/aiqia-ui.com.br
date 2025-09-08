@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@aiqiabr/aiqia-ui";
+} from "..";
 import { useFormContext } from "react-hook-form";
 
 export type SelectFormProps = {
@@ -19,6 +19,8 @@ export type SelectFormProps = {
   label?: string;
   placeholder?: string;
   helpText?: string;
+  disabled?: boolean;
+  isLoading?: boolean;
 };
 
 export const SelectForm = ({
@@ -27,6 +29,7 @@ export const SelectForm = ({
   placeholder,
   options,
   helpText,
+  isLoading,
   ...props
 }: SelectFormProps) => {
   const form = useFormContext();
@@ -44,7 +47,7 @@ export const SelectForm = ({
             {...props}
           >
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger isLoading={isLoading}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
