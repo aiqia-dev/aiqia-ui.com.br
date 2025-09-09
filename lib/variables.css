@@ -22,7 +22,7 @@
   --success: hsl(160.1 84.1% 39.4%);
   --success-foreground: hsl(0 0% 98%);
   --border: hsl(240 5.9% 90%);
-  --input: hsl(240 5.9% 90%);
+  --input: hsl(0 0% 100%);
   --ring: hsl(240 5.9% 10%);
   --radius: 0.5rem;
   --chart-1: hsl(221.2 83.2% 53.3%);
@@ -56,7 +56,7 @@
   --success: hsl(162.9 93.5% 24.3%);
   --success-foreground: hsl(0 0% 98%);
   --border: hsl(240 3.7% 15.9%);
-  --input: hsl(240 3.7% 15.9%);
+  --input: hsl(240 10% 3.9%);
   --ring: hsl(240 4.9% 83.9%);
   --chart-1: hsl(221.2 83.2% 53.3%);
   --chart-2: hsl(212 95% 68%);
