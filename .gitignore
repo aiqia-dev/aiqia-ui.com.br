@@ -25,6 +25,7 @@ out/
 build
 storybook-static
 tsconfig.tsbuildinfo
+cosmos-export
 
 # Debug
 npm-debug.log*

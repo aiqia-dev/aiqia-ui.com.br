@@ -80,6 +80,7 @@
     "globals": "^15.15.0",
     "react": "19.1.0",
     "react-cosmos": "^7.0.0",
+    "react-cosmos-plugin-boolean-input": "^7.0.0",
     "react-cosmos-plugin-open-fixture": "^7.0.0",
     "react-cosmos-plugin-vite": "^7.0.0",
     "react-dom": "19.1.0",

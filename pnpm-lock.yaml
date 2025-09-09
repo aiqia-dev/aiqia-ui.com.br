@@ -156,6 +156,9 @@ importers:
       react-cosmos:
         specifier: ^7.0.0
         version: 7.0.0
+      react-cosmos-plugin-boolean-input:
+        specifier: ^7.0.0
+        version: 7.0.0
       react-cosmos-plugin-open-fixture:
         specifier: ^7.0.0
         version: 7.0.0
@@ -2702,6 +2705,9 @@ packages:
 
   react-cosmos-dom@7.0.0:
     resolution: {integrity: sha512-8PbCp8Uss3LQK0+HoUjVj0daww/axLS7b0GyTcLLZnLzxYaOXNugWJIr66dyBRFX330IgypCO8DW6auNmJPqvQ==}
+
+  react-cosmos-plugin-boolean-input@7.0.0:
+    resolution: {integrity: sha512-435ukWfECA3Rsc411Tf/EN/hKrf0C221btJaWiacYhSziO1dEgzjubOf2KlvwmWaK0CiLZJEI83uSrmWMe3FVA==}
 
   react-cosmos-plugin-open-fixture@7.0.0:
     resolution: {integrity: sha512-zp3r+9m3QjdqMfnExLlSlEiGELuFq+jLF/S3VaVcPHbndAhWehOrLWvjL8YRn+xKgFx8o3vydwrfabR/+W4Rew==}
@@ -5757,6 +5763,8 @@ snapshots:
       lodash-es: 4.17.21
       react-cosmos-core: 7.0.0
       react-cosmos-renderer: 7.0.0
+
+  react-cosmos-plugin-boolean-input@7.0.0: {}
 
   react-cosmos-plugin-open-fixture@7.0.0: {}
 
