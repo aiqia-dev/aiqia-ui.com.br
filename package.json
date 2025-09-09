@@ -1,6 +1,6 @@
 {
   "name": "@aiqiabr/aiqia-ui",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "author": "Aiqia",
   "type": "module",
   "main": "dist/main.js",
