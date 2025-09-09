@@ -11,5 +11,7 @@ export type ComboBoxProps = {
     searchPlaceholder?: string;
     emptyMessage?: string;
     error?: string;
+    isDisabled?: boolean;
+    isLoading?: boolean;
 };
-export declare function Combobox({ label, options, selected, onSelect, placeholder, searchPlaceholder, emptyMessage, error, }: ComboBoxProps): import("react/jsx-runtime").JSX.Element;
+export declare function Combobox({ label, options, selected, onSelect, placeholder, searchPlaceholder, emptyMessage, error, isDisabled, isLoading }: ComboBoxProps): import("react/jsx-runtime").JSX.Element;

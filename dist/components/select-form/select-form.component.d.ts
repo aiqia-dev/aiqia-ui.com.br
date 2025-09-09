@@ -7,5 +7,7 @@ export type SelectFormProps = {
     label?: string;
     placeholder?: string;
     helpText?: string;
+    disabled?: boolean;
+    isLoading?: boolean;
 };
-export declare const SelectForm: ({ name, label, placeholder, options, helpText, ...props }: SelectFormProps) => import("react/jsx-runtime").JSX.Element;
+export declare const SelectForm: ({ name, label, placeholder, options, helpText, isLoading, ...props }: SelectFormProps) => import("react/jsx-runtime").JSX.Element;

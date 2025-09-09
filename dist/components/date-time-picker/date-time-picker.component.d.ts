@@ -1,4 +1,4 @@
-import { CalendarProps } from '..';
+import { DayPickerProps } from 'react-day-picker';
 import * as React from "react";
 type TimePickerType = "minutes" | "seconds" | "hours" | "12hours";
 type Period = "AM" | "PM";
@@ -60,7 +60,7 @@ type DateTimePickerProps = {
      * Show the default month and time when popup the calendar. Default is the current Date().
      **/
     defaultPopupValue?: Date;
-} & Pick<CalendarProps, "locale" | "weekStartsOn" | "showWeekNumber" | "showOutsideDays">;
+} & Pick<DayPickerProps, "locale" | "weekStartsOn" | "showWeekNumber" | "showOutsideDays">;
 type DateTimePickerRef = {
     value?: Date;
 } & Omit<HTMLButtonElement, "value">;
@@ -96,6 +96,6 @@ declare const DateTimePicker: React.ForwardRefExoticComponent<{
      * Show the default month and time when popup the calendar. Default is the current Date().
      **/
     defaultPopupValue?: Date;
-} & Pick<import('react-day-picker').DayPickerDefaultProps | import('react-day-picker').DayPickerSingleProps | import('react-day-picker').DayPickerMultipleProps | import('react-day-picker').DayPickerRangeProps, "showOutsideDays" | "showWeekNumber" | "weekStartsOn" | "locale"> & React.RefAttributes<Partial<DateTimePickerRef>>>;
+} & Pick<DayPickerProps, "showOutsideDays" | "showWeekNumber" | "weekStartsOn" | "locale"> & React.RefAttributes<Partial<DateTimePickerRef>>>;
 export { DateTimePicker, TimePickerInput, TimePicker };
 export type { TimePickerType, DateTimePickerProps, DateTimePickerRef };
