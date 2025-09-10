@@ -5289,7 +5289,7 @@ function c4({
           role: "combobox",
           "aria-expanded": h,
           className: T(
-            "justify-between w-full",
+            "justify-between w-full hover:bg-input bg-input",
             d && "opacity-50 cursor-not-allowed",
             !s && "text-muted-foreground",
             p
@@ -14815,7 +14815,7 @@ function DI({
           variant: "outline",
           disabled: t.length === 0 || c,
           className: T(
-            "relative w-full justify-between",
+            "relative w-full justify-between hover:bg-input bg-input",
             !r && "text-muted-foreground"
           ),
           children: [
@@ -17013,7 +17013,7 @@ function y4({ value: e, onChange: t }) {
       {
         variant: "outline",
         className: T(
-          "w-full justify-between text-left font-normal",
+          "w-full justify-between text-left font-normal hover:bg-input bg-input",
           !r && "text-muted-foreground"
         ),
         children: [
@@ -17520,7 +17520,7 @@ const Q$ = f.forwardRef(
         {
           variant: "outline",
           className: T(
-            "w-full justify-between text-left font-normal",
+            "w-full justify-between text-left font-normal hover:bg-input bg-input",
             !v && "text-muted-foreground",
             d
           ),
@@ -19698,7 +19698,7 @@ const lq = (e, t = 300) => {
               onClick: j,
               variant: "outline",
               className: T(
-                "flex w-full p-1 py-0 rounded-md border min-h-10 h-auto items-center justify-between [&_svg]:pointer-events-auto",
+                "flex w-full p-1 py-0 rounded-md border min-h-10 h-auto items-center justify-between hover:bg-input bg-input [&_svg]:pointer-events-auto",
                 c
               ),
               children: h.length > 0 ? /* @__PURE__ */ u.jsxs("div", { className: "flex justify-between items-center w-full", children: [
@@ -21542,7 +21542,7 @@ const ea = lB, I4 = mB, ta = uB, wn = f.forwardRef(({ className: e, children: t,
   {
     ref: o,
     className: T(
-      "flex h-9 w-full items-center justify-between rounded-md border bg-input shadow-xs px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      "flex h-9 w-full items-center justify-between rounded-md border bg-input shadow-xs px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
       e
     ),
     ...n,
