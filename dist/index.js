@@ -5659,7 +5659,7 @@ const $N = ({
   {
     role: "presentation",
     "aria-hidden": "true",
-    className: T("flex h-9 w-9 items-center justify-center", e),
+    className: T("flex h-9 w-9 items-center justify-center relative", e),
     ...t,
     children: [
       /* @__PURE__ */ u.jsx($g, { className: "h-4 w-4" }),
@@ -19956,7 +19956,7 @@ const vq = ({
   "span",
   {
     "aria-hidden": !0,
-    className: T("flex h-9 w-9 items-center justify-center", e),
+    className: T("flex h-9 w-9 items-center justify-center relative", e),
     ...t,
     children: [
       /* @__PURE__ */ u.jsx($g, { className: "h-4 w-4" }),
