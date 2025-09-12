@@ -60,9 +60,11 @@ export function Combobox({
               !selected && "text-muted-foreground"
             )}
           >
-            {selected
-              ? options.find((option) => option.value === selected)?.label
-              : placeholder}
+            <div className="truncate">
+              {selected
+                ? options.find((option) => option.value === selected)?.label
+                : placeholder}
+            </div>
 
             <div className="flex items-center gap-1">
               {isLoading && (
@@ -72,7 +74,7 @@ export function Combobox({
             </div>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="min-w-[var(--radix-popover-trigger-width)] p-0">
+        <PopoverContent className="p-0 w-auto min-w-[var(--radix-popover-trigger-width)]">
           <Command>
             <CommandInput placeholder={searchPlaceholder} />
             <CommandList>
@@ -97,7 +99,9 @@ export function Combobox({
                         selected === option.value ? "opacity-100" : "opacity-0"
                       )}
                     />
-                    {option.label}
+                    <div className="w-0 flex-1">
+                      {option.label}
+                    </div>
                   </CommandItem>
                 ))}
               </CommandGroup>

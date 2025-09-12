@@ -118,9 +118,11 @@ export function AsyncSelect<T>({
             )}
             disabled={disabled}
           >
-            {value && selectedOption
-              ? getDisplayValue(selectedOption)
-              : placeholder}
+            <div className="truncate">
+              {value && selectedOption
+                ? getDisplayValue(selectedOption)
+                : placeholder}
+            </div>
             <ChevronsUpDown className="opacity-50" size={10} />
           </Button>
         </PopoverTrigger>
@@ -159,13 +161,15 @@ export function AsyncSelect<T>({
                   >
                     <Check
                       className={cn(
-                        "mr-2 size-4",
+                        "mr-2 size-4 shrink-0",
                         selectedValue === getOptionValue(option)
                           ? "opacity-100"
                           : "opacity-0"
                       )}
                     />
-                    {renderOption(option)}
+                    <div className="w-0 flex-1">
+                      {renderOption(option)}
+                    </div>
                   </CommandItem>
                 ))}
               </CommandGroup>
