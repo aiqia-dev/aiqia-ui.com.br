@@ -16,7 +16,7 @@ const Fixture = () => {
     { value: '3', label: 'Option 3' },
   ]);
   const [error] = useFixtureInput('error', '');
-  const [isDisabled] = useFixtureInput('disabled', false);
+  const [disabled] = useFixtureInput('disabled', false);
   const [isLoading] = useFixtureInput('loading', false);
 
   return (
@@ -30,7 +30,7 @@ const Fixture = () => {
         selected={selected}
         onSelect={setSelected}
         error={error}
-        isDisabled={isDisabled}
+        disabled={disabled}
         isLoading={isLoading}
       />
 
@@ -46,7 +46,7 @@ const [selected, setSelected] = useState<string | undefined>();
   options={options}
   selected={selected}
   onSelect={setSelected}
-  isDisabled={isDisabled}
+  disabled={disabled}
   isLoading={isLoading}
   error="${error}"
 />`}

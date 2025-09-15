@@ -29,7 +29,7 @@ export type ComboBoxProps = {
   searchPlaceholder?: string;
   emptyMessage?: string;
   error?: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
   isLoading?: boolean;
 };
 
@@ -42,7 +42,7 @@ export function Combobox({
   searchPlaceholder = "Buscar...",
   emptyMessage = "Nenhum resultado encontrado.",
   error,
-  isDisabled = false,
+  disabled = false,
   isLoading = false
 }: ComboBoxProps) {
   const [open, setOpen] = useState(false);
@@ -54,7 +54,7 @@ export function Combobox({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            disabled={options.length === 0 || isDisabled}
+            disabled={disabled}
             className={cn(
               "relative w-full justify-between hover:bg-input bg-input",
               !selected && "text-muted-foreground"

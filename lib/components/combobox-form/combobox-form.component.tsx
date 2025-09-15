@@ -18,7 +18,7 @@ export type ComboboxFormProps = {
   placeholder?: string;
   searchPlaceholder?: string;
   emptyMessage?: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
   isLoading?: boolean;
 };
 
@@ -29,7 +29,7 @@ export function ComboboxForm({
   placeholder = "Selecione uma opção",
   searchPlaceholder = "Buscar...",
   emptyMessage = "Nenhum resultado encontrado.",
-  isDisabled = false,
+  disabled = false,
   isLoading = false
 }: ComboboxFormProps) {
   const { control, setValue } = useFormContext();
@@ -48,7 +48,7 @@ export function ComboboxForm({
             options={options}
             selected={field.value}
             onSelect={(v) => setValue(name, v, { shouldValidate: true })}
-            isDisabled={isDisabled}
+            disabled={disabled}
             isLoading={isLoading}
           />
           <FormMessage />

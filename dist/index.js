@@ -10284,7 +10284,7 @@ function Ij({
   placeholder: r = "Selecione uma opção",
   searchPlaceholder: o = "Buscar...",
   emptyMessage: a = "Nenhum resultado encontrado.",
-  isDisabled: s = !1,
+  disabled: s = !1,
   isLoading: c = !1
 }) {
   const { control: u, setValue: d } = qn();
@@ -10304,7 +10304,7 @@ function Ij({
             options: n,
             selected: f.value,
             onSelect: (m) => d(e, m, { shouldValidate: !0 }),
-            isDisabled: s,
+            disabled: s,
             isLoading: c
           }
         ),
@@ -10322,7 +10322,7 @@ function Z0({
   searchPlaceholder: a = "Buscar...",
   emptyMessage: s = "Nenhum resultado encontrado.",
   error: c,
-  isDisabled: u = !1,
+  disabled: u = !1,
   isLoading: d = !1
 }) {
   const [f, m] = Ne(!1);
@@ -10333,7 +10333,7 @@ function Z0({
         yt,
         {
           variant: "outline",
-          disabled: t.length === 0 || u,
+          disabled: u,
           className: T(
             "relative w-full justify-between hover:bg-input bg-input",
             !n && "text-muted-foreground"
@@ -12522,10 +12522,10 @@ const mr = ZE, pr = eR, yn = l.forwardRef(({ className: e, align: t = "center", 
   }
 ) }));
 yn.displayName = gf.displayName;
-function Fj({ value: e, onChange: t }) {
-  const [n, r] = l.useState(e);
-  function o(a) {
-    r(a), t?.(a);
+function Fj({ value: e, onChange: t, disabled: n }) {
+  const [r, o] = l.useState(e);
+  function a(s) {
+    o(s), t?.(s);
   }
   return /* @__PURE__ */ i.jsxs(mr, { children: [
     /* @__PURE__ */ i.jsx(pr, { asChild: !0, children: /* @__PURE__ */ i.jsxs(
@@ -12534,12 +12534,13 @@ function Fj({ value: e, onChange: t }) {
         variant: "outline",
         className: T(
           "w-full justify-between text-left font-normal hover:bg-input bg-input",
-          !n && "text-muted-foreground"
+          !r && "text-muted-foreground"
         ),
+        disabled: n,
         children: [
           /* @__PURE__ */ i.jsxs("div", { className: "flex", children: [
             /* @__PURE__ */ i.jsx(Uv, { className: "mr-2" }),
-            n ? Ze(n, "PPP", { locale: Mn }) : /* @__PURE__ */ i.jsx("span", { children: "Selecione uma data" })
+            r ? Ze(r, "PPP", { locale: Mn }) : /* @__PURE__ */ i.jsx("span", { children: "Selecione uma data" })
           ] }),
           /* @__PURE__ */ i.jsx(pt, { className: "shrink-0 opacity-50" })
         ]
@@ -12550,8 +12551,8 @@ function Fj({ value: e, onChange: t }) {
       {
         required: !0,
         mode: "single",
-        selected: n,
-        onSelect: o,
+        selected: r,
+        onSelect: a,
         initialFocus: !0
       }
     ) })

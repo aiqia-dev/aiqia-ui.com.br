@@ -17,9 +17,10 @@ import { ptBR } from "date-fns/locale";
 export interface DatePickerProps {
   value?: Date;
   onChange?: (date: Date | undefined) => void;
+  disabled?: boolean;
 }
 
-export function DatePicker({ value, onChange }: DatePickerProps) {
+export function DatePicker({ value, onChange, disabled }: DatePickerProps) {
   const [date, setDate] = React.useState<Date | undefined>(value);
 
   function handleSelect(date: Date | undefined) {
@@ -36,6 +37,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
             "w-full justify-between text-left font-normal hover:bg-input bg-input",
             !date && "text-muted-foreground"
           )}
+          disabled={disabled}
         >
           <div className="flex">
             <CalendarIcon className="mr-2" />

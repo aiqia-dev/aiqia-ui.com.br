@@ -15,7 +15,7 @@ const Fixture = () => {
     { value: '2', label: 'Option 2' },
     { value: '3', label: 'Option 3' },
   ]);
-  const [isDisabled] = useFixtureInput('disabled', false);
+  const [disabled] = useFixtureInput('disabled', false);
   const [isLoading] = useFixtureInput('loading', false);
 
   const form = useForm({
@@ -39,7 +39,7 @@ const Fixture = () => {
             searchPlaceholder={searchPlaceholder}
             emptyMessage={emptyMessage}
             options={options}
-            isDisabled={isDisabled}
+            disabled={disabled}
             isLoading={isLoading}
           />
           <Button type="submit">Submit</Button>
@@ -72,7 +72,7 @@ return (
         searchPlaceholder={searchPlaceholder}
         emptyMessage={emptyMessage}
         options={options}
-        isDisabled={isDisabled}
+        disabled={disabled}
         isLoading={isLoading}
       />
       <Button type="submit">Submit</Button>
