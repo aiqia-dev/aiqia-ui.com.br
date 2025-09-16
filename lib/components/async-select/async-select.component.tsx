@@ -111,7 +111,7 @@ export function AsyncSelect<T>({
             role="combobox"
             aria-expanded={open}
             className={cn(
-              "justify-between w-full hover:bg-input bg-input",
+              "justify-between w-full hover:bg-input bg-input font-normal",
               disabled && "opacity-50 cursor-not-allowed",
               !value && "text-muted-foreground",
               triggerClassName

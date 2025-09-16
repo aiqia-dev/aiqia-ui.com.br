@@ -56,7 +56,7 @@ export function Combobox({
             variant="outline"
             disabled={disabled}
             className={cn(
-              "relative w-full justify-between hover:bg-input bg-input",
+              "relative w-full justify-between hover:bg-input bg-input font-normal",
               !selected && "text-muted-foreground"
             )}
           >

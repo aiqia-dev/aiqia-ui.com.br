@@ -9,7 +9,7 @@ import { useFixtureInput } from 'react-cosmos/client';
 import { Code } from 'cosmos/Code';
 
 const Fixture = () => {
-  const [value, setValue] = useFixtureInput('value', 'apple');
+  const [value, setValue] = useFixtureInput('value', '');
   const [disabled] = useFixtureInput('disabled', false);
   const [isLoading] = useFixtureInput('isLoading', false);
 

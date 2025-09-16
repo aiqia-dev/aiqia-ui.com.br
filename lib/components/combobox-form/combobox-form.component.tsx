@@ -3,6 +3,7 @@ import {
   Combobox,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "..";
 
@@ -40,8 +41,8 @@ export function ComboboxForm({
       name={name}
       render={({ field }) => (
         <FormItem>
+          {!!label && <FormLabel>{label}</FormLabel>}
           <Combobox
-            label={label}
             placeholder={placeholder}
             searchPlaceholder={searchPlaceholder}
             emptyMessage={emptyMessage}
