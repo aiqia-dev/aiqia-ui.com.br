@@ -31,7 +31,7 @@ export interface AsyncSelectProps<T> {
   /** Callback when search term changes */
   onSearchChange: (value: string) => void;
   /** Label for the select field */
-  label: string;
+  label?: string;
   /** Placeholder text when no selection */
   placeholder?: string;
   /** Disable the entire select */
