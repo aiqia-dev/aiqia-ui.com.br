@@ -740,7 +740,9 @@ type DateTimePickerRef = {
 
 const DateTimePicker = React.forwardRef<
   Partial<DateTimePickerRef>,
-  DateTimePickerProps
+  DateTimePickerProps & {
+    disabledDates?: DayPickerProps["disabled"]
+  }
 >(
   (
     {
@@ -755,6 +757,7 @@ const DateTimePicker = React.forwardRef<
       granularity = "second",
       placeholder = "Selecione...",
       className,
+      disabledDates,
       ...props
     },
     ref
@@ -892,6 +895,7 @@ const DateTimePicker = React.forwardRef<
             onMonthChange={handleSelect}
             yearRange={yearRange}
             locale={locale}
+            disabled={disabledDates}
             {...props}
           />
           {granularity !== "day" && (

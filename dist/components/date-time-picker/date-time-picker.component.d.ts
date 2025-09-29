@@ -96,6 +96,8 @@ declare const DateTimePicker: React.ForwardRefExoticComponent<{
      * Show the default month and time when popup the calendar. Default is the current Date().
      **/
     defaultPopupValue?: Date;
-} & Pick<DayPickerProps, "showOutsideDays" | "showWeekNumber" | "weekStartsOn" | "locale"> & React.RefAttributes<Partial<DateTimePickerRef>>>;
+} & Pick<DayPickerProps, "showOutsideDays" | "showWeekNumber" | "weekStartsOn" | "locale"> & {
+    disabledDates?: DayPickerProps["disabled"];
+} & React.RefAttributes<Partial<DateTimePickerRef>>>;
 export { DateTimePicker, TimePickerInput, TimePicker };
 export type { TimePickerType, DateTimePickerProps, DateTimePickerRef };

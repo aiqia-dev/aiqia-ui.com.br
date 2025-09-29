@@ -13,14 +13,16 @@ import {
   PopoverTrigger,
 } from "../popover/popover.component";
 import { ptBR } from "date-fns/locale";
+import { DayPickerProps } from "react-day-picker";
 
 export interface DatePickerProps {
   value?: Date;
   onChange?: (date: Date | undefined) => void;
   disabled?: boolean;
+  disabledDates?: DayPickerProps["disabled"]
 }
 
-export function DatePicker({ value, onChange, disabled }: DatePickerProps) {
+export function DatePicker({ value, onChange, disabled, disabledDates }: DatePickerProps) {
   const [date, setDate] = React.useState<Date | undefined>(value);
 
   function handleSelect(date: Date | undefined) {
@@ -57,6 +59,7 @@ export function DatePicker({ value, onChange, disabled }: DatePickerProps) {
           mode="single"
           selected={date}
           onSelect={handleSelect}
+          disabled={disabledDates}
           initialFocus
         />
       </PopoverContent>
