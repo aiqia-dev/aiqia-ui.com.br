@@ -1,0 +1,495 @@
+{
+  "rendererUrl": "renderer.html",
+  "fixtures": [
+    {
+      "filePath": "lib/components/accordion/accordion.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "accordion",
+        "accordion"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Faccordion%2Faccordion.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/alert/alert.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "alert",
+        "alert"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Falert%2Falert.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/alert-dialog/alert-dialog.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "alert-dialog",
+        "alert-dialog"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Falert-dialog%2Falert-dialog.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/async-select/async-select.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "async-select",
+        "async-select"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fasync-select%2Fasync-select.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/async-select-form/async-select-form.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "async-select-form",
+        "async-select-form"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fasync-select-form%2Fasync-select-form.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/avatar/avatar.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "avatar",
+        "avatar"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Favatar%2Favatar.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/badge/badge.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "badge",
+        "badge"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fbadge%2Fbadge.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/breadcrumb/breadcrumb.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "breadcrumb",
+        "breadcrumb"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fbreadcrumb%2Fbreadcrumb.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/button/button.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "button",
+        "button"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fbutton%2Fbutton.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/calendar/calendar.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "calendar",
+        "calendar"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fcalendar%2Fcalendar.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/card/card.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "card",
+        "card"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fcard%2Fcard.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/carousel/carousel.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "carousel",
+        "carousel"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fcarousel%2Fcarousel.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/chart/chart.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "chart",
+        "chart"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fchart%2Fchart.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/checkbox/checkbox.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "checkbox",
+        "checkbox"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fcheckbox%2Fcheckbox.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/combobox/combobox.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "combobox",
+        "combobox"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fcombobox%2Fcombobox.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/combobox-form/combobox-form.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "combobox-form",
+        "combobox-form"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fcombobox-form%2Fcombobox-form.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/command/command.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "command",
+        "command"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fcommand%2Fcommand.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/date-picker/date-picker.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "date-picker",
+        "date-picker"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fdate-picker%2Fdate-picker.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/date-time-picker/date-time-picker.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "date-time-picker",
+        "date-time-picker"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fdate-time-picker%2Fdate-time-picker.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/dialog/dialog.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "dialog",
+        "dialog"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fdialog%2Fdialog.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/dropdown-menu/dropdown-menu.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "dropdown-menu",
+        "dropdown-menu"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fdropdown-menu%2Fdropdown-menu.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/form/form.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "form",
+        "form"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fform%2Fform.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/heading/heading.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "heading",
+        "heading"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fheading%2Fheading.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/input-form/input-form.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "input-form",
+        "input-form"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Finput-form%2Finput-form.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/input/input.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "input",
+        "input"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Finput%2Finput.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/label/label.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "label",
+        "label"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Flabel%2Flabel.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/list-item/list-item.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "list-item",
+        "list-item"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Flist-item%2Flist-item.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/masked-input/masked-input.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "masked-input",
+        "masked-input"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fmasked-input%2Fmasked-input.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/multi-select/multi-select.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "multi-select",
+        "multi-select"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fmulti-select%2Fmulti-select.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/navigation-menu/navigation-menu.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "navigation-menu",
+        "navigation-menu"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fnavigation-menu%2Fnavigation-menu.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/pagination/pagination.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "pagination",
+        "pagination"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fpagination%2Fpagination.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/popover/popover.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "popover",
+        "popover"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fpopover%2Fpopover.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/radio-group/radio-group.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "radio-group",
+        "radio-group"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fradio-group%2Fradio-group.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/scroll-area/scroll-area.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "scroll-area",
+        "scroll-area"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fscroll-area%2Fscroll-area.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/select-form/select-form.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "select-form",
+        "select-form"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fselect-form%2Fselect-form.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/select/select.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "select",
+        "select"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fselect%2Fselect.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/separator/separator.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "separator",
+        "separator"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fseparator%2Fseparator.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/sheet/sheet.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "sheet",
+        "sheet"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fsheet%2Fsheet.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/skeleton/skeleton.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "skeleton",
+        "skeleton"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fskeleton%2Fskeleton.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/switch/switch.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "switch",
+        "switch"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Fswitch%2Fswitch.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/table/table.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "table",
+        "table"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftable%2Ftable.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/tabs/tabs.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "tabs",
+        "tabs"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftabs%2Ftabs.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/textarea-form/textarea-form.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "textarea-form",
+        "textarea-form"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftextarea-form%2Ftextarea-form.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/textarea/textarea.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "textarea",
+        "textarea"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftextarea%2Ftextarea.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/toast/toast.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "toast",
+        "toast"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftoast%2Ftoast.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/toaster/toaster.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "toaster",
+        "toaster"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftoaster%2Ftoaster.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/toggle-group/toggle-group.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "toggle-group",
+        "toggle-group"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftoggle-group%2Ftoggle-group.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/toggle/toggle.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "toggle",
+        "toggle"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftoggle%2Ftoggle.fixture.tsx%22%7D&locked=true"
+    },
+    {
+      "filePath": "lib/components/tooltip/tooltip.fixture.tsx",
+      "cleanPath": [
+        "lib",
+        "components",
+        "tooltip",
+        "tooltip"
+      ],
+      "rendererUrl": "renderer.html?fixtureId=%7B%22path%22%3A%22lib%2Fcomponents%2Ftooltip%2Ftooltip.fixture.tsx%22%7D&locked=true"
+    }
+  ]
+}
