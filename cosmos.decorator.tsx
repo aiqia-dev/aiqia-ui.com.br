@@ -1,13 +1,17 @@
+import React from "react";
 import { Moon } from "lucide-react";
 import { Sun } from "lucide-react";
 import { ThemeProvider, useTheme } from "next-themes";
+import { MemoryRouter } from "react-router-dom";
 
-export default ({ children }) => (
+export default ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider attribute="class" defaultTheme="light">
-    <ModeToggle />
-    <div className="p-15 pt-20">
-      {children}
-    </div>
+    <MemoryRouter>
+      <ModeToggle />
+      <div className="p-15 pt-20">
+        {children}
+      </div>
+    </MemoryRouter>
   </ThemeProvider>
 )
 

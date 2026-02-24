@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, buttonVariants } from "..";
-import type { DayPickerProps } from "react-day-picker";
+import { Button, Calendar } from "..";
+import type { DayPicker, DayPickerProps } from "react-day-picker";
 import { Input } from "..";
 import { Popover, PopoverContent, PopoverTrigger } from "..";
 import { cn } from "../../utils/utils";
@@ -9,9 +9,7 @@ import { add, format } from "date-fns";
 import { type Locale, ptBR } from "date-fns/locale";
 import {
   Calendar as CalendarIcon,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
+  ChevronDown
 } from "lucide-react";
 import { Clock } from "lucide-react";
 import * as React from "react";
@@ -24,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "..";
-import { DayPicker } from "react-day-picker";
 
 // ---------- utils start ----------
 /**
@@ -246,169 +243,6 @@ function genYears(yearRange = 50) {
 }
 
 // ---------- utils end ----------
-
-function Calendar({
-  className,
-  classNames,
-  showOutsideDays = true,
-  yearRange = 50,
-  ...props
-}: DayPickerProps & { yearRange?: number }) {
-  const MONTHS = React.useMemo(() => {
-    let locale: Pick<Locale, "options" | "localize" | "formatLong"> = ptBR;
-    const { options, localize, formatLong } = props.locale || {};
-    if (options && localize && formatLong) {
-      locale = {
-        options,
-        localize,
-        formatLong,
-      };
-    }
-    return genMonths(locale);
-  }, []);
-
-  const YEARS = React.useMemo(() => genYears(yearRange), []);
-  const disableLeftNavigation = () => {
-    const today = new Date();
-    const startDate = new Date(today.getFullYear() - yearRange, 0, 1);
-    if (props.month) {
-      return (
-        props.month.getMonth() === startDate.getMonth() &&
-        props.month.getFullYear() === startDate.getFullYear()
-      );
-    }
-    return false;
-  };
-  const disableRightNavigation = () => {
-    const today = new Date();
-    const endDate = new Date(today.getFullYear() + yearRange, 11, 31);
-    if (props.month) {
-      return (
-        props.month.getMonth() === endDate.getMonth() &&
-        props.month.getFullYear() === endDate.getFullYear()
-      );
-    }
-    return false;
-  };
-
-  return (
-    <DayPicker
-      showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
-      classNames={
-        {
-          months:
-            "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-          month: "space-y-4",
-          caption: "flex justify-center pt-1 relative items-center",
-          caption_label: "text-sm font-medium",
-          nav: "space-x-1 flex items-center",
-          nav_button: cn(
-            buttonVariants({ variant: "outline" }),
-            "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 [&_svg]:size-3"
-          ),
-          nav_button_previous: cn(
-            "absolute left-1",
-            disableLeftNavigation() && "pointer-events-none"
-          ),
-          nav_button_next: cn(
-            "absolute right-1",
-            disableRightNavigation() && "pointer-events-none"
-          ),
-          table: "w-full border-collapse space-y-1",
-          head_row: "flex",
-          head_cell:
-            "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
-          row: "flex w-full mt-2",
-          cell: cn(
-            "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
-            props.mode === "range"
-              ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
-              : "[&:has([aria-selected])]:rounded-md"
-          ),
-          day: cn(
-            buttonVariants({ variant: "ghost" }),
-            "h-8 w-8 p-0 font-normal aria-selected:opacity-100"
-          ),
-          day_range_start: "day-range-start",
-          day_range_end: "day-range-end",
-          day_selected:
-            "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-          day_today: "bg-accent text-accent-foreground",
-          day_outside:
-            "day-outside text-muted-foreground aria-selected:bg-accent/50 aria-selected:text-muted-foreground",
-          day_disabled: "text-muted-foreground opacity-50",
-          day_range_middle:
-            "aria-selected:bg-accent aria-selected:text-accent-foreground",
-          day_hidden: "invisible",
-          ...classNames,
-        } as any
-      }
-      components={
-        {
-          Chevron: ({ ...props }) =>
-            props.orientation === "left" ? (
-              <ChevronLeft className="h-4 w-4" />
-            ) : (
-              <ChevronRight className="h-4 w-4" />
-            ),
-          MonthCaption: ({ calendarMonth }: any) => {
-            return (
-              <div className="inline-flex gap-2">
-                <Select
-                  defaultValue={calendarMonth.date.getMonth().toString()}
-                  onValueChange={(value) => {
-                    const newDate = new Date(calendarMonth.date);
-                    newDate.setMonth(Number.parseInt(value, 10));
-                    props.onMonthChange?.(newDate);
-                  }}
-                >
-                  <SelectTrigger className="w-fit gap-1 border-none p-0 focus:bg-accent focus:text-accent-foreground">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {MONTHS.map((month) => (
-                      <SelectItem
-                        key={month.value}
-                        value={month.value.toString()}
-                      >
-                        {month.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  defaultValue={calendarMonth.date.getFullYear().toString()}
-                  onValueChange={(value) => {
-                    const newDate = new Date(calendarMonth.date);
-                    newDate.setFullYear(Number.parseInt(value, 10));
-                    props.onMonthChange?.(newDate);
-                  }}
-                >
-                  <SelectTrigger className="w-fit gap-1 border-none p-0 focus:bg-accent focus:text-accent-foreground">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {YEARS.map((year) => (
-                      <SelectItem
-                        key={year.value}
-                        value={year.value.toString()}
-                      >
-                        {year.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            );
-          },
-        } as any
-      }
-      {...props}
-    />
-  );
-}
-Calendar.displayName = "Calendar";
 
 interface PeriodSelectorProps {
   period: Period;
@@ -742,7 +576,7 @@ const DateTimePicker = React.forwardRef<
   Partial<DateTimePickerRef>,
   DateTimePickerProps & {
     disabledDates?: DayPickerProps["disabled"]
-  }
+  } & Omit<React.ComponentProps<typeof DayPicker>, "mode" | "selected" | "onSelect">
 >(
   (
     {
@@ -881,7 +715,6 @@ const DateTimePicker = React.forwardRef<
           <Calendar
             mode="single"
             selected={displayDate}
-            month={month}
             onSelect={(newDate) => {
               if (newDate) {
                 newDate.setHours(
@@ -893,9 +726,9 @@ const DateTimePicker = React.forwardRef<
               }
             }}
             onMonthChange={handleSelect}
-            yearRange={yearRange}
             locale={locale}
             disabled={disabledDates}
+            className="w-full"
             {...props}
           />
           {granularity !== "day" && (

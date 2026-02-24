@@ -4,18 +4,22 @@ import { Code } from 'cosmos/Code';
 
 const Fixture = () => {
   const [date, setDate] = useFixtureState<any>('date');
-  const [mode] = useFixtureSelect('mode', {
-    options: ['default', 'single', 'multiple', 'range'],
+  const [mode] = useFixtureSelect<'single' | 'range'>('mode', {
+    options: ['single', 'range']
+  });
+  const [layout] = useFixtureSelect<"dropdown" | "label" | "dropdown-months" | "dropdown-years">('layout', {
+    options: ["dropdown", "label", "dropdown-months", "dropdown-years"]
   });
 
   return (
     <>
       <div className="flex justify-center">
         <Calendar
-          mode={mode}
+          mode={mode as any}
           selected={date}
           onSelect={setDate}
           className="rounded-md border w-auto mx-auto"
+          captionLayout={layout}
         />
       </div>
 
@@ -25,6 +29,7 @@ const Fixture = () => {
   selected={date}
   onSelect={setDate}
   className="rounded-md border"
+  captionLayout="${layout}"
 />
       `}</Code>
     </>

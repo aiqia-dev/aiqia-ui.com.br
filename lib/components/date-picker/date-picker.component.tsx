@@ -13,22 +13,51 @@ import {
   PopoverTrigger,
 } from "../popover/popover.component";
 import { ptBR } from "date-fns/locale";
-import { DayPickerProps } from "react-day-picker";
+import { DateRange, DayPicker, DayPickerProps } from "react-day-picker";
 
-export interface DatePickerProps {
-  value?: Date;
-  onChange?: (date: Date | undefined) => void;
+export type DatePickerProps = {
+  value?: Date | DateRange;
+  onChange?: (date: any) => void;
   disabled?: boolean;
-  disabledDates?: DayPickerProps["disabled"]
-}
+  disabledDates?: DayPickerProps["disabled"];
+} & React.ComponentProps<typeof DayPicker>;
 
-export function DatePicker({ value, onChange, disabled, disabledDates }: DatePickerProps) {
-  const [date, setDate] = React.useState<Date | undefined>(value);
+export function DatePicker({
+  value,
+  onChange,
+  disabled,
+  disabledDates,
+  mode = "single",
+  ...props
+}: DatePickerProps) {
+  const [date, setDate] = React.useState<any>(value);
 
-  function handleSelect(date: Date | undefined) {
-    setDate(date);
-    onChange?.(date);
+  function handleSelect(newDate: any) {
+    setDate(newDate);
+    onChange?.(newDate);
   }
+
+  const renderValue = () => {
+    if (!date) return <span>Selecione uma data</span>;
+
+    if (mode === "range") {
+      const range = date as DateRange;
+      if (range.from) {
+        if (range.to) {
+          return (
+            <>
+              {format(range.from, "dd/MM/yyyy", { locale: ptBR })} -{" "}
+              {format(range.to, "dd/MM/yyyy", { locale: ptBR })}
+            </>
+          );
+        }
+        return format(range.from, "dd/MM/yyyy", { locale: ptBR });
+      }
+      return <span>Selecione uma data</span>;
+    }
+
+    return format(date as Date, "PPP", { locale: ptBR });
+  };
 
   return (
     <Popover>
@@ -43,11 +72,7 @@ export function DatePicker({ value, onChange, disabled, disabledDates }: DatePic
         >
           <div className="flex">
             <CalendarIcon className="mr-2" />
-            {date ? (
-              format(date, "PPP", { locale: ptBR })
-            ) : (
-              <span>Selecione uma data</span>
-            )}
+            {renderValue()}
           </div>
 
           <ChevronDown className="shrink-0 opacity-50" />
@@ -55,12 +80,12 @@ export function DatePicker({ value, onChange, disabled, disabledDates }: DatePic
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
-          required
-          mode="single"
+          mode={mode as any}
           selected={date}
           onSelect={handleSelect}
           disabled={disabledDates}
-          initialFocus
+          defaultMonth={date?.from}
+          {...props}
         />
       </PopoverContent>
     </Popover>
