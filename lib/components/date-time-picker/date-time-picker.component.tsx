@@ -6,7 +6,7 @@ import { Input } from "..";
 import { Popover, PopoverContent, PopoverTrigger } from "..";
 import { cn } from "../../utils/utils";
 import { add, format } from "date-fns";
-import { type Locale, ptBR } from "date-fns/locale";
+import { ptBR } from "date-fns/locale";
 import {
   Calendar as CalendarIcon,
   ChevronDown
@@ -223,23 +223,6 @@ function display12HourValue(hours: number) {
   if (hours >= 22) return `${hours - 12}`;
   if (hours % 12 > 9) return `${hours}`;
   return `0${hours % 12}`;
-}
-
-function genMonths(
-  locale: Pick<Locale, "options" | "localize" | "formatLong">
-) {
-  return Array.from({ length: 12 }, (_, i) => ({
-    value: i,
-    label: format(new Date(2021, i), "MMMM", { locale }),
-  }));
-}
-
-function genYears(yearRange = 50) {
-  const today = new Date();
-  return Array.from({ length: yearRange * 2 + 1 }, (_, i) => ({
-    value: today.getFullYear() - yearRange + i,
-    label: (today.getFullYear() - yearRange + i).toString(),
-  }));
 }
 
 // ---------- utils end ----------
@@ -713,7 +696,6 @@ const DateTimePicker = React.forwardRef<
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
           <Calendar
-            mode="single"
             selected={displayDate}
             onSelect={(newDate) => {
               if (newDate) {
@@ -730,6 +712,7 @@ const DateTimePicker = React.forwardRef<
             disabled={disabledDates}
             className="w-full"
             {...props}
+            mode="single"
           />
           {granularity !== "day" && (
             <div className="border-t border-border p-3">

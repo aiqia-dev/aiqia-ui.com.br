@@ -11,6 +11,8 @@ const Fixture = () => {
         value={date}
         onChange={setDate}
         captionLayout="dropdown"
+        displayFormat={{ hour24: 'dd/MM/yyyy HH:mm' }}
+        granularity="minute"
       />
       <Code>{`
 <DateTimePicker value={date} onChange={setDate} />
