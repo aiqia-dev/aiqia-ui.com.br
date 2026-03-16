@@ -5,7 +5,7 @@ import type {
   ToastProps,
 } from "../components/toast/toast.component";
 
-const TOAST_LIMIT = 1;
+const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 10000;
 
 type ToasterToast = ToastProps & {

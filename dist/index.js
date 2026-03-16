@@ -18836,7 +18836,7 @@ const Ag = u.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ l.jsx(
   }
 ));
 Ag.displayName = Eg.displayName;
-const cD = 1, lD = 1e4;
+const cD = 5, lD = 1e4;
 let Xs = 0;
 function uD() {
   return Xs = (Xs + 1) % Number.MAX_SAFE_INTEGER, Xs.toString();
@@ -18931,7 +18931,7 @@ function jA() {
   const { toasts: e } = mD();
   return /* @__PURE__ */ l.jsxs(oD, { children: [
     e.map(function({ id: t, title: n, description: r, action: o, ...s }) {
-      return /* @__PURE__ */ l.jsxs(Pg, { ...s, children: [
+      return /* @__PURE__ */ l.jsxs(Pg, { ...s, className: "mt-2", children: [
         /* @__PURE__ */ l.jsxs("div", { className: "grid gap-1", children: [
           n && /* @__PURE__ */ l.jsx(Dg, { children: n }),
           r && /* @__PURE__ */ l.jsx(Ag, { children: r })
