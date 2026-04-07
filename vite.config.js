@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { peerDependencies } from "./package.json";
 import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
@@ -31,7 +30,17 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: Object.keys(peerDependencies),
+      external: [
+        'react', 
+        'react-dom', 
+        'react/jsx-runtime', 
+        'react/jsx-dev-runtime',
+        'lucide-react',
+        'recharts',
+        'react-hook-form',
+        'react-router-dom',
+        'tailwindcss'
+      ],
       output: {
         globals: { react: "React", "react-dom": "ReactDOM" },
         entryFileNames: "index.js",
