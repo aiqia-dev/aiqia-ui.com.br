@@ -12,7 +12,7 @@ declare const ToastViewport: React.ForwardRefExoticComponent<Omit<ToastPrimitive
     position?: keyof typeof positions;
 } & React.RefAttributes<HTMLOListElement>>;
 declare const Toast: React.ForwardRefExoticComponent<Omit<ToastPrimitives.ToastProps & React.RefAttributes<HTMLLIElement>, "ref"> & VariantProps<(props?: ({
-    variant?: "default" | "destructive" | "success" | null | undefined;
+    variant?: "default" | "destructive" | "success" | "warning" | null | undefined;
 } & import('class-variance-authority/types').ClassProp) | undefined) => string> & React.RefAttributes<HTMLLIElement>>;
 declare const ToastAction: React.ForwardRefExoticComponent<Omit<ToastPrimitives.ToastActionProps & React.RefAttributes<HTMLButtonElement>, "ref"> & React.RefAttributes<HTMLButtonElement>>;
 declare const ToastClose: React.ForwardRefExoticComponent<Omit<ToastPrimitives.ToastCloseProps & React.RefAttributes<HTMLButtonElement>, "ref"> & React.RefAttributes<HTMLButtonElement>>;
