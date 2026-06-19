@@ -15413,8 +15413,8 @@ const cM = l.forwardRef(
     yearRange: s = 50,
     disabled: a = !1,
     displayFormat: i,
-    granularity: c = "second",
-    placeholder: d = "dd/mm/aaaa - hh:mm:ss",
+    granularity: c = "minute",
+    placeholder: d = "dd/mm/aaaa - hh:mm",
     className: m,
     disabledDates: f,
     ...p
