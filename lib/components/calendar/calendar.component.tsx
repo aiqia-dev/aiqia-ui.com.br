@@ -11,14 +11,15 @@ import {
 import { cn } from "@/utils"
 import { Button, buttonVariants } from "../button/button.component"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
+import { ptBR } from "date-fns/locale"
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  captionLayout = "label",
+  captionLayout = 'dropdown',
   buttonVariant = "ghost",
-  locale,
+  locale = ptBR,
   formatters,
   components,
   ...props
