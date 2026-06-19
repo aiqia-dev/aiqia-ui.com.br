@@ -94,6 +94,7 @@ export function DatePicker({
   disabled,
   disabledDates,
   mode = "single",
+  captionLayout = 'dropdown',
   ...props
 }: DatePickerProps) {
   const [date, setDate] = React.useState<any>(value);

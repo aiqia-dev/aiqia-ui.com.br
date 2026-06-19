@@ -615,6 +615,7 @@ const DateTimePicker = React.forwardRef<
       disabled = false,
       displayFormat,
       granularity = "minute",
+      captionLayout = "dropdown",
       placeholder = "dd/mm/aaaa - hh:mm",
       className,
       disabledDates,
