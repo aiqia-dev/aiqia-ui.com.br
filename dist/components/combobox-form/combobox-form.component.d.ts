@@ -12,4 +12,4 @@ export type ComboboxFormProps = {
     disabled?: boolean;
     isLoading?: boolean;
 };
-export declare function ComboboxForm({ name, label, options, placeholder, searchPlaceholder, emptyMessage, disabled, isLoading }: ComboboxFormProps): import("react/jsx-runtime").JSX.Element;
+export declare function ComboboxForm({ name, label, options, placeholder, searchPlaceholder, emptyMessage, disabled, isLoading }: ComboboxFormProps): import("react").JSX.Element;

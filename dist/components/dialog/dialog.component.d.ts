@@ -9,11 +9,11 @@ declare const DialogContent: React.ForwardRefExoticComponent<Omit<DialogPrimitiv
     onClose?: () => void;
 } & React.RefAttributes<HTMLDivElement>>;
 declare const DialogHeader: {
-    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): import("react/jsx-runtime").JSX.Element;
+    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): React.JSX.Element;
     displayName: string;
 };
 declare const DialogFooter: {
-    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): import("react/jsx-runtime").JSX.Element;
+    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): React.JSX.Element;
     displayName: string;
 };
 declare const DialogTitle: React.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTitleProps & React.RefAttributes<HTMLHeadingElement>, "ref"> & React.RefAttributes<HTMLHeadingElement>>;

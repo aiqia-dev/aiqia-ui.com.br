@@ -4,4 +4,4 @@ export interface MaskedInputProps extends Omit<InputProps, "onChange" | "value">
     mask: string;
     onChange: (value: string) => void;
 }
-export declare function MaskedInput({ value, mask, onChange, ...rest }: MaskedInputProps): import("react/jsx-runtime").JSX.Element;
+export declare function MaskedInput({ value, mask, onChange, ...rest }: MaskedInputProps): import("react").JSX.Element;

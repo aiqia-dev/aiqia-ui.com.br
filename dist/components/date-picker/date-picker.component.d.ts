@@ -6,4 +6,4 @@ export type DatePickerProps = {
     disabled?: boolean;
     disabledDates?: DayPickerProps["disabled"];
 } & React.ComponentProps<typeof DayPicker>;
-export declare function DatePicker({ value, onChange, disabled, disabledDates, mode, ...props }: DatePickerProps): import("react/jsx-runtime").JSX.Element;
+export declare function DatePicker({ value, onChange, disabled, disabledDates, mode, ...props }: DatePickerProps): React.JSX.Element;

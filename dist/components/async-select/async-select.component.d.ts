@@ -34,4 +34,4 @@ export interface AsyncSelectProps<T> {
     /** Error message */
     error?: string;
 }
-export declare function AsyncSelect<T>({ options, isLoading, renderOption, getOptionValue, getDisplayValue, label, placeholder, value, onChange, onSearchChange, disabled, triggerClassName, noResultsMessage, clearable, error, }: AsyncSelectProps<T>): import("react/jsx-runtime").JSX.Element;
+export declare function AsyncSelect<T>({ options, isLoading, renderOption, getOptionValue, getDisplayValue, label, placeholder, value, onChange, onSearchChange, disabled, triggerClassName, noResultsMessage, clearable, error, }: AsyncSelectProps<T>): import("react").JSX.Element;

@@ -1,16 +1,13 @@
 "use client";
 
-import { Button, Calendar } from "..";
+import { Calendar } from "..";
 import type { DayPicker, DayPickerProps } from "react-day-picker";
 import { Input } from "..";
 import { Popover, PopoverContent, PopoverTrigger } from "..";
 import { cn } from "../../utils/utils";
-import { add, format } from "date-fns";
+import { add, format, parse, isValid } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import {
-  Calendar as CalendarIcon,
-  ChevronDown
-} from "lucide-react";
+import { Calendar as CalendarIcon } from "lucide-react";
 import { Clock } from "lucide-react";
 import * as React from "react";
 import { useEffect, useImperativeHandle, useRef } from "react";
@@ -226,6 +223,52 @@ function display12HourValue(hours: number) {
 }
 
 // ---------- utils end ----------
+
+// ---------- datetime input utils start ----------
+
+function getDateTimeInputFormat(granularity: Granularity): string {
+  switch (granularity) {
+    case "day": return "dd/MM/yyyy";
+    case "hour": return "dd/MM/yyyy HH";
+    case "minute": return "dd/MM/yyyy HH:mm";
+    case "second": return "dd/MM/yyyy HH:mm:ss";
+  }
+}
+
+function getDateTimeInputMaxDigits(granularity: Granularity): number {
+  switch (granularity) {
+    case "day": return 8;
+    case "hour": return 10;
+    case "minute": return 12;
+    case "second": return 14;
+  }
+}
+
+function applyDateTimeMask(raw: string, granularity: Granularity): string {
+  const digits = raw.replace(/\D/g, "");
+  const maxDigits = getDateTimeInputMaxDigits(granularity);
+  let result = "";
+  for (let i = 0; i < digits.length && i < maxDigits; i++) {
+    if (i === 2 || i === 4) result += "/";
+    if (i === 8) result += " ";
+    if (i === 10 || i === 12) result += ":";
+    result += digits[i];
+  }
+  return result;
+}
+
+function parseDateTimeInput(str: string, granularity: Granularity): Date | null {
+  const fmt = getDateTimeInputFormat(granularity);
+  if (str.length < fmt.length) return null;
+  const d = parse(str.slice(0, fmt.length), fmt, new Date());
+  return isValid(d) ? d : null;
+}
+
+function formatDateTimeToInput(date: Date, granularity: Granularity): string {
+  return format(date, getDateTimeInputFormat(granularity));
+}
+
+// ---------- datetime input utils end ----------
 
 interface PeriodSelectorProps {
   period: Period;
@@ -572,7 +615,7 @@ const DateTimePicker = React.forwardRef<
       disabled = false,
       displayFormat,
       granularity = "second",
-      placeholder = "Selecione...",
+      placeholder = "dd/mm/aaaa - hh:mm:ss",
       className,
       disabledDates,
       ...props
@@ -581,8 +624,24 @@ const DateTimePicker = React.forwardRef<
   ) => {
     const [month, setMonth] = React.useState<Date>(value ?? defaultPopupValue);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const [displayDate, setDisplayDate] = React.useState<Date | undefined>(
-      value
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [displayDate, setDisplayDate] = React.useState<Date | undefined>(value);
+    const [open, setOpen] = React.useState(false);
+    const [inputValue, setInputValue] = React.useState<string>(
+      value ? formatDateTimeToInput(value, granularity) : ""
+    );
+    /**
+     * When the user types or selects from the calendar, we call onChange which
+     * causes the parent to update `value`. We use this ref to skip the effect
+     * in that case so the user's in-progress input is not overwritten.
+     */
+    const preventExternalSync = useRef(false);
+    /**
+     * Tracks the last valid input string, used to restore on blur
+     * when the user leaves the input in a partial/invalid state.
+     */
+    const lastValidInputValue = useRef<string>(
+      value ? formatDateTimeToInput(value, granularity) : ""
     );
     /**
      * carry over the current time when a user clicks a new day
@@ -617,18 +676,33 @@ const DateTimePicker = React.forwardRef<
     };
 
     useEffect(() => {
+      if (preventExternalSync.current) {
+        preventExternalSync.current = false;
+        return;
+      }
+      // External value change — sync all state
+      const str = !value ? "" : formatDateTimeToInput(value, granularity);
       if (!value) {
         setDisplayDate(undefined);
+      } else {
+        setDisplayDate(value);
+        setMonth(value);
       }
-    }, [value]);
+      setInputValue(str);
+      lastValidInputValue.current = str;
+    }, [value, granularity]);
 
     const onSelect = (newDay?: Date) => {
       if (!newDay) {
         return;
       }
+      preventExternalSync.current = true;
+      const str = formatDateTimeToInput(newDay, granularity);
       onChange?.(newDay);
       setMonth(newDay);
       setDisplayDate(newDay);
+      setInputValue(str);
+      lastValidInputValue.current = str;
     };
 
     useImperativeHandle(
@@ -640,60 +714,91 @@ const DateTimePicker = React.forwardRef<
       [displayDate]
     );
 
-    const initHourFormat = {
-      hour24:
-        displayFormat?.hour24 ??
-        `PPP HH:mm${!granularity || granularity === "second" ? ":ss" : ""}`,
-      hour12:
-        displayFormat?.hour12 ??
-        `PP hh:mm${!granularity || granularity === "second" ? ":ss" : ""} b`,
-    };
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+      const rawInput = e.target.value;
 
-    let loc = ptBR;
-    const { options, localize, formatLong } = locale;
-    if (options && localize && formatLong) {
-      loc = {
-        ...ptBR,
-        options,
-        localize,
-        formatLong,
-      };
+      // If the user clears the input entirely, propagate undefined immediately
+      if (rawInput.replace(/\D/g, "") === "") {
+        setInputValue("");
+        lastValidInputValue.current = "";
+        preventExternalSync.current = true;
+        setDisplayDate(undefined);
+        onChange?.(undefined);
+        return;
+      }
+
+      const cursorPos = e.target.selectionStart ?? rawInput.length;
+      const digitsBeforeCursor = rawInput
+        .slice(0, cursorPos)
+        .replace(/\D/g, "").length;
+
+      const masked = applyDateTimeMask(rawInput, granularity);
+      setInputValue(masked);
+
+      // Restore cursor position after React re-renders the masked value
+      requestAnimationFrame(() => {
+        if (inputRef.current) {
+          let digitCount = 0;
+          let newPos = masked.length;
+          for (let i = 0; i < masked.length; i++) {
+            if (/\d/.test(masked[i])) digitCount++;
+            if (digitCount === digitsBeforeCursor) {
+              newPos = i + 1;
+              break;
+            }
+          }
+          inputRef.current.setSelectionRange(newPos, newPos);
+        }
+      });
+
+      const parsed = parseDateTimeInput(masked, granularity);
+      if (parsed) {
+        preventExternalSync.current = true;
+        lastValidInputValue.current = masked;
+        onChange?.(parsed);
+        setDisplayDate(parsed);
+        setMonth(parsed);
+      }
+      // Partial date: keep previous value, user is still editing
+    }
+
+    function handleInputBlur() {
+      const isComplete = parseDateTimeInput(inputValue, granularity) !== null;
+      // If user left the input with a partial/invalid value, restore last valid
+      if (!isComplete && inputValue !== "") {
+        setInputValue(lastValidInputValue.current);
+      }
     }
 
     return (
-      <Popover>
-        <PopoverTrigger asChild disabled={disabled}>
-          <Button
-            variant="outline"
-            className={cn(
-              "w-full justify-between text-left font-normal hover:bg-input bg-input",
-              !displayDate && "text-muted-foreground",
-              className
-            )}
-            ref={buttonRef}
-          >
-            <div className="flex">
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              <span className="truncate block" title={placeholder}>
-                {displayDate ? (
-                  format(
-                    displayDate,
-                    hourCycle === 24
-                      ? initHourFormat.hour24
-                      : initHourFormat.hour12,
-                    {
-                      locale: loc,
-                    }
-                  )
-                ) : (
-                  <span>{placeholder}</span>
-                )}
-              </span>
-            </div>
-
-            <ChevronDown className="shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
+      <Popover open={open} onOpenChange={setOpen}>
+        <div
+          className={cn(
+            "flex h-9 w-full items-center rounded-md border bg-input shadow-xs transition-colors focus-within:ring-1 focus-within:ring-ring",
+            disabled && "cursor-not-allowed opacity-50",
+            className
+          )}
+        >
+          <input
+            ref={inputRef}
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            placeholder={placeholder}
+            disabled={disabled}
+            className="min-w-0 flex-1 bg-transparent px-3 py-1 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed md:text-sm"
+          />
+          <PopoverTrigger asChild disabled={disabled}>
+            <button
+              ref={buttonRef}
+              type="button"
+              disabled={disabled}
+              className="flex items-center pr-3 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed"
+            >
+              <CalendarIcon className="h-4 w-4" />
+            </button>
+          </PopoverTrigger>
+        </div>
         <PopoverContent className="w-auto p-0">
           <Calendar
             selected={displayDate}
@@ -708,6 +813,7 @@ const DateTimePicker = React.forwardRef<
               }
             }}
             onMonthChange={handleSelect}
+            month={displayDate ?? month}
             locale={locale}
             disabled={disabledDates}
             className="w-full"
@@ -718,10 +824,14 @@ const DateTimePicker = React.forwardRef<
             <div className="border-t border-border p-3">
               <TimePicker
                 onChange={(value) => {
+                  preventExternalSync.current = true;
                   onChange?.(value);
                   setDisplayDate(value);
                   if (value) {
                     setMonth(value);
+                    const str = formatDateTimeToInput(value, granularity);
+                    setInputValue(str);
+                    lastValidInputValue.current = str;
                   }
                 }}
                 date={month}

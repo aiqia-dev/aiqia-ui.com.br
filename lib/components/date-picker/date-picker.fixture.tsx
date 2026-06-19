@@ -8,7 +8,7 @@ const Fixture = () => {
     options: ['single', 'range']
   });
   const [numberOfMonths] = useFixtureSelect<string>('numberOfMonths', {
-    options: ['1', '2', '3', '4'],
+    options: ['1', '2', '3'],
   });
 
 

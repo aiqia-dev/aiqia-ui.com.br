@@ -10,4 +10,4 @@ export declare const AsyncSelectForm: ({ name, label, disabled, isLoading, optio
     getDisplayValue: (item: any) => string;
     getOptionValue: (item: any) => string;
     renderOption: (item: any) => ReactNode | string;
-}) => import("react/jsx-runtime").JSX.Element;
+}) => import("react").JSX.Element;
