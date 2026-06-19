@@ -614,8 +614,8 @@ const DateTimePicker = React.forwardRef<
       yearRange = 50,
       disabled = false,
       displayFormat,
-      granularity = "second",
-      placeholder = "dd/mm/aaaa - hh:mm:ss",
+      granularity = "minute",
+      placeholder = "dd/mm/aaaa - hh:mm",
       className,
       disabledDates,
       ...props
