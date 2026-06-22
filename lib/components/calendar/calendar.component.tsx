@@ -22,10 +22,15 @@ function Calendar({
   locale = ptBR,
   formatters,
   components,
+  startMonth,
+  endMonth,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
 }) {
+  const today = new Date()
+  const defaultStartMonth = new Date(today.getFullYear() - 100, 0, 1)
+  const defaultEndMonth = new Date(today.getFullYear() + 10, 11, 31)
   const defaultClassNames = getDefaultClassNames()
 
   return (
@@ -38,6 +43,8 @@ function Calendar({
         className
       )}
       captionLayout={captionLayout}
+      startMonth={startMonth ?? defaultStartMonth}
+      endMonth={endMonth ?? defaultEndMonth}
       locale={locale}
       formatters={{
         formatMonthDropdown: (date) =>
