@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar } from "..";
-import type { DayPicker, DayPickerProps } from "react-day-picker";
+import { DayPicker, type DayPickerProps, TZDate } from "react-day-picker";
 import { Input } from "..";
 import { Popover, PopoverContent, PopoverTrigger } from "..";
 import { cn } from "../../utils/utils";
@@ -260,7 +260,7 @@ function applyDateTimeMask(raw: string, granularity: Granularity): string {
 function parseDateTimeInput(str: string, granularity: Granularity): Date | null {
   const fmt = getDateTimeInputFormat(granularity);
   if (str.length < fmt.length) return null;
-  const d = parse(str.slice(0, fmt.length), fmt, new Date());
+  const d = parse(str.slice(0, fmt.length), fmt, new TZDate(new Date(), "America/Sao_Paulo"));
   return isValid(d) ? d : null;
 }
 
@@ -300,7 +300,7 @@ const TimePeriodSelect = React.forwardRef<
        * otherwise user must manually change the hour each time
        */
       if (date) {
-        const tempDate = new Date(date);
+        const tempDate = new TZDate(date, "America/Sao_Paulo");
         const hours = display12HourValue(date.getHours());
         onDateChange?.(
           setDateByType(
@@ -359,7 +359,11 @@ const TimePickerInput = React.forwardRef<
       value,
       id,
       name,
-      date = new Date(new Date().setHours(0, 0, 0, 0)),
+      date = (() => {
+        const d = new TZDate(new Date(), "America/Sao_Paulo");
+        d.setHours(0, 0, 0, 0);
+        return d;
+      })(),
       onDateChange,
       onChange,
       onKeyDown,
@@ -414,7 +418,7 @@ const TimePickerInput = React.forwardRef<
         const step = e.key === "ArrowUp" ? 1 : -1;
         const newValue = getArrowByType(calculatedValue, step, picker);
         if (flag) setFlag(false);
-        const tempDate = date ? new Date(date) : new Date();
+        const tempDate = date ? new TZDate(date, "America/Sao_Paulo") : new TZDate(new Date(), "America/Sao_Paulo");
         onDateChange?.(setDateByType(tempDate, newValue, picker, period));
       }
       if (e.key >= "0" && e.key <= "9") {
@@ -423,7 +427,7 @@ const TimePickerInput = React.forwardRef<
         const newValue = calculateNewValue(e.key);
         if (flag) onRightFocus?.();
         setFlag((prev) => !prev);
-        const tempDate = date ? new Date(date) : new Date();
+        const tempDate = date ? new TZDate(date, "America/Sao_Paulo") : new TZDate(new Date(), "America/Sao_Paulo");
         onDateChange?.(setDateByType(tempDate, newValue, picker, period));
       }
     };
@@ -607,7 +611,11 @@ const DateTimePicker = React.forwardRef<
   (
     {
       locale = ptBR,
-      defaultPopupValue = new Date(new Date().setHours(0, 0, 0, 0)),
+      defaultPopupValue = (() => {
+        const d = new TZDate(new Date(), "America/Sao_Paulo");
+        d.setHours(0, 0, 0, 0);
+        return d;
+      })(),
       value,
       onChange,
       hourCycle = 24,
@@ -817,6 +825,7 @@ const DateTimePicker = React.forwardRef<
             locale={locale}
             disabled={disabledDates}
             className="w-full"
+            timeZone="America/Sao_Paulo"
             {...props}
             mode="single"
           />

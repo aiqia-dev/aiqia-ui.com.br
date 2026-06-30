@@ -11,7 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../popover/popover.component";
-import { DateRange, DayPicker, DayPickerProps } from "react-day-picker";
+import { DateRange, DayPicker, DayPickerProps, TZDate } from "react-day-picker";
 
 export type DatePickerProps = {
   value?: Date | DateRange;
@@ -48,7 +48,11 @@ function applyRangeMask(raw: string): string {
 
 function parseSingleDate(str: string): Date | null {
   if (str.length < 10) return null;
-  const d = parse(str.slice(0, 10), "dd/MM/yyyy", new Date());
+  const d = parse(
+    str.slice(0, 10),
+    "dd/MM/yyyy",
+    new TZDate(new Date(), "America/Sao_Paulo")
+  );
   return isValid(d) ? d : null;
 }
 
@@ -260,6 +264,7 @@ export function DatePicker({
           disabled={disabledDates}
           month={calendarMonth}
           onMonthChange={setCalendarMonth}
+          timeZone="America/Sao_Paulo"
           {...props}
         />
       </PopoverContent>

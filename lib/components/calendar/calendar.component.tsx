@@ -4,6 +4,7 @@ import * as React from "react"
 import {
   DayPicker,
   getDefaultClassNames,
+  TZDate,
   type DayButton,
   type Locale,
 } from "react-day-picker"
@@ -24,18 +25,20 @@ function Calendar({
   components,
   startMonth,
   endMonth,
+  timeZone = "America/Sao_Paulo",
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
 }) {
-  const today = new Date()
-  const defaultStartMonth = new Date(today.getFullYear() - 100, 0, 1)
-  const defaultEndMonth = new Date(today.getFullYear() + 10, 11, 31)
+  const today = new TZDate(new Date(), timeZone)
+  const defaultStartMonth = new TZDate(today.getFullYear() - 100, 0, 1, timeZone)
+  const defaultEndMonth = new TZDate(today.getFullYear() + 10, 11, 31, timeZone)
   const defaultClassNames = getDefaultClassNames()
 
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
+      timeZone={timeZone}
       className={cn(
         "p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)] bg-background group/calendar in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
