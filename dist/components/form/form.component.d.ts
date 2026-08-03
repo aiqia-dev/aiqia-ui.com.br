@@ -1,7 +1,7 @@
 import { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
-declare const Form: <TFieldValues extends FieldValues, TContext = any, TTransformedValues = TFieldValues>({ children, watch, getValues, getFieldState, setError, clearErrors, setValue, setValues, trigger, formState, resetField, reset, handleSubmit, unregister, control, register, setFocus, subscribe, }: import('react-hook-form').FormProviderProps<TFieldValues, TContext, TTransformedValues>) => React.JSX.Element;
+declare const Form: <TFieldValues extends FieldValues, TContext = any, TTransformedValues = TFieldValues>({ children, watch, getValues, getFieldState, setError, clearErrors, setValue, setValues, trigger, formState, resetField, reset, resetDefaultValues, handleSubmit, unregister, control, register, setFocus, subscribe, }: import('react-hook-form').FormProviderProps<TFieldValues, TContext, TTransformedValues>) => React.JSX.Element;
 declare const FormField: <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({ ...props }: ControllerProps<TFieldValues, TName>) => React.JSX.Element;
 declare const useFormField: () => {
     invalid: boolean;
