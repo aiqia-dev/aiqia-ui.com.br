@@ -1,0 +1,14 @@
+import { FlashTableColumnManager, FlashTableColumnManagerProps, FlashTableToolbar, FlashTableToolbarProps } from './flash-table-column-manager';
+import { ContextMenuPosition, FlashTableContextMenu, FlashTableContextMenuProps } from './flash-table-context-menu';
+import { FlashTableHeaderCell, FlashTableHeaderCellProps } from './flash-table-header-cell';
+import { FlashTableHelpDialog, FlashTableHelpDialogProps } from './flash-table-help-dialog';
+import { FlashTableProps } from './flash-table.types';
+import { DEFAULT_FLASH_TABLE_LABELS } from './flash-table.utils';
+import { useFlashTablePersistence } from './use-flash-table-persistence';
+export declare function FlashTable<TData, TValue = unknown>({ columns, data, totalRecords, tableId, persistState, storageScope, storagePrefix, storage, isLoading, loadingMode, skeletonRowsCount, emptyMessage, emptyContent, rowSelection: propRowSelection, onRowSelectionChange: propOnRowSelectionChange, onSelectedRowsChange, enableRowSelection, showSelectionColumn, isRowSelectable, selectionDisabledReason, renderBulkActions, expanded: propExpanded, onExpandedChange: propOnExpandedChange, getSubRows, getRowCanExpand, renderSubComponent, showExpandColumn, expandOnRowClick, enableSorting, enableMultiSort, sorting: propSorting, onSortingChange: propOnSortingChange, manualSorting, columnVisibility: propColumnVisibility, onColumnVisibilityChange: propOnColumnVisibilityChange, columnSizing: propColumnSizing, onColumnSizingChange: propOnColumnSizingChange, columnOrder: propColumnOrder, onColumnOrderChange: propOnColumnOrderChange, columnPinning: propColumnPinning, onColumnPinningChange: propOnColumnPinningChange, pinActionsColumnRight, pinLastColumnRight, defaultPinnedLeft, defaultPinnedRight, enableColumnOrdering, enableColumnPinning, enableColumnVisibility, enableColumnResizing, enableContextMenu, showToolbar, showTotalRecords, showDensityToggle, showHelpButton, toolbarLeftContent, toolbarRightContent, density: defaultDensity, onDensityChange: propOnDensityChange, tableLayout, striped, hoverable, stickyHeader, maxHeight, className, classNames, style, getRowId, onRowClick, onRowDoubleClick, rowClassName, renderRowProgress, footerContent, onTableReady, labels: customLabels, }: FlashTableProps<TData, TValue>): import("react").JSX.Element;
+export declare namespace FlashTable {
+    var displayName: string;
+}
+export { FlashTableColumnManager, type FlashTableColumnManagerProps, FlashTableToolbar, type FlashTableToolbarProps, FlashTableContextMenu, type FlashTableContextMenuProps, type ContextMenuPosition, FlashTableHeaderCell, type FlashTableHeaderCellProps, FlashTableHelpDialog, type FlashTableHelpDialogProps, useFlashTablePersistence, DEFAULT_FLASH_TABLE_LABELS, };
+export * from './flash-table.types';
+export * from './flash-table.utils';

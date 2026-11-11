@@ -21,6 +21,7 @@ export * from "./date-time-picker/date-time-picker.component";
 export * from "./date-time-picker-form/date-time-picker-form.component";
 export * from "./dialog/dialog.component";
 export * from "./dropdown-menu/dropdown-menu.component";
+export * from "./flash-table/flash-table.component";
 export * from "./form/form.component";
 export * from "./heading/heading.component";
 export * from "./input/input.component";

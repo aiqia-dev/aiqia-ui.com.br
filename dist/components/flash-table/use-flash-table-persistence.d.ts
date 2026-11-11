@@ -1,0 +1,41 @@
+import { ColumnDef, ColumnOrderState, ColumnPinningState, ColumnSizingState, OnChangeFn, VisibilityState } from '@tanstack/react-table';
+import { FlashTableDensity, FlashTableStorageAdapter } from './flash-table.types';
+export interface UseFlashTablePersistenceOptions<TData, TValue> {
+    columns: ColumnDef<TData, TValue>[];
+    tableId?: string;
+    persistState: boolean;
+    storageScope?: string;
+    storagePrefix?: string;
+    storage?: FlashTableStorageAdapter;
+    defaultDensity: FlashTableDensity;
+    pinActionsColumnRight: boolean;
+    pinLastColumnRight: boolean;
+    defaultPinnedLeft?: string[];
+    defaultPinnedRight?: string[];
+    propColumnVisibility?: VisibilityState;
+    onColumnVisibilityChange?: OnChangeFn<VisibilityState>;
+    propColumnSizing?: ColumnSizingState;
+    onColumnSizingChange?: OnChangeFn<ColumnSizingState>;
+    propColumnOrder?: ColumnOrderState;
+    onColumnOrderChange?: OnChangeFn<ColumnOrderState>;
+    propColumnPinning?: ColumnPinningState;
+    onColumnPinningChange?: OnChangeFn<ColumnPinningState>;
+    propDensity?: FlashTableDensity;
+    onDensityChange?: (density: FlashTableDensity) => void;
+}
+export declare function useFlashTablePersistence<TData, TValue>({ columns, tableId, persistState, storageScope, storagePrefix, storage, defaultDensity, pinActionsColumnRight, pinLastColumnRight, defaultPinnedLeft, defaultPinnedRight, propColumnVisibility, onColumnVisibilityChange, propColumnSizing, onColumnSizingChange, propColumnOrder, onColumnOrderChange, propColumnPinning, onColumnPinningChange, propDensity, onDensityChange, }: UseFlashTablePersistenceOptions<TData, TValue>): {
+    columnVisibility: VisibilityState;
+    onColumnVisibilityChange: OnChangeFn<VisibilityState>;
+    columnSizing: ColumnSizingState;
+    onColumnSizingChange: OnChangeFn<ColumnSizingState>;
+    columnOrder: ColumnOrderState;
+    onColumnOrderChange: OnChangeFn<ColumnOrderState>;
+    columnPinning: ColumnPinningState;
+    onColumnPinningChange: OnChangeFn<ColumnPinningState>;
+    density: FlashTableDensity;
+    onDensityChange: (nextDensity: FlashTableDensity) => void;
+    defaultColumnOrder: ColumnOrderState;
+    defaultColumnPinning: ColumnPinningState;
+    isCustomized: boolean;
+    resetToDefaults: () => void;
+};
