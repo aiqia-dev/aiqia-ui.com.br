@@ -164,6 +164,7 @@ export function FlashTable<TData, TValue = unknown>({
   onRowClick,
   onRowDoubleClick,
   rowClassName,
+  rowAccentColor,
   renderRowProgress,
   footerContent,
   onTableReady,
@@ -198,6 +199,20 @@ export function FlashTable<TData, TValue = unknown>({
   const headerElementsRef = useRef<Map<string, HTMLTableCellElement>>(
     new Map()
   );
+  const accentOverlayRef = useRef<HTMLDivElement>(null);
+  const rowElementsRef = useRef<Map<string, HTMLTableRowElement>>(new Map());
+  const expandedRowElementsRef = useRef<Map<string, HTMLTableRowElement>>(
+    new Map()
+  );
+  const [rowAccentBars, setRowAccentBars] = useState<
+    Array<{
+      key: string;
+      top: number;
+      height: number;
+      color: string;
+      isCssColor: boolean;
+    }>
+  >([]);
 
   const finalSorting = propSorting ?? internalSorting;
   const finalOnSortingChange = propOnSortingChange ?? setInternalSorting;
@@ -500,6 +515,96 @@ export function FlashTable<TData, TValue = unknown>({
     []
   );
 
+  const registerRowElement = useCallback(
+    (rowId: string, element: HTMLTableRowElement | null) => {
+      if (element) {
+        rowElementsRef.current.set(rowId, element);
+      } else {
+        rowElementsRef.current.delete(rowId);
+      }
+    },
+    []
+  );
+
+  const registerExpandedRowElement = useCallback(
+    (rowId: string, element: HTMLTableRowElement | null) => {
+      if (element) {
+        expandedRowElementsRef.current.set(rowId, element);
+      } else {
+        expandedRowElementsRef.current.delete(rowId);
+      }
+    },
+    []
+  );
+
+  const measureRowAccents = useCallback(() => {
+    if (!rowAccentColor) {
+      setRowAccentBars((prev) => (prev.length === 0 ? prev : []));
+      return;
+    }
+    const overlay = accentOverlayRef.current;
+    if (!overlay) return;
+
+    const overlayRect = overlay.getBoundingClientRect();
+    const currentRows = table.getRowModel().rows;
+    const nextBars: Array<{
+      key: string;
+      top: number;
+      height: number;
+      color: string;
+      isCssColor: boolean;
+    }> = [];
+
+    currentRows.forEach((row, index) => {
+      const color = rowAccentColor(row.original, index);
+      if (!color) return;
+
+      const tr = rowElementsRef.current.get(row.id);
+      if (!tr) return;
+
+      const trRect = tr.getBoundingClientRect();
+      const expandedTr = expandedRowElementsRef.current.get(row.id);
+      const bottom = expandedTr
+        ? expandedTr.getBoundingClientRect().bottom
+        : trRect.bottom;
+
+      const top = Math.round((trRect.top - overlayRect.top) * 10) / 10;
+      const height = Math.round((bottom - trRect.top) * 10) / 10;
+      if (height <= 0) return;
+
+      const isCssColor =
+        color.startsWith("#") ||
+        color.startsWith("rgb") ||
+        color.startsWith("hsl") ||
+        color.startsWith("oklch") ||
+        color.startsWith("var(");
+
+      nextBars.push({
+        key: row.id,
+        top,
+        height,
+        color,
+        isCssColor,
+      });
+    });
+
+    setRowAccentBars((prev) => {
+      if (
+        prev.length === nextBars.length &&
+        prev.every(
+          (item, i) =>
+            item.key === nextBars[i].key &&
+            Math.abs(item.top - nextBars[i].top) <= 0.5 &&
+            Math.abs(item.height - nextBars[i].height) <= 0.5 &&
+            item.color === nextBars[i].color
+        )
+      ) {
+        return prev;
+      }
+      return nextBars;
+    });
+  }, [rowAccentColor, table]);
+
   const updateScrollState = useCallback(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -545,15 +650,19 @@ export function FlashTable<TData, TValue = unknown>({
   useLayoutEffect(() => {
     measureHeaderWidths();
     updateScrollState();
+    measureRowAccents();
   }, [
     measureHeaderWidths,
     updateScrollState,
+    measureRowAccents,
     data,
     columnVisibility,
     columnOrder,
     columnPinning,
     columnSizing,
     density,
+    finalSorting,
+    finalExpanded,
   ]);
 
   useEffect(() => {
@@ -564,6 +673,7 @@ export function FlashTable<TData, TValue = unknown>({
     const observer = new ResizeObserver(() => {
       measureHeaderWidths();
       updateScrollState();
+      measureRowAccents();
     });
 
     observer.observe(container);
@@ -578,6 +688,7 @@ export function FlashTable<TData, TValue = unknown>({
   }, [
     updateScrollState,
     measureHeaderWidths,
+    measureRowAccents,
     columnVisibility,
     columnOrder,
     columnPinning,
@@ -852,6 +963,30 @@ export function FlashTable<TData, TValue = unknown>({
             classNames?.viewport
           )}
         >
+          {/* Always-pinned left row accent bars overlay */}
+          {rowAccentColor && (
+            <div
+              ref={accentOverlayRef}
+              aria-hidden="true"
+              className="sticky left-0 z-[25] h-0 w-0 overflow-visible pointer-events-none"
+            >
+              {rowAccentBars.map((bar) => (
+                <div
+                  key={bar.key}
+                  className={cn(
+                    "absolute left-0 w-[4px]",
+                    !bar.isCssColor && bar.color
+                  )}
+                  style={{
+                    top: `${bar.top}px`,
+                    height: `${bar.height}px`,
+                    ...(bar.isCssColor ? { backgroundColor: bar.color } : {}),
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -965,6 +1100,7 @@ export function FlashTable<TData, TValue = unknown>({
                     return (
                       <Fragment key={row.id}>
                         <TableRow
+                          ref={(el) => registerRowElement(row.id, el)}
                           data-state={row.getIsSelected() && "selected"}
                           onClick={(e) => {
                             if (expandOnRowClick && row.getCanExpand()) {
@@ -978,16 +1114,17 @@ export function FlashTable<TData, TValue = unknown>({
                               : undefined
                           }
                           className={cn(
-                            "group/row border-b-0 transition-colors [--flash-table-cell-bg:var(--card)] data-[state=selected]:[--flash-table-cell-bg:var(--muted)]",
+                            "group/row border-b-0 transition-colors [--flash-table-cell-bg:var(--card)]",
+                            striped &&
+                              isEvenRow &&
+                              "bg-muted/80 dark:bg-muted/40 [--flash-table-cell-bg:color-mix(in_srgb,var(--muted)_80%,var(--card))] dark:[--flash-table-cell-bg:color-mix(in_srgb,var(--muted)_40%,var(--card))]",
                             hoverable
-                              ? "hover:bg-muted hover:[--flash-table-cell-bg:var(--muted)] data-[state=selected]:bg-muted"
+                              ? "hover:bg-muted hover:[--flash-table-cell-bg:var(--muted)] dark:hover:bg-muted dark:hover:[--flash-table-cell-bg:var(--muted)]"
                               : "hover:bg-transparent",
+                            "data-[state=selected]:bg-muted data-[state=selected]:[--flash-table-cell-bg:var(--muted)] dark:data-[state=selected]:bg-muted dark:data-[state=selected]:[--flash-table-cell-bg:var(--muted)]",
                             (onRowClick ||
                               (expandOnRowClick && row.getCanExpand())) &&
                               "cursor-pointer",
-                            striped &&
-                              isEvenRow &&
-                              "bg-muted [--flash-table-cell-bg:var(--muted)]",
                             classNames?.row,
                             rowClassName
                               ? rowClassName(row.original, rowIndex)
@@ -1069,15 +1206,8 @@ export function FlashTable<TData, TValue = unknown>({
                                   (isSystemLeftCol ||
                                     meta?.align === "center") &&
                                     "text-center",
-                                  // Pinned cell 100% opaque background so scrolled content never bleeds through
-                                  isPinned && [
-                                    "z-20",
-                                    striped && isEvenRow
-                                      ? "bg-muted"
-                                      : "bg-card",
-                                    hoverable && "group-hover/row:bg-muted",
-                                    "group-data-[state=selected]/row:bg-muted",
-                                  ],
+                                  // Pinned cell stacking context (opaque background comes from --flash-table-cell-bg)
+                                  isPinned && "z-20",
                                   // Sticky boundary dividers & directional shadows
                                   isLastLeftPinned &&
                                     "border-r border-border",
@@ -1105,6 +1235,7 @@ export function FlashTable<TData, TValue = unknown>({
                         {/* Optional Expanded Sub-Component Row */}
                         {hasSubComponent && renderSubComponent && (
                           <TableRow
+                            ref={(el) => registerExpandedRowElement(row.id, el)}
                             className={cn(
                               "bg-muted/20 hover:bg-muted/20 border-b-0",
                               classNames?.expandedRow
@@ -1176,7 +1307,7 @@ export function FlashTable<TData, TValue = unknown>({
                 <TableFooter
                   className={cn(
                     "border-t bg-muted/50 font-medium",
-                    stickyHeader && maxHeight && "sticky bottom-0 z-20 bg-muted",
+                    stickyHeader && maxHeight && "sticky bottom-0 z-30 bg-muted",
                     classNames?.footer
                   )}
                 >

@@ -310,6 +310,8 @@ export interface FlashTableProps<TData, TValue = unknown> {
   ) => void;
   /** Dynamic className per row based on row data */
   rowClassName?: (row: TData, index: number) => string;
+  /** 4px highlight bar on the left edge of each row. Accepts a Tailwind background class (e.g. 'bg-destructive', 'bg-emerald-500') or CSS color (e.g. '#ef4444', 'var(--primary)'). */
+  rowAccentColor?: (row: TData, index: number) => string | null | undefined;
   /** Horizontal progress bar rendered at the bottom edge of each row (0 to 100%) */
   renderRowProgress?: (row: TData) => FlashTableRowProgress | null;
   /** Custom footer content rendered inside <TableFooter> */

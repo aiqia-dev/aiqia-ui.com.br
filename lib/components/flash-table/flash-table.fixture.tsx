@@ -207,12 +207,31 @@ const MOCK_SHIPMENTS: ShipmentRow[] = [
 
 const STATUS_LABELS: Record<
   ShipmentRow["status"],
-  { label: string; variant: "default" | "secondary" | "destructive" | "outline" }
+  {
+    label: string;
+    variant: "default" | "secondary" | "destructive" | "outline";
+    color?: string;
+  }
 > = {
-  em_transito: { label: "Em Trânsito", variant: "default" },
-  entregue: { label: "Entregue", variant: "secondary" },
-  pendente: { label: "Pendente", variant: "outline" },
-  atrasado: { label: "Atrasado", variant: "destructive" },
+  em_transito: {
+    label: "Em Trânsito",
+    variant: "default",
+    color: "bg-primary",
+  },
+  entregue: {
+    label: "Entregue",
+    variant: "secondary",
+    color: "bg-emerald-500",
+  },
+  pendente: {
+    label: "Pendente",
+    variant: "outline",
+  },
+  atrasado: {
+    label: "Atrasado",
+    variant: "destructive",
+    color: "bg-destructive",
+  },
 };
 
 const Fixture = () => {
@@ -223,7 +242,8 @@ const Fixture = () => {
   const [striped] = useFixtureInput("striped", false);
   const [showSelectionColumn] = useFixtureInput("showSelectionColumn", true);
   const [enableExpandable] = useFixtureInput("enableExpandable", true);
-  const [showRowProgress] = useFixtureInput("showRowProgress", true);
+  const [showRowProgress] = useFixtureInput("showRowProgress", false);
+  const [showRowAccent] = useFixtureInput("showRowAccent", true);
   const [isLoading] = useFixtureInput("isLoading", false);
 
   const columns = useMemo<ColumnDef<ShipmentRow>[]>(
@@ -438,16 +458,16 @@ const Fixture = () => {
               )
             : undefined
         }
+        rowAccentColor={
+          showRowAccent
+            ? (row) => STATUS_LABELS[row.status].color
+            : undefined
+        }
         renderRowProgress={
           showRowProgress
             ? (row) => ({
                 percent: row.progress,
-                color:
-                  row.status === "entregue"
-                    ? "bg-emerald-500"
-                    : row.status === "atrasado"
-                      ? "bg-destructive"
-                      : "bg-primary",
+                color: STATUS_LABELS[row.status].color ?? "bg-primary",
               })
             : undefined
         }
