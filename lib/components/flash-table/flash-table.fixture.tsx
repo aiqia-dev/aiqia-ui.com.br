@@ -429,33 +429,33 @@ const Fixture = () => {
         renderSubComponent={
           enableExpandable
             ? ({ data }) => (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-muted/30 p-3 rounded-md border border-border">
-                  <div>
-                    <span className="text-muted-foreground block">
-                      Rota completa
-                    </span>
-                    <strong className="text-foreground">
-                      {data.origin} → {data.destination}
-                    </strong>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground block">
-                      Motorista / Placa
-                    </span>
-                    <strong className="text-foreground">
-                      {data.driver} ({data.plate})
-                    </strong>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground block">
-                      Progresso da entrega
-                    </span>
-                    <strong className="text-foreground">
-                      {data.progress}% concluído
-                    </strong>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-muted/30 p-3 rounded-md border border-border">
+                <div>
+                  <span className="text-muted-foreground block">
+                    Rota completa
+                  </span>
+                  <strong className="text-foreground">
+                    {data.origin} → {data.destination}
+                  </strong>
                 </div>
-              )
+                <div>
+                  <span className="text-muted-foreground block">
+                    Motorista / Placa
+                  </span>
+                  <strong className="text-foreground">
+                    {data.driver} ({data.plate})
+                  </strong>
+                </div>
+                <div>
+                  <span className="text-muted-foreground block">
+                    Progresso da entrega
+                  </span>
+                  <strong className="text-foreground">
+                    {data.progress}% concluído
+                  </strong>
+                </div>
+              </div>
+            )
             : undefined
         }
         rowAccentColor={
@@ -466,9 +466,9 @@ const Fixture = () => {
         renderRowProgress={
           showRowProgress
             ? (row) => ({
-                percent: row.progress,
-                color: STATUS_LABELS[row.status].color ?? "bg-primary",
-              })
+              percent: row.progress,
+              color: STATUS_LABELS[row.status].color ?? "bg-primary",
+            })
             : undefined
         }
       />

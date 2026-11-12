@@ -975,6 +975,15 @@ export function FlashTable<TData, TValue = unknown>({
         )}
         onContextMenu={handleContextMenu}
       >
+        {/* Scoped CSS rule ensuring fixed/actions columns never stretch in fixed table layouts */}
+        <style>{`
+          .flash-table-fixed-cell {
+            width: var(--flash-col-size) !important;
+            min-width: var(--flash-col-size) !important;
+            max-width: var(--flash-col-size) !important;
+          }
+        `}</style>
+
         {/* Loading Overlay */}
         {showLoadingOverlay && (
           <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex justify-center items-center z-50">
@@ -1091,6 +1100,46 @@ export function FlashTable<TData, TValue = unknown>({
                 classNames?.table
               )}
             >
+              <colgroup>
+                {table.getVisibleLeafColumns().map((col) => {
+                  const colId = col.id;
+                  const isActionsCol = actionsColumnIds.has(colId);
+                  const isSystemLeftCol = isSystemLeftColumnId(colId);
+                  const meta = col.columnDef
+                    .meta as FlashTableColumnMeta | undefined;
+                  const customCol = col.columnDef as FlashTableColumnDef<
+                    TData,
+                    TValue
+                  >;
+                  const isFixed =
+                    isActionsCol ||
+                    isSystemLeftCol ||
+                    Boolean(meta?.isActions) ||
+                    (customCol.enableResizing === false &&
+                      (customCol.size !== undefined ||
+                        customCol.width !== undefined ||
+                        meta?.width !== undefined));
+
+                  const size = col.getSize();
+                  const formattedSize = `${size}px`;
+
+                  return (
+                    <col
+                      key={colId}
+                      style={{
+                        width: formattedSize,
+                        ...(isFixed
+                          ? ({
+                              "--flash-col-size": formattedSize,
+                            } as CSSProperties)
+                          : {}),
+                      }}
+                      className={isFixed ? "flash-table-fixed-cell" : undefined}
+                    />
+                  );
+                })}
+              </colgroup>
+
               <TableHeader
                 className={cn(
                   "bg-muted",
@@ -1254,10 +1303,28 @@ export function FlashTable<TData, TValue = unknown>({
                                     ? cell.column.getSize()
                                     : undefined);
 
-                            const cellStyle: CSSProperties = {
+                            const isFixedCol =
+                              isActionsCol ||
+                              isSystemLeftCol ||
+                              Boolean(meta?.isActions) ||
+                              (colDef.enableResizing === false &&
+                                (colDef.size !== undefined ||
+                                  colDef.width !== undefined ||
+                                  meta?.width !== undefined));
+
+                            const formattedColSize =
+                              typeof resolvedWidth === "number"
+                                ? `${resolvedWidth}px`
+                                : resolvedWidth;
+
+                            const cellStyle: CSSProperties &
+                              Record<string, string | number | undefined> = {
                               width: resolvedWidth,
                               minWidth: resolvedMinWidth,
                               maxWidth: resolvedMaxWidth,
+                              ...(isFixedCol
+                                ? { "--flash-col-size": formattedColSize }
+                                : {}),
                               ...(isPinned
                                 ? {
                                     backgroundColor:
@@ -1283,6 +1350,7 @@ export function FlashTable<TData, TValue = unknown>({
                                 key={cell.id}
                                 style={cellStyle}
                                 className={cn(
+                                  isFixedCol && "flash-table-fixed-cell",
                                   meta?.wrap
                                     ? "whitespace-normal"
                                     : "whitespace-nowrap overflow-hidden text-ellipsis",
@@ -1447,6 +1515,7 @@ export function FlashTable<TData, TValue = unknown>({
                           const isFirstRightPinned =
                             colId === firstRightPinnedColumnId;
                           const isActionsCol = actionsColumnIds.has(colId);
+                          const isSystemLeftCol = isSystemLeftColumnId(colId);
                           const meta = header.column.columnDef.meta as
                             | FlashTableColumnMeta
                             | undefined;
@@ -1474,10 +1543,28 @@ export function FlashTable<TData, TValue = unknown>({
                                   | undefined) ??
                                 (isActionsCol ? header.getSize() : undefined);
 
-                          const footerStyle: CSSProperties = {
+                          const isFixedCol =
+                            isActionsCol ||
+                            isSystemLeftCol ||
+                            Boolean(meta?.isActions) ||
+                            (colDef.enableResizing === false &&
+                              (colDef.size !== undefined ||
+                                colDef.width !== undefined ||
+                                meta?.width !== undefined));
+
+                          const formattedColSize =
+                            typeof resolvedWidth === "number"
+                              ? `${resolvedWidth}px`
+                              : resolvedWidth;
+
+                          const footerStyle: CSSProperties &
+                            Record<string, string | number | undefined> = {
                             width: resolvedWidth,
                             minWidth: resolvedMinWidth,
                             maxWidth: resolvedMaxWidth,
+                            ...(isFixedCol
+                              ? { "--flash-col-size": formattedColSize }
+                              : {}),
                             ...(isPinned
                               ? {
                                   backgroundColor: "var(--muted)",
@@ -1502,6 +1589,7 @@ export function FlashTable<TData, TValue = unknown>({
                               key={header.id}
                               style={footerStyle}
                               className={cn(
+                                isFixedCol && "flash-table-fixed-cell",
                                 "whitespace-nowrap overflow-hidden text-ellipsis font-medium border-t border-border",
                                 isPinned ? "sticky bg-muted z-20" : "bg-muted",
                                 density === "ultra-compact" && "py-1 px-2 text-xs",

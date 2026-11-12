@@ -127,10 +127,23 @@ export function FlashTableHeaderCell<TData, TValue>({
       : (meta?.maxWidth as number | string | undefined) ??
         (isActionsCol ? header.getSize() : undefined);
 
-  const style: CSSProperties = {
+  const isFixedCol =
+    isActionsCol ||
+    isSystemLeftCol ||
+    Boolean(meta?.isActions) ||
+    (colDef.enableResizing === false &&
+      (colDef.size !== undefined ||
+        colDef.width !== undefined ||
+        meta?.width !== undefined));
+
+  const formattedColSize =
+    typeof resolvedWidth === "number" ? `${resolvedWidth}px` : resolvedWidth;
+
+  const style: CSSProperties & Record<string, string | number | undefined> = {
     width: resolvedWidth,
     minWidth: resolvedMinWidth,
     maxWidth: resolvedMaxWidth,
+    ...(isFixedCol ? { "--flash-col-size": formattedColSize } : {}),
     ...(hasActiveTransform
       ? {
           transform: CSS.Translate.toString(transform),
@@ -209,6 +222,7 @@ export function FlashTableHeaderCell<TData, TValue>({
       {...(canReorder ? listeners : {})}
       onClick={canSort ? handleHeaderClick : undefined}
       className={cn(
+        isFixedCol && "flash-table-fixed-cell",
         "group/th select-none whitespace-nowrap align-middle border-b border-border transition-colors font-medium text-muted-foreground",
         isSystemLeftCol && "[&:has([role=checkbox])]:pr-2",
         isPinned ? "sticky" : "relative",

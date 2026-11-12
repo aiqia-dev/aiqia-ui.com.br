@@ -124,3 +124,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.flash-table-fixed-cell {
+  width: var(--flash-col-size) !important;
+  min-width: var(--flash-col-size) !important;
+  max-width: var(--flash-col-size) !important;
+}
