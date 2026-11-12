@@ -6,7 +6,13 @@ export type FlashTableLoadingMode = "auto" | "overlay" | "skeleton";
 export interface FlashTableColumnMeta {
     /** Human-readable column label used in the column manager and context menu */
     label?: string;
-    /** Marks this column as the actions column (auto-pinned to the right) */
+    /** Explicit fixed or target width (e.g. 70, 80, '80px', '5rem') */
+    width?: number | string;
+    /** Explicit minimum width */
+    minWidth?: number | string;
+    /** Explicit maximum width */
+    maxWidth?: number | string;
+    /** Marks this column as the actions column (auto-pinned to the right, compact width) */
     isActions?: boolean;
     /** Default pin side when the table initializes */
     defaultPinned?: "left" | "right" | false;
@@ -27,6 +33,17 @@ export interface FlashTableColumnMeta {
     /** Whether text in cells of this column should wrap instead of truncating/nowrap */
     wrap?: boolean;
 }
+export type FlashTableColumnDef<TData, TValue = unknown> = ColumnDef<TData, TValue> & {
+    /**
+     * Direct width alias for convenience (e.g. 70, 80, '80px').
+     * Maps to TanStack's `size` and prevents fixed table layouts from auto-expanding action/non-resizable columns.
+     */
+    width?: number | string;
+    /** Direct minWidth alias */
+    minWidth?: number | string;
+    /** Direct maxWidth alias */
+    maxWidth?: number | string;
+};
 export interface FlashTablePersistedState {
     columnOrder: ColumnOrderState;
     columnVisibility: VisibilityState;
@@ -100,8 +117,8 @@ export interface FlashTableStorageAdapter {
     removeItem: (key: string) => void;
 }
 export interface FlashTableProps<TData, TValue = unknown> {
-    /** Column definitions powered by @tanstack/react-table */
-    columns: ColumnDef<TData, TValue>[];
+    /** Column definitions powered by @tanstack/react-table (supports FlashTableColumnDef with width/minWidth/maxWidth aliases) */
+    columns: (ColumnDef<TData, TValue> | FlashTableColumnDef<TData, TValue>)[];
     /** Dataset array to render */
     data: TData[];
     /** Total number of records (for server-paginated lists; defaults to data.length when omitted) */

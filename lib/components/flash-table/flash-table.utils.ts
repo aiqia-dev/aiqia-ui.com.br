@@ -147,6 +147,80 @@ export function isActionsColumnDef<TData, TValue>(
   return false;
 }
 
+/**
+ * Parses numeric pixel width from a number or CSS string ('80px', '5rem', '80')
+ */
+export function parseColumnWidth(
+  value: number | string | undefined
+): number | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value === "number") {
+    return Number.isFinite(value) && value > 0 ? value : undefined;
+  }
+  const str = String(value).trim();
+  if (!str) return undefined;
+
+  // Direct number string "80"
+  if (/^\d+(?:\.\d+)?$/.test(str)) {
+    const num = parseFloat(str);
+    return Number.isFinite(num) && num > 0 ? num : undefined;
+  }
+
+  // Pixel string "80px"
+  const pxMatch = str.match(/^(\d+(?:\.\d+)?)px$/);
+  if (pxMatch) {
+    return parseFloat(pxMatch[1]);
+  }
+
+  // Rem string "5rem" (assuming standard 16px root font size)
+  const remMatch = str.match(/^(\d+(?:\.\d+)?)rem$/);
+  if (remMatch) {
+    return parseFloat(remMatch[1]) * 16;
+  }
+
+  return undefined;
+}
+
+/**
+ * Extracts numeric width from Tailwind className (e.g. 'w-[80px]', '!w-[80px]', 'w-20', '!w-16')
+ */
+export function extractWidthFromClassName(
+  className?: string,
+  prefix: "w" | "min-w" | "max-w" = "w"
+): number | undefined {
+  if (!className) return undefined;
+
+  // Check for arbitrary px class: w-[80px] or !w-[80px]
+  const arbitraryPxRegex = new RegExp(
+    `(?:^|\\s)!?${prefix}-\\[(\\d+(?:\\.\\d+)?)px\\]`
+  );
+  const pxMatch = className.match(arbitraryPxRegex);
+  if (pxMatch) {
+    return parseFloat(pxMatch[1]);
+  }
+
+  // Check for arbitrary rem class: w-[5rem] or !w-[5rem]
+  const arbitraryRemRegex = new RegExp(
+    `(?:^|\\s)!?${prefix}-\\[(\\d+(?:\\.\\d+)?)rem\\]`
+  );
+  const remMatch = className.match(arbitraryRemRegex);
+  if (remMatch) {
+    return parseFloat(remMatch[1]) * 16;
+  }
+
+  // Check for standard Tailwind numeric scale: w-16, w-20, w-24, etc.
+  const scaleRegex = new RegExp(
+    `(?:^|\\s)!?${prefix}-(\\d+(?:\\.\\d+)?)(?:\\s|$)`
+  );
+  const scaleMatch = className.match(scaleRegex);
+  if (scaleMatch) {
+    const scale = parseFloat(scaleMatch[1]);
+    return scale * 4;
+  }
+
+  return undefined;
+}
+
 function extractTextFromReactNode(node: ReactNode): string {
   if (typeof node === "string" || typeof node === "number") {
     return String(node).trim();

@@ -18,6 +18,7 @@ import {
   TooltipTrigger,
 } from "../tooltip/tooltip.component";
 import type {
+  FlashTableColumnDef,
   FlashTableColumnMeta,
   FlashTableDensity,
   FlashTableLabels,
@@ -112,12 +113,24 @@ export function FlashTableHeaderCell<TData, TValue>({
     transform !== null && (transform.x !== 0 || transform.y !== 0);
 
   const resolvedStickyOffset = stickyOffset ?? 0;
+  const colDef = column.columnDef as FlashTableColumnDef<TData, TValue>;
+
+  const resolvedWidth =
+    (meta?.width as number | string | undefined) ?? header.getSize();
+  const resolvedMinWidth =
+    colDef.minSize ??
+    (meta?.minWidth as number | string | undefined) ??
+    (isPinned ? header.getSize() : undefined);
+  const resolvedMaxWidth =
+    colDef.maxSize && colDef.maxSize < Number.MAX_SAFE_INTEGER
+      ? colDef.maxSize
+      : (meta?.maxWidth as number | string | undefined) ??
+        (isActionsCol ? header.getSize() : undefined);
 
   const style: CSSProperties = {
-    width: header.getSize(),
-    minWidth:
-      column.columnDef.minSize ?? (isPinned ? header.getSize() : undefined),
-    maxWidth: column.columnDef.maxSize,
+    width: resolvedWidth,
+    minWidth: resolvedMinWidth,
+    maxWidth: resolvedMaxWidth,
     ...(hasActiveTransform
       ? {
           transform: CSS.Translate.toString(transform),

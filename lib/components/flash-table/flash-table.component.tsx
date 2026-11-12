@@ -73,6 +73,7 @@ import {
   type FlashTableHelpDialogProps,
 } from "./flash-table-help-dialog";
 import type {
+  FlashTableColumnDef,
   FlashTableColumnMeta,
   FlashTableLabels,
   FlashTableProps,
@@ -80,10 +81,12 @@ import type {
 import {
   DEFAULT_FLASH_TABLE_LABELS,
   extractColumnId,
+  extractWidthFromClassName,
   isActionsColumnDef,
   isExpansionColumnId,
   isSelectionColumnId,
   isSystemLeftColumnId,
+  parseColumnWidth,
 } from "./flash-table.utils";
 import { useFlashTablePersistence } from "./use-flash-table-persistence";
 
@@ -266,10 +269,87 @@ export function FlashTable<TData, TValue = unknown>({
 
   // Build normalized columns including optional auto-injected selection & expand columns
   const normalizedColumns = useMemo<ColumnDef<TData, TValue>[]>(() => {
-    const baseCols = columns.map((col, idx) => ({
-      ...col,
-      id: extractColumnId(col, idx),
-    }));
+    const baseCols = columns.map((rawCol, idx) => {
+      const colId = extractColumnId(rawCol, idx);
+      const isActionsCol = isActionsColumnDef(
+        colId,
+        rawCol,
+        idx === columns.length - 1,
+        pinActionsColumnRight,
+        pinLastColumnRight
+      );
+
+      const meta = rawCol.meta as FlashTableColumnMeta | undefined;
+      const customCol = rawCol as FlashTableColumnDef<TData, TValue>;
+
+      // Resolve explicit width or width inferred from Tailwind classes
+      const rawWidth =
+        rawCol.size ??
+        customCol.width ??
+        meta?.width ??
+        extractWidthFromClassName(meta?.headerClassName, "w") ??
+        extractWidthFromClassName(meta?.cellClassName, "w");
+      const parsedWidth = parseColumnWidth(rawWidth);
+
+      // Resolve min width
+      const rawMinWidth =
+        rawCol.minSize ??
+        customCol.minWidth ??
+        meta?.minWidth ??
+        extractWidthFromClassName(meta?.headerClassName, "min-w") ??
+        extractWidthFromClassName(meta?.cellClassName, "min-w");
+      const parsedMinWidth = parseColumnWidth(rawMinWidth);
+
+      // Resolve max width
+      const rawMaxWidth =
+        rawCol.maxSize ??
+        customCol.maxWidth ??
+        meta?.maxWidth ??
+        extractWidthFromClassName(meta?.headerClassName, "max-w") ??
+        extractWidthFromClassName(meta?.cellClassName, "max-w");
+      const parsedMaxWidth = parseColumnWidth(rawMaxWidth);
+
+      let finalSize = parsedWidth;
+      let finalMinSize = parsedMinWidth;
+      let finalMaxSize = parsedMaxWidth;
+
+      if (isActionsCol) {
+        // Actions column: default to 70px if no explicit size or width provided
+        if (finalSize === undefined) {
+          finalSize = 70;
+        }
+        // Crucial for fixed table layout: lock maxSize to prevent the browser
+        // from expanding the actions column across excess horizontal table width!
+        if (finalMaxSize === undefined) {
+          finalMaxSize = finalSize;
+        }
+        if (finalMinSize === undefined) {
+          finalMinSize = finalSize;
+        }
+      } else {
+        // For non-actions columns:
+        // If an explicit size smaller than 60px is set, allow it without defaultColumn clamping
+        if (finalSize !== undefined && finalMinSize === undefined) {
+          finalMinSize = Math.min(60, finalSize);
+        }
+        // If column resizing is disabled and an explicit size was provided without maxSize, lock maxSize
+        if (
+          rawCol.enableResizing === false &&
+          finalSize !== undefined &&
+          finalMaxSize === undefined
+        ) {
+          finalMaxSize = finalSize;
+        }
+      }
+
+      return {
+        ...rawCol,
+        id: colId,
+        ...(finalSize !== undefined ? { size: finalSize } : {}),
+        ...(finalMinSize !== undefined ? { minSize: finalMinSize } : {}),
+        ...(finalMaxSize !== undefined ? { maxSize: finalMaxSize } : {}),
+      };
+    });
 
     const injectedLeftCols: ColumnDef<TData, TValue>[] = [];
 
@@ -366,6 +446,8 @@ export function FlashTable<TData, TValue = unknown>({
     return [...injectedLeftCols, ...baseCols];
   }, [
     columns,
+    pinActionsColumnRight,
+    pinLastColumnRight,
     shouldInjectSelectionCol,
     shouldInjectExpandCol,
     labels,
@@ -1148,12 +1230,34 @@ export function FlashTable<TData, TValue = unknown>({
                               | undefined;
                             const stickyOffset = stickyOffsets[colId] ?? 0;
 
+                            const colDef =
+                              cell.column.columnDef as FlashTableColumnDef<
+                                TData,
+                                TValue
+                              >;
+                            const resolvedWidth =
+                              (meta?.width as number | string | undefined) ??
+                              cell.column.getSize();
+                            const resolvedMinWidth =
+                              colDef.minSize ??
+                              (meta?.minWidth as number | string | undefined) ??
+                              (isPinned ? cell.column.getSize() : undefined);
+                            const resolvedMaxWidth =
+                              colDef.maxSize &&
+                              colDef.maxSize < Number.MAX_SAFE_INTEGER
+                                ? colDef.maxSize
+                                : (meta?.maxWidth as
+                                    | number
+                                    | string
+                                    | undefined) ??
+                                  (isActionsCol
+                                    ? cell.column.getSize()
+                                    : undefined);
+
                             const cellStyle: CSSProperties = {
-                              width: cell.column.getSize(),
-                              minWidth:
-                                cell.column.columnDef.minSize ??
-                                (isPinned ? cell.column.getSize() : undefined),
-                              maxWidth: cell.column.columnDef.maxSize,
+                              width: resolvedWidth,
+                              minWidth: resolvedMinWidth,
+                              maxWidth: resolvedMaxWidth,
                               ...(isPinned
                                 ? {
                                     backgroundColor:
@@ -1348,8 +1452,32 @@ export function FlashTable<TData, TValue = unknown>({
                             | undefined;
                           const stickyOffset = stickyOffsets[colId] ?? 0;
 
+                          const colDef =
+                            header.column.columnDef as FlashTableColumnDef<
+                              TData,
+                              TValue
+                            >;
+                          const resolvedWidth =
+                            (meta?.width as number | string | undefined) ??
+                            header.getSize();
+                          const resolvedMinWidth =
+                            colDef.minSize ??
+                            (meta?.minWidth as number | string | undefined) ??
+                            (isPinned ? header.getSize() : undefined);
+                          const resolvedMaxWidth =
+                            colDef.maxSize &&
+                            colDef.maxSize < Number.MAX_SAFE_INTEGER
+                              ? colDef.maxSize
+                              : (meta?.maxWidth as
+                                  | number
+                                  | string
+                                  | undefined) ??
+                                (isActionsCol ? header.getSize() : undefined);
+
                           const footerStyle: CSSProperties = {
-                            width: header.getSize(),
+                            width: resolvedWidth,
+                            minWidth: resolvedMinWidth,
+                            maxWidth: resolvedMaxWidth,
                             ...(isPinned
                               ? {
                                   backgroundColor: "var(--muted)",
