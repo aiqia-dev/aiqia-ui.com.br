@@ -349,7 +349,10 @@ export function FlashTableHeaderCell<TData, TValue>({
       )}
 
       {/* Column Resize Handle */}
-      {enableColumnResizing && column.getCanResize() && !isSystemLeftCol && (
+      {enableColumnResizing &&
+        column.getCanResize() &&
+        !isSystemLeftCol &&
+        !isActionsCol && (
         <div
           onMouseDown={handleResizeMouseDown}
           onTouchStart={handleResizeTouchStart}

@@ -312,6 +312,8 @@ export function FlashTable<TData, TValue = unknown>({
       let finalSize = parsedWidth;
       let finalMinSize = parsedMinWidth;
       let finalMaxSize = parsedMaxWidth;
+      let finalEnableResizing = rawCol.enableResizing;
+      let finalEnableSorting = rawCol.enableSorting;
 
       if (isActionsCol) {
         // Actions column: default to 70px if no explicit size or width provided
@@ -325,6 +327,13 @@ export function FlashTable<TData, TValue = unknown>({
         }
         if (finalMinSize === undefined) {
           finalMinSize = finalSize;
+        }
+        // Actions columns are non-resizable and non-sortable by default
+        if (finalEnableResizing === undefined) {
+          finalEnableResizing = false;
+        }
+        if (finalEnableSorting === undefined) {
+          finalEnableSorting = false;
         }
       } else {
         // For non-actions columns:
@@ -348,6 +357,12 @@ export function FlashTable<TData, TValue = unknown>({
         ...(finalSize !== undefined ? { size: finalSize } : {}),
         ...(finalMinSize !== undefined ? { minSize: finalMinSize } : {}),
         ...(finalMaxSize !== undefined ? { maxSize: finalMaxSize } : {}),
+        ...(finalEnableResizing !== undefined
+          ? { enableResizing: finalEnableResizing }
+          : {}),
+        ...(finalEnableSorting !== undefined
+          ? { enableSorting: finalEnableSorting }
+          : {}),
       };
     });
 
