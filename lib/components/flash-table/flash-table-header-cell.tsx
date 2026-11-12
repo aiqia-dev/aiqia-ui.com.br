@@ -115,8 +115,18 @@ export function FlashTableHeaderCell<TData, TValue>({
   const resolvedStickyOffset = stickyOffset ?? 0;
   const colDef = column.columnDef as FlashTableColumnDef<TData, TValue>;
 
-  const resolvedWidth =
-    (meta?.width as number | string | undefined) ?? header.getSize();
+  const isResizedByUser =
+    header.getContext().table.getState().columnSizing[column.id] !== undefined;
+  const isExplicit =
+    Boolean(meta?.hasExplicitWidth) ||
+    isResizedByUser ||
+    isActionsCol ||
+    isSystemLeftCol ||
+    isPinned;
+
+  const resolvedWidth = isExplicit
+    ? (meta?.width as number | string | undefined) ?? header.getSize()
+    : undefined;
   const resolvedMinWidth =
     colDef.minSize ??
     (meta?.minWidth as number | string | undefined) ??

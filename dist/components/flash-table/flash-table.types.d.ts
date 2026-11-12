@@ -12,6 +12,8 @@ export interface FlashTableColumnMeta {
     minWidth?: number | string;
     /** Explicit maximum width */
     maxWidth?: number | string;
+    /** Internal/resolved flag indicating whether the column has an explicit author-defined width */
+    hasExplicitWidth?: boolean;
     /** Marks this column as the actions column (auto-pinned to the right, compact width) */
     isActions?: boolean;
     /** Default pin side when the table initializes */

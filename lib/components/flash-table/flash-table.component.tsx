@@ -282,6 +282,18 @@ export function FlashTable<TData, TValue = unknown>({
       const meta = rawCol.meta as FlashTableColumnMeta | undefined;
       const customCol = rawCol as FlashTableColumnDef<TData, TValue>;
 
+      // Check if author provided an explicit size or width
+      const hasAuthorExplicitWidth =
+        rawCol.size !== undefined ||
+        customCol.width !== undefined ||
+        meta?.width !== undefined ||
+        extractWidthFromClassName(meta?.headerClassName, "w") !== undefined ||
+        extractWidthFromClassName(meta?.cellClassName, "w") !== undefined;
+
+      const isExplicitCol = Boolean(
+        hasAuthorExplicitWidth || isActionsCol
+      );
+
       // Resolve explicit width or width inferred from Tailwind classes
       const rawWidth =
         rawCol.size ??
@@ -354,6 +366,10 @@ export function FlashTable<TData, TValue = unknown>({
       return {
         ...rawCol,
         id: colId,
+        meta: {
+          ...meta,
+          hasExplicitWidth: isExplicitCol,
+        },
         ...(finalSize !== undefined ? { size: finalSize } : {}),
         ...(finalMinSize !== undefined ? { minSize: finalMinSize } : {}),
         ...(finalMaxSize !== undefined ? { maxSize: finalMaxSize } : {}),
@@ -384,6 +400,7 @@ export function FlashTable<TData, TValue = unknown>({
           enablePinning: false,
           enableReordering: false,
           defaultPinned: "left",
+          hasExplicitWidth: true,
         } satisfies FlashTableColumnMeta,
         header: ({ table: tbl }) => (
           <Checkbox
@@ -430,6 +447,7 @@ export function FlashTable<TData, TValue = unknown>({
           enablePinning: false,
           enableReordering: false,
           defaultPinned: "left",
+          hasExplicitWidth: true,
         } satisfies FlashTableColumnMeta,
         header: () => null,
         cell: ({ row }) => {
@@ -1135,6 +1153,17 @@ export function FlashTable<TData, TValue = unknown>({
                         customCol.width !== undefined ||
                         meta?.width !== undefined));
 
+                  const isResizedByUser = columnSizing[colId] !== undefined;
+                  const isExplicit =
+                    Boolean(meta?.hasExplicitWidth) ||
+                    isResizedByUser ||
+                    isFixed ||
+                    Boolean(col.getIsPinned());
+
+                  if (!isExplicit) {
+                    return <col key={colId} />;
+                  }
+
                   const size = col.getSize();
                   const formattedSize = `${size}px`;
 
@@ -1299,9 +1328,19 @@ export function FlashTable<TData, TValue = unknown>({
                                 TData,
                                 TValue
                               >;
-                            const resolvedWidth =
-                              (meta?.width as number | string | undefined) ??
-                              cell.column.getSize();
+                            const isResizedByUser =
+                              columnSizing[colId] !== undefined;
+                            const isExplicit =
+                              Boolean(meta?.hasExplicitWidth) ||
+                              isResizedByUser ||
+                              isActionsCol ||
+                              isSystemLeftCol ||
+                              isPinned;
+
+                            const resolvedWidth = isExplicit
+                              ? (meta?.width as number | string | undefined) ??
+                                cell.column.getSize()
+                              : undefined;
                             const resolvedMinWidth =
                               colDef.minSize ??
                               (meta?.minWidth as number | string | undefined) ??
@@ -1541,9 +1580,19 @@ export function FlashTable<TData, TValue = unknown>({
                               TData,
                               TValue
                             >;
-                          const resolvedWidth =
-                            (meta?.width as number | string | undefined) ??
-                            header.getSize();
+                          const isResizedByUser =
+                            columnSizing[colId] !== undefined;
+                          const isExplicit =
+                            Boolean(meta?.hasExplicitWidth) ||
+                            isResizedByUser ||
+                            isActionsCol ||
+                            isSystemLeftCol ||
+                            isPinned;
+
+                          const resolvedWidth = isExplicit
+                            ? (meta?.width as number | string | undefined) ??
+                              header.getSize()
+                            : undefined;
                           const resolvedMinWidth =
                             colDef.minSize ??
                             (meta?.minWidth as number | string | undefined) ??
