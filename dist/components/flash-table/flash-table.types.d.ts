@@ -1,6 +1,6 @@
-import { CellContext, Column, ColumnDef, ColumnOrderState, ColumnPinningPosition, ColumnPinningState, ColumnSizingState, ExpandedState, Header, HeaderContext, OnChangeFn, Row, RowData, RowSelectionState, SortingState, Table, Updater, VisibilityState } from '@tanstack/react-table';
+import { CellContext, Column, ColumnDef, ColumnOrderState, ColumnPinningPosition, ColumnPinningState, ColumnResizeMode, ColumnSizingState, ExpandedState, Header, HeaderContext, OnChangeFn, Row, RowData, RowSelectionState, SortingState, Table, Updater, VisibilityState } from '@tanstack/react-table';
 import { CSSProperties, MouseEvent, ReactNode } from 'react';
-export type { CellContext, Column, ColumnDef, ColumnOrderState, ColumnPinningPosition, ColumnPinningState, ColumnSizingState, ExpandedState, Header, HeaderContext, OnChangeFn, Row, RowData, RowSelectionState, SortingState, Table as FlashTableInstance, Table as TanStackTable, Updater, VisibilityState, };
+export type { CellContext, Column, ColumnDef, ColumnOrderState, ColumnPinningPosition, ColumnPinningState, ColumnResizeMode, ColumnSizingState, ExpandedState, Header, HeaderContext, OnChangeFn, Row, RowData, RowSelectionState, SortingState, Table as FlashTableInstance, Table as TanStackTable, Updater, VisibilityState, };
 export type FlashTableDensity = "ultra-compact" | "compact" | "comfortable";
 export type FlashTableLoadingMode = "auto" | "overlay" | "skeleton";
 export interface FlashTableColumnMeta {
@@ -215,6 +215,13 @@ export interface FlashTableProps<TData, TValue = unknown> {
     enableColumnVisibility?: boolean;
     /** Enables resizing column widths by dragging header edges (default: true) */
     enableColumnResizing?: boolean;
+    /**
+     * Column resizing behavior.
+     * - 'onEnd': updates column width only upon mouse release with a visual guide line (Google Sheets style, ultra-performant for large lists).
+     * - 'onChange': resizes in real-time as the mouse moves.
+     * Defaults to 'onEnd'.
+     */
+    columnResizeMode?: ColumnResizeMode;
     /** Enables right-click context menu on the table (default: true) */
     enableContextMenu?: boolean;
     /** Shows the compact top control bar (default: true) */

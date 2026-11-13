@@ -130,8 +130,7 @@ export function FlashTableHelpDialog({
 
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-base">
-            <HelpCircle className="size-4 text-primary" />
+          <DialogTitle className="text-base">
             {labels.helpModalTitle}
           </DialogTitle>
           <DialogDescription>{labels.helpModalDescription}</DialogDescription>

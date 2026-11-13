@@ -45,6 +45,7 @@ export interface FlashTableHeaderCellProps<TData, TValue> {
     columnId: string,
     element: HTMLTableCellElement | null
   ) => void;
+  tableHeight?: number;
 }
 
 export function FlashTableHeaderCell<TData, TValue>({
@@ -64,6 +65,7 @@ export function FlashTableHeaderCell<TData, TValue>({
   labels,
   className,
   onRegisterHeaderElement,
+  tableHeight,
 }: FlashTableHeaderCellProps<TData, TValue>) {
   const { column } = header;
   const meta = column.columnDef.meta as FlashTableColumnMeta | undefined;
@@ -175,6 +177,36 @@ export function FlashTableHeaderCell<TData, TValue>({
 
   const suppressSortClickRef = useRef(false);
   const resizeHandler = header.getResizeHandler();
+  const isResizing = column.getIsResizing();
+  const tableContext = header.getContext().table;
+  const isResizeOnEnd = tableContext.options.columnResizeMode === "onEnd";
+  const rawDeltaOffset =
+    isResizeOnEnd && isResizing
+      ? tableContext.getState().columnSizingInfo.deltaOffset ?? 0
+      : 0;
+
+  // Clamping: ensure resizing cannot shrink column below minSize or below 10px
+  const currentSize = column.getSize();
+  const rawMin = colDef.minSize ?? (meta?.minWidth as number | undefined);
+  const minAllowed = Math.max(10, typeof rawMin === "number" ? rawMin : 10);
+  const maxAllowed =
+    colDef.maxSize && colDef.maxSize < Number.MAX_SAFE_INTEGER
+      ? colDef.maxSize
+      : typeof meta?.maxWidth === "number"
+      ? meta.maxWidth
+      : undefined;
+
+  const minDelta = -(currentSize - minAllowed);
+  const maxDelta =
+    maxAllowed !== undefined ? maxAllowed - currentSize : undefined;
+
+  let deltaOffset = rawDeltaOffset;
+  if (deltaOffset < minDelta) {
+    deltaOffset = minDelta;
+  }
+  if (maxDelta !== undefined && deltaOffset > maxDelta) {
+    deltaOffset = maxDelta;
+  }
 
   const handleResizeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -237,9 +269,19 @@ export function FlashTableHeaderCell<TData, TValue>({
         isSystemLeftCol && "[&:has([role=checkbox])]:pr-2",
         isPinned ? "sticky" : "relative",
         // Density sizing & typography - matched to aiqia-ui TableHead
-        density === "ultra-compact" && "h-7 px-2 text-xs",
-        density === "compact" && "h-8.5 px-3 text-xs",
-        density === "comfortable" && "h-10 px-3 text-sm",
+        density === "ultra-compact" && (canPin ? "h-7 pl-2 pr-5 text-xs" : "h-7 px-2 text-xs"),
+        density === "compact" &&
+          (isActionsCol
+            ? "h-8.5 px-2 text-xs"
+            : canPin
+            ? "h-8.5 pl-3 pr-5 text-xs"
+            : "h-8.5 px-3 text-xs"),
+        density === "comfortable" &&
+          (isActionsCol
+            ? "h-10 px-2 text-sm"
+            : canPin
+            ? "h-10 pl-3 pr-5 text-sm"
+            : "h-10 px-3 text-sm"),
         // Background: 100% opaque bg-muted when pinned so scrolled headers never bleed through
         isPinned ? "bg-muted z-30" : "bg-muted hover:bg-accent z-10",
         // Interactive cursor
@@ -263,11 +305,6 @@ export function FlashTableHeaderCell<TData, TValue>({
     >
       {header.isPlaceholder ? null : (
         <div
-          style={
-            resolvedMinWidth !== undefined
-              ? { minWidth: `${resolvedMinWidth}px` }
-              : undefined
-          }
           className={cn(
             "flex items-center gap-1.5 w-full min-w-0 overflow-hidden",
             (isActionsCol || meta?.align === "right") && "justify-end",
@@ -335,32 +372,32 @@ export function FlashTableHeaderCell<TData, TValue>({
               </span>
             )}
           </div>
-
-          {/* Pin Button */}
-          {canPin && (
-            <button
-              type="button"
-              onClick={handleTogglePin}
-              onPointerDown={(e) => e.stopPropagation()}
-              title={isPinned ? labels.unpin : labels.pinLeft}
-              aria-label={isPinned ? labels.unpin : labels.pinLeft}
-              className={cn(
-                "inline-flex items-center justify-center rounded-xs p-0.5 shrink-0 transition-all cursor-pointer",
-                isPinned
-                  ? "text-primary bg-primary/15 hover:bg-primary/25 opacity-100"
-                  : "text-muted-foreground/40 hover:text-foreground hover:bg-background/80 opacity-0 group-hover/th:opacity-100 focus:opacity-100"
-              )}
-            >
-              <Pin
-                className={cn(
-                  "size-3 transition-transform",
-                  isPinnedLeft && "fill-current -rotate-45",
-                  isPinnedRight && "fill-current rotate-45"
-                )}
-              />
-            </button>
-          )}
         </div>
+      )}
+
+      {/* Pin Button - locked to the right boundary of the column, visible on hover (or always if pinned) */}
+      {canPin && (
+        <button
+          type="button"
+          onClick={handleTogglePin}
+          onPointerDown={(e) => e.stopPropagation()}
+          title={isPinned ? labels.unpin : labels.pinLeft}
+          aria-label={isPinned ? labels.unpin : labels.pinLeft}
+          className={cn(
+            "absolute right-2 top-1/2 -translate-y-1/2 z-20 inline-flex items-center justify-center rounded-xs p-0.5 transition-all cursor-pointer",
+            isPinned
+              ? "text-primary bg-primary/15 hover:bg-primary/25 opacity-100"
+              : "text-muted-foreground/50 hover:text-foreground hover:bg-background/80 opacity-0 group-hover/th:opacity-100 focus:opacity-100"
+          )}
+        >
+          <Pin
+            className={cn(
+              "size-3 transition-transform",
+              isPinnedLeft && "fill-current -rotate-45",
+              isPinnedRight && "fill-current rotate-45"
+            )}
+          />
+        </button>
       )}
 
       {/* Column Resize Handle */}
@@ -378,16 +415,30 @@ export function FlashTableHeaderCell<TData, TValue>({
           onClick={(e) => e.stopPropagation()}
           onPointerDown={(e) => e.stopPropagation()}
           title={labels.resetColumnWidth}
-          className="group/resize absolute right-0 top-0 z-20 flex h-full w-2.5 cursor-col-resize select-none touch-none items-center justify-end"
+          style={{
+            transform:
+              isResizeOnEnd && isResizing && deltaOffset
+                ? `translateX(${deltaOffset}px)`
+                : undefined,
+          }}
+          className={cn(
+            "group/resize absolute -right-2 top-0 z-30 flex h-full w-4 cursor-col-resize select-none touch-none items-center justify-center",
+            isResizing && "z-50"
+          )}
         >
-          <span
-            className={cn(
-              "h-4/5 w-0.5 rounded-full transition-colors",
-              column.getIsResizing()
-                ? "bg-primary h-full"
-                : "bg-transparent group-hover/th:bg-border group-hover/resize:bg-primary"
-            )}
-          />
+          {!isResizing ? (
+            <div className="flex items-center justify-center gap-1.5 pointer-events-none transition-opacity duration-150 opacity-0 group-hover/th:opacity-60 group-hover/resize:opacity-100">
+              <span className="w-[2px] h-3.5 rounded-full bg-muted-foreground/60 group-hover/resize:bg-primary transition-colors shrink-0" />
+              <span className="w-[2px] h-3.5 rounded-full bg-muted-foreground/60 group-hover/resize:bg-primary transition-colors shrink-0" />
+            </div>
+          ) : (
+            <div
+              style={{
+                height: tableHeight ? `${tableHeight}px` : "100%",
+              }}
+              className="absolute top-0 w-[2px] bg-primary shadow-sm pointer-events-none"
+            />
+          )}
         </div>
       )}
     </TableHead>

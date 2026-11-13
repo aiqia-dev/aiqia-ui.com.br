@@ -5,6 +5,7 @@ import type {
   ColumnOrderState,
   ColumnPinningPosition,
   ColumnPinningState,
+  ColumnResizeMode,
   ColumnSizingState,
   ExpandedState,
   Header,
@@ -29,6 +30,7 @@ export type {
   ColumnOrderState,
   ColumnPinningPosition,
   ColumnPinningState,
+  ColumnResizeMode,
   ColumnSizingState,
   ExpandedState,
   Header,
@@ -282,6 +284,13 @@ export interface FlashTableProps<TData, TValue = unknown> {
   enableColumnVisibility?: boolean;
   /** Enables resizing column widths by dragging header edges (default: true) */
   enableColumnResizing?: boolean;
+  /**
+   * Column resizing behavior.
+   * - 'onEnd': updates column width only upon mouse release with a visual guide line (Google Sheets style, ultra-performant for large lists).
+   * - 'onChange': resizes in real-time as the mouse moves.
+   * Defaults to 'onEnd'.
+   */
+  columnResizeMode?: ColumnResizeMode;
   /** Enables right-click context menu on the table (default: true) */
   enableContextMenu?: boolean;
 

@@ -17,5 +17,6 @@ export interface FlashTableHeaderCellProps<TData, TValue> {
     labels: FlashTableLabels;
     className?: string;
     onRegisterHeaderElement: (columnId: string, element: HTMLTableCellElement | null) => void;
+    tableHeight?: number;
 }
-export declare function FlashTableHeaderCell<TData, TValue>({ header, density, enableColumnOrdering, enableColumnPinning, enableColumnResizing, isActionsCol, isSystemLeftCol, pinnedPosition, stickyOffset, isLastLeftPinned, isFirstRightPinned, canScrollLeft, canScrollRight, labels, className, onRegisterHeaderElement, }: FlashTableHeaderCellProps<TData, TValue>): import("react").JSX.Element;
+export declare function FlashTableHeaderCell<TData, TValue>({ header, density, enableColumnOrdering, enableColumnPinning, enableColumnResizing, isActionsCol, isSystemLeftCol, pinnedPosition, stickyOffset, isLastLeftPinned, isFirstRightPinned, canScrollLeft, canScrollRight, labels, className, onRegisterHeaderElement, tableHeight, }: FlashTableHeaderCellProps<TData, TValue>): import("react").JSX.Element;

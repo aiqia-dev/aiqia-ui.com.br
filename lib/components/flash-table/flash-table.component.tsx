@@ -146,6 +146,7 @@ export function FlashTable<TData, TValue = unknown>({
   enableColumnPinning = true,
   enableColumnVisibility = true,
   enableColumnResizing = true,
+  columnResizeMode: columnResizeModeProp = "onEnd",
   enableContextMenu = true,
   showToolbar = true,
   showTotalRecords = true,
@@ -207,6 +208,7 @@ export function FlashTable<TData, TValue = unknown>({
   const expandedRowElementsRef = useRef<Map<string, HTMLTableRowElement>>(
     new Map()
   );
+  const [tableHeight, setTableHeight] = useState<number | undefined>(undefined);
   const [rowAccentBars, setRowAccentBars] = useState<
     Array<{
       key: string;
@@ -349,10 +351,15 @@ export function FlashTable<TData, TValue = unknown>({
         }
       } else {
         // For non-actions columns:
-        // If an explicit size smaller than 60px is set, allow it without defaultColumn clamping
-        if (finalSize !== undefined && finalMinSize === undefined) {
-          finalMinSize = Math.min(60, finalSize);
-        }
+        // Ensure minSize is at least 10px or respects author's minSize
+        const resolvedMin =
+          finalMinSize !== undefined
+            ? Math.max(10, finalMinSize)
+            : finalSize !== undefined
+            ? Math.max(10, Math.min(60, finalSize))
+            : 10;
+        finalMinSize = resolvedMin;
+
         // If column resizing is disabled and an explicit size was provided without maxSize, lock maxSize
         if (
           rawCol.enableResizing === false &&
@@ -544,7 +551,7 @@ export function FlashTable<TData, TValue = unknown>({
     data,
     columns: normalizedColumns,
     defaultColumn: {
-      minSize: 60,
+      minSize: 10,
     },
     getRowId,
     getSubRows,
@@ -576,7 +583,7 @@ export function FlashTable<TData, TValue = unknown>({
     enableMultiSort,
     enableColumnResizing,
     enableColumnPinning,
-    columnResizeMode: "onChange",
+    columnResizeMode: columnResizeModeProp,
   });
 
   useEffect(() => {
@@ -789,7 +796,14 @@ export function FlashTable<TData, TValue = unknown>({
       measureHeaderWidths();
       updateScrollState();
       measureRowAccents();
+      if (tableElementRef.current) {
+        setTableHeight(tableElementRef.current.offsetHeight);
+      }
     });
+
+    if (tableEl) {
+      setTableHeight(tableEl.offsetHeight);
+    }
 
     observer.observe(container);
     if (tableEl) {
@@ -1123,10 +1137,7 @@ export function FlashTable<TData, TValue = unknown>({
                 useFixedLayout
                   ? {
                       width: table.getTotalSize(),
-                      minWidth:
-                        hasCustomColumnSizing || isResizingAnyColumn
-                          ? undefined
-                          : "100%",
+                      minWidth: "100%",
                     }
                   : undefined
               }
@@ -1236,6 +1247,7 @@ export function FlashTable<TData, TValue = unknown>({
                             labels={labels}
                             className={classNames?.headerCell}
                             onRegisterHeaderElement={registerHeaderElement}
+                            tableHeight={tableHeight}
                           />
                         );
                       })}
@@ -1429,9 +1441,13 @@ export function FlashTable<TData, TValue = unknown>({
                                   density === "ultra-compact" &&
                                     "py-0.5 px-2 text-xs",
                                   density === "compact" &&
-                                    "py-1 px-3 text-sm",
+                                    (isActionsCol
+                                      ? "py-1 px-2 text-sm"
+                                      : "py-1 px-3 text-sm"),
                                   density === "comfortable" &&
-                                    "py-2 px-3 text-sm",
+                                    (isActionsCol
+                                      ? "py-2 px-2 text-sm"
+                                      : "py-2 px-3 text-sm"),
                                   // Alignment
                                   (isActionsCol || meta?.align === "right") &&
                                     "text-right",
@@ -1457,8 +1473,15 @@ export function FlashTable<TData, TValue = unknown>({
                               >
                                 <div
                                   style={
-                                    resolvedMinWidth !== undefined
-                                      ? { minWidth: `${resolvedMinWidth}px` }
+                                    resolvedMinWidth !== undefined &&
+                                    !isFixedCol &&
+                                    !isActionsCol
+                                      ? {
+                                          minWidth:
+                                            typeof resolvedMinWidth === "number"
+                                              ? `${resolvedMinWidth}px`
+                                              : resolvedMinWidth,
+                                        }
                                       : undefined
                                   }
                                   className="w-full"
@@ -1672,8 +1695,14 @@ export function FlashTable<TData, TValue = unknown>({
                                 "whitespace-nowrap overflow-hidden text-ellipsis font-medium border-t border-border",
                                 isPinned ? "sticky bg-muted z-20" : "bg-muted",
                                 density === "ultra-compact" && "py-1 px-2 text-xs",
-                                density === "compact" && "py-1 px-3 text-sm",
-                                density === "comfortable" && "py-2 px-3 text-sm",
+                                density === "compact" &&
+                                  (isActionsCol
+                                    ? "py-1 px-2 text-sm"
+                                    : "py-1 px-3 text-sm"),
+                                density === "comfortable" &&
+                                  (isActionsCol
+                                    ? "py-2 px-2 text-sm"
+                                    : "py-2 px-3 text-sm"),
                                 (isActionsCol || meta?.align === "right") &&
                                   "text-right",
                                 meta?.align === "center" && "text-center",
@@ -1686,8 +1715,15 @@ export function FlashTable<TData, TValue = unknown>({
                               {header.isPlaceholder ? null : (
                                 <div
                                   style={
-                                    resolvedMinWidth !== undefined
-                                      ? { minWidth: `${resolvedMinWidth}px` }
+                                    resolvedMinWidth !== undefined &&
+                                    !isFixedCol &&
+                                    !isActionsCol
+                                      ? {
+                                          minWidth:
+                                            typeof resolvedMinWidth === "number"
+                                              ? `${resolvedMinWidth}px`
+                                              : resolvedMinWidth,
+                                        }
                                       : undefined
                                   }
                                   className="w-full"

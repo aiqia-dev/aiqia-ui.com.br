@@ -52,6 +52,33 @@ function resolveUpdater<T>(updater: Updater<T>, previous: T): T {
     : updater;
 }
 
+function sanitizeColumnSizing<TData, TValue>(
+  raw: ColumnSizingState,
+  columns: ColumnDef<TData, TValue>[]
+): ColumnSizingState {
+  const minMap = new Map<string, number>();
+  columns.forEach((col) => {
+    const colId =
+      col.id ?? ("accessorKey" in col ? String(col.accessorKey) : "");
+    if (colId) {
+      const rawMin = col.minSize;
+      minMap.set(
+        colId,
+        Math.max(10, typeof rawMin === "number" ? rawMin : 10)
+      );
+    }
+  });
+
+  const sanitized: ColumnSizingState = {};
+  for (const [colId, size] of Object.entries(raw)) {
+    if (typeof size === "number") {
+      const minAllowed = minMap.get(colId) ?? 10;
+      sanitized[colId] = Math.max(minAllowed, size);
+    }
+  }
+  return sanitized;
+}
+
 export function useFlashTablePersistence<TData, TValue>({
   columns,
   tableId,
@@ -181,7 +208,7 @@ export function useFlashTablePersistence<TData, TValue>({
         },
         columnSizing:
           parsed.columnSizing && typeof parsed.columnSizing === "object"
-            ? parsed.columnSizing
+            ? sanitizeColumnSizing(parsed.columnSizing, columns)
             : {},
         density:
           parsed.density === "ultra-compact" ||
@@ -292,12 +319,15 @@ export function useFlashTablePersistence<TData, TValue>({
   const handleColumnSizingChange: OnChangeFn<ColumnSizingState> = useCallback(
     (updater) => {
       onColumnSizingChange?.(updater);
-      setInternalState((prev) => ({
-        ...prev,
-        columnSizing: resolveUpdater(updater, prev.columnSizing),
-      }));
+      setInternalState((prev) => {
+        const nextRaw = resolveUpdater(updater, prev.columnSizing);
+        return {
+          ...prev,
+          columnSizing: sanitizeColumnSizing(nextRaw, columns),
+        };
+      });
     },
-    [onColumnSizingChange]
+    [onColumnSizingChange, columns]
   );
 
   const handleColumnOrderChange: OnChangeFn<ColumnOrderState> = useCallback(
