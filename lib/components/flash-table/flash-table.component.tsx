@@ -1121,7 +1121,13 @@ export function FlashTable<TData, TValue = unknown>({
               ref={tableElementRef}
               style={
                 useFixedLayout
-                  ? { width: table.getTotalSize(), minWidth: "100%" }
+                  ? {
+                      width: table.getTotalSize(),
+                      minWidth:
+                        hasCustomColumnSizing || isResizingAnyColumn
+                          ? undefined
+                          : "100%",
+                    }
                   : undefined
               }
               className={cn(
@@ -1449,10 +1455,19 @@ export function FlashTable<TData, TValue = unknown>({
                                   meta?.cellClassName
                                 )}
                               >
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext()
-                                )}
+                                <div
+                                  style={
+                                    resolvedMinWidth !== undefined
+                                      ? { minWidth: `${resolvedMinWidth}px` }
+                                      : undefined
+                                  }
+                                  className="w-full"
+                                >
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext()
+                                  )}
+                                </div>
                               </TableCell>
                             );
                           })}
@@ -1668,12 +1683,21 @@ export function FlashTable<TData, TValue = unknown>({
                                 meta?.footerClassName
                               )}
                             >
-                              {header.isPlaceholder
-                                ? null
-                                : flexRender(
+                              {header.isPlaceholder ? null : (
+                                <div
+                                  style={
+                                    resolvedMinWidth !== undefined
+                                      ? { minWidth: `${resolvedMinWidth}px` }
+                                      : undefined
+                                  }
+                                  className="w-full"
+                                >
+                                  {flexRender(
                                     header.column.columnDef.footer,
                                     header.getContext()
                                   )}
+                                </div>
+                              )}
                             </TableCell>
                           );
                         })}

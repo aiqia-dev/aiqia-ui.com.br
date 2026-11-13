@@ -263,6 +263,11 @@ export function FlashTableHeaderCell<TData, TValue>({
     >
       {header.isPlaceholder ? null : (
         <div
+          style={
+            resolvedMinWidth !== undefined
+              ? { minWidth: `${resolvedMinWidth}px` }
+              : undefined
+          }
           className={cn(
             "flex items-center gap-1.5 w-full min-w-0 overflow-hidden",
             (isActionsCol || meta?.align === "right") && "justify-end",
