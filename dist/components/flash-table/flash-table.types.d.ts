@@ -183,7 +183,7 @@ export interface FlashTableProps<TData, TValue = unknown> {
     expandOnRowClick?: boolean;
     /** Enables column sorting (default: true) */
     enableSorting?: boolean;
-    /** Enables multi-column sorting when holding Shift (default: true) */
+    /** Enables multi-column sorting when holding Shift (default: false) */
     enableMultiSort?: boolean;
     /** Controlled sorting state */
     sorting?: SortingState;

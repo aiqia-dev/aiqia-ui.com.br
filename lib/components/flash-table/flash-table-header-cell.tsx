@@ -5,7 +5,6 @@ import {
   ArrowDown,
   ArrowUp,
   ArrowUpDown,
-  GripVertical,
   Info,
   Pin,
 } from "lucide-react";
@@ -311,16 +310,6 @@ export function FlashTableHeaderCell<TData, TValue>({
             (isSystemLeftCol || meta?.align === "center") && "justify-center"
           )}
         >
-          {/* Drag Handle Icon */}
-          {canReorder && (
-            <span
-              className="inline-flex items-center justify-center text-muted-foreground/30 group-hover/th:text-muted-foreground cursor-grab active:cursor-grabbing shrink-0 -ml-1 transition-colors"
-              title={labels.columnManagerFooterHint}
-            >
-              <GripVertical className="size-3" />
-            </span>
-          )}
-
           {/* Header Content */}
           <div
             className={cn(

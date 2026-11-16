@@ -126,7 +126,7 @@ export function FlashTable<TData, TValue = unknown>({
   showExpandColumn = true,
   expandOnRowClick = false,
   enableSorting = true,
-  enableMultiSort = true,
+  enableMultiSort = false,
   sorting: propSorting,
   onSortingChange: propOnSortingChange,
   manualSorting = false,
@@ -1423,9 +1423,7 @@ export function FlashTable<TData, TValue = unknown>({
                                 style={cellStyle}
                                 className={cn(
                                   isFixedCol && "flash-table-fixed-cell",
-                                  meta?.wrap
-                                    ? "whitespace-normal"
-                                    : "whitespace-nowrap overflow-hidden text-ellipsis",
+                                  meta?.wrap && "whitespace-normal",
                                   "align-middle transition-colors",
                                   isSystemLeftCol &&
                                     "[&:has([role=checkbox])]:pr-2",
@@ -1471,21 +1469,7 @@ export function FlashTable<TData, TValue = unknown>({
                                   meta?.cellClassName
                                 )}
                               >
-                                <div
-                                  style={
-                                    resolvedMinWidth !== undefined &&
-                                    !isFixedCol &&
-                                    !isActionsCol
-                                      ? {
-                                          minWidth:
-                                            typeof resolvedMinWidth === "number"
-                                              ? `${resolvedMinWidth}px`
-                                              : resolvedMinWidth,
-                                        }
-                                      : undefined
-                                  }
-                                  className="w-full"
-                                >
+                                <div className="w-full">
                                   {flexRender(
                                     cell.column.columnDef.cell,
                                     cell.getContext()
@@ -1692,7 +1676,7 @@ export function FlashTable<TData, TValue = unknown>({
                               style={footerStyle}
                               className={cn(
                                 isFixedCol && "flash-table-fixed-cell",
-                                "whitespace-nowrap overflow-hidden text-ellipsis font-medium border-t border-border",
+                                "font-medium border-t border-border",
                                 isPinned ? "sticky bg-muted z-20" : "bg-muted",
                                 density === "ultra-compact" && "py-1 px-2 text-xs",
                                 density === "compact" &&
@@ -1713,21 +1697,7 @@ export function FlashTable<TData, TValue = unknown>({
                               )}
                             >
                               {header.isPlaceholder ? null : (
-                                <div
-                                  style={
-                                    resolvedMinWidth !== undefined &&
-                                    !isFixedCol &&
-                                    !isActionsCol
-                                      ? {
-                                          minWidth:
-                                            typeof resolvedMinWidth === "number"
-                                              ? `${resolvedMinWidth}px`
-                                              : resolvedMinWidth,
-                                        }
-                                      : undefined
-                                  }
-                                  className="w-full"
-                                >
+                                <div className="w-full">
                                   {flexRender(
                                     header.column.columnDef.footer,
                                     header.getContext()

@@ -78,13 +78,8 @@ const HELP_FEATURES: HelpFeatureItem[] = [
     id: "sort",
     icon: <ArrowUpDown className="size-4" />,
     title: "Ordenação",
-    description: (
-      <>
-        Clique no título para ordenar. Segure{" "}
-        <kbd className={kbdClassName}>Shift</kbd> para ordenar por múltiplas
-        colunas.
-      </>
-    ),
+    description:
+      "Clique no título da coluna para alternar entre ordem crescente, decrescente ou limpar.",
   },
   {
     id: "density",
