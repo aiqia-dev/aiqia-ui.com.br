@@ -3996,7 +3996,7 @@ function od({
               transform: Ye && De && He ? `translateX(${He}px)` : void 0
             },
             className: a(
-              "group/resize absolute -right-2 top-0 z-30 flex h-full w-4 cursor-col-resize select-none touch-none items-center justify-center",
+              "group/resize absolute right-0 top-0 z-30 flex h-full w-2 cursor-col-resize select-none touch-none items-center justify-end",
               De && "z-50"
             ),
             children: De ? /* @__PURE__ */ r(
@@ -4005,12 +4005,9 @@ function od({
                 style: {
                   height: C ? `${C}px` : "100%"
                 },
-                className: "absolute top-0 w-[2px] bg-primary shadow-sm pointer-events-none"
+                className: "absolute right-0 top-0 w-[2px] bg-primary shadow-sm pointer-events-none"
               }
-            ) : /* @__PURE__ */ c("div", { className: "flex items-center justify-center gap-1.5 pointer-events-none transition-opacity duration-150 opacity-0 group-hover/th:opacity-60 group-hover/resize:opacity-100", children: [
-              /* @__PURE__ */ r("span", { className: "w-[2px] h-3.5 rounded-full bg-muted-foreground/60 group-hover/resize:bg-primary transition-colors shrink-0" }),
-              /* @__PURE__ */ r("span", { className: "w-[2px] h-3.5 rounded-full bg-muted-foreground/60 group-hover/resize:bg-primary transition-colors shrink-0" })
-            ] })
+            ) : /* @__PURE__ */ r("div", { className: "flex items-center justify-end pointer-events-none transition-opacity duration-150 opacity-0 group-hover/th:opacity-60 group-hover/resize:opacity-100", children: /* @__PURE__ */ r("span", { className: "w-[2px] h-3.5 rounded-full bg-muted-foreground/60 group-hover/resize:bg-primary transition-colors shrink-0" }) })
           }
         )
       ]
